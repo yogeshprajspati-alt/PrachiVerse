@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy New Year Prachiii✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<style>
+:root{
+  --pink:#ec4899;
+  --violet:#8b5cf6;
+  --gold:#fcd34d;
+  --dark:#0f172a;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(-45deg,#0f172a,#1e1b4b,#312e81,#4c1d95);
+  background-size:400% 400%;
+  animation:gradientShift 20s ease infinite;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+  touch-action:manipulation;
+}
+
+@keyframes gradientShift{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+#particles-js{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+#fireworks{
+  position:fixed;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+}
+
+/* ========== ENVELOPE STAGE ========== */
+.stage{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.6s ease;
+  z-index:10;
+}
+
+.stage.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.envelope-container{
+  position:relative;
+  cursor:pointer;
+}
+
+.envelope{
+  width:min(320px, 85vw);
+  height:min(200px, 50vw);
+  position:relative;
+  transition:all 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.envelope:hover{
+  transform:scale(1.05);
+}
+
+.envelope.glow{
+  filter:drop-shadow(0 0 40px rgba(236,72,153,0.8));
+}
+
+.env-back{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#f5f5f5,#e5e5e5);
+  border-radius:16px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.3);
+}
+
+.env-flap{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top center;
+  transition:transform 1.2s cubic-bezier(0.4,0,0.2,1);
+  border-radius:16px 16px 0 0;
+  z-index:2;
+}
+
+.envelope.open .env-flap{
+  transform:rotateX(180deg);
+}
+
+.env-letter{
+  position:absolute;
+  left:50%;
+  bottom:15px;
+  transform:translateX(-50%);
+  width:88%;
+  height:85%;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  overflow:hidden;
+  opacity:0;
+  transition:transform 1.2s cubic-bezier(0.4,0,0.2,1), bottom 1.2s cubic-bezier(0.4,0,0.2,1), opacity 0.8s ease 0.6s;
+  z-index:1;
+}
+
+.envelope.open .env-letter{
+  bottom:60px;
+  transform:translateX(-50%) translateY(-20px);
+  opacity:1;
+}
+
+.letter-content{
+  padding:20px;
+  height:100%;
+  overflow-y:auto;
+  color:#1f2937;
+}
+
+.letter-content h2{
+  font-family:'Playfair Display',serif;
+  color:var(--pink);
+  font-size:1.5rem;
+  margin-bottom:12px;
+}
+
+.hint{
+  margin-top:30px;
+  text-align:center;
+  font-size:0.9rem;
+  opacity:0.7;
+  animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:0.7}
+  50%{opacity:1}
+}
+
+/* ========== MESSAGE STAGE ========== */
+.message-box{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:24px;
+  padding:35px;
+  max-width:600px;
+  width:90%;
+  box-shadow:0 0 60px rgba(0,0,0,0.4);
+  text-align:center;
+}
+
+.message-box h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,6vw,3.5rem);
+  background:linear-gradient(45deg,var(--violet),var(--pink),var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:20px;
+}
+
+#typedText{
+  font-size:clamp(1rem,3vw,1.2rem);
+  line-height:1.8;
+  white-space:pre-wrap;
+  border-right:3px solid var(--gold);
+  display:inline-block;
+  min-height:20px;
+
+    max-height:40vh;
+  overflow-y:auto;
+}
+
+.continue-btn{
+  margin-top:30px;
+  padding:15px 40px;
+  border-radius:50px;
+  border:none;
+  font-size:1.1rem;
+  font-weight:600;
+  background:linear-gradient(45deg,var(--pink),var(--violet));
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(236,72,153,0.5);
+  transition:all 0.3s ease;
+  opacity:0;
+  pointer-events:none;
+}
+
+.continue-btn.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.continue-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px rgba(236,72,153,0.8);
+}
+
+.continue-btn:active{
+  transform:scale(0.98);
+}
+
+/* ========== INTERACTIVE STAGE ========== */
+.interactive-box{
+  text-align:center;
+  max-width:700px;
+  width:90%;
+}
+
+.interactive-box h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.5rem,7vw,4rem);
+  background:linear-gradient(45deg,var(--violet),var(--pink),var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:20px;
+  text-shadow:0 0 40px rgba(236,72,153,0.6);
+}
+
+.interactive-box p{
+  font-size:clamp(1.1rem,3.5vw,1.4rem);
+  margin-bottom:30px;
+  opacity:0.9;
+}
+
+.heart-big{
+  font-size:5rem;
+  animation:heartbeat 1.2s ease-in-out infinite;
+  display:inline-block;
+  margin:20px 0;
+  cursor:pointer;
+  transition:transform 0.2s ease;
+}
+
+.heart-big:hover{
+  transform:scale(1.15);
+}
+
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  25%{transform:scale(1.15)}
+  50%{transform:scale(1)}
+}
+
+.tap-hint{
+  font-size:1rem;
+  opacity:0.7;
+  margin-top:20px;
+}
+
+/* ========== FLOATING HEARTS ========== */
+.float-heart{
+  position:fixed;
+  bottom:-60px;
+  font-size:clamp(1.2rem,4vw,2rem);
+  pointer-events:none;
+  z-index:3;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translateY(-120vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:600px){
+  .letter-content{padding:15px}
+  .letter-content h2{font-size:1.3rem}
+  .message-box{padding:25px}
+  .interactive-box h1{margin-bottom:15px}
+  .heart-big{font-size:4rem}
+}
+
+@media(max-height:600px){
+  .envelope{height:min(160px,40vw)}
+  .letter-content{padding:12px;font-size:0.85rem}
+}
+
+/* Prevent text selection on interactive elements */
+.envelope,.continue-btn,.heart-big{
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ========== MUSIC TOGGLE ========== */
+#musicToggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.3);
+  background:rgba(139,92,246,0.3);
+  backdrop-filter:blur(10px);
+  color:#fff;
+  font-size:1.5rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+
+#musicToggle:hover{
+  transform:scale(1.1);
+  background:rgba(139,92,246,0.5);
+  box-shadow:0 6px 30px rgba(139,92,246,0.6);
+}
+
+#musicToggle:active{
+  transform:scale(0.95);
+}
+
+#musicToggle.playing{
+  background:rgba(236,72,153,0.4);
+  animation:musicPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes musicPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(236,72,153,0.4)}
+  50%{box-shadow:0 4px 30px rgba(236,72,153,0.8)}
+}
+
+@media(max-width:600px){
+  #musicToggle{
+    width:50px;
+    height:50px;
+    bottom:15px;
+    right:15px;
+    font-size:1.3rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+<canvas id="fireworks"></canvas>
+
+<!-- STAGE 1: ENVELOPE -->
+<div class="stage active" id="stage1">
+  <div class="envelope-container">
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+      <div class="env-flap"></div>
+      <div class="env-letter">
+        <div class="letter-content">
+          <h2>💌</h2>
+          <p style="font-size:0.95rem;line-height:1.6;">wait.....</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hint">✨ Tap the envelope and wait!✨</div>
+</div>
+
+<!-- STAGE 2: MESSAGE -->
+<div class="stage" id="stage2">
+  <div class="message-box">
+    <h1>Dear Prachiii 💖</h1>
+    <div id="typedText"></div>
+    <button class="continue-btn" id="continueBtn">Ab kyaa..?? →</button>
+  </div>
+</div>
+
+<!-- STAGE 3: INTERACTIVE -->
+<div class="stage" id="stage3">
+  <div class="interactive-box">
+    <h1>Happy New Year!</h1>
+    <p>Here's to new beginnings, shared smiles,<br>and moments that matter ✨</p>
+    <div class="heart-big" id="bigHeart">🥂</div>
+    <p>Tension mat lo isme alcohol nhi apple juice h 😁</p>
+    <p class="tap-hint">Tap anywhere for fireworks 🎆</p>
+  </div>
+</div>
+
+<!-- Music Toggle Button -->
+<button id="musicToggle" title="Toggle Music">🔇</button>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="./playdate.mp3" type="audio/mpeg">
+  <!-- Fallback: If playdate.mp3 not found, uses this -->
+  <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a468ef69c.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ========== PARTICLES ==========
+particlesJS('particles-js',{
+  particles:{
+    number:{value:60,density:{enable:true,value_area:800}},
+    color:{value:['#ec4899','#8b5cf6','#fcd34d']},
+    shape:{type:'circle'},
+    opacity:{value:0.5,random:true,anim:{enable:true,speed:0.8,opacity_min:0.1}},
+    size:{value:3,random:true,anim:{enable:true,speed:2,size_min:0.5}},
+    line_linked:{enable:false},
+    move:{enable:true,speed:1.2,direction:'none',random:true,out_mode:'out'}
+  },
+  interactivity:{
+    detect_on:'canvas',
+    events:{onhover:{enable:true,mode:'bubble'},onclick:{enable:false}},
+    modes:{bubble:{distance:120,size:4,duration:2,opacity:0.8}}
+  }
+});
+
+// ========== FIREWORKS ==========
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+let particles=[];
+
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+class Particle{
+  constructor(x,y,vx,vy,color,life){
+    this.x=x;
+    this.y=y;
+    this.vx=vx;
+    this.vy=vy;
+    this.color=color;
+    this.life=life;
+    this.maxLife=life;
+  }
+  update(){
+    this.x+=this.vx;
+    this.y+=this.vy;
+    this.vy+=0.08;
+    this.life--;
+  }
+  draw(){
+    ctx.globalAlpha=this.life/this.maxLife;
+    ctx.fillStyle=this.color;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,2.5,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function createFirework(x,y){
+  const colors=['#ec4899','#8b5cf6','#fcd34d','#fff','#ff6b6b'];
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  const count=50+Math.random()*30;
+  for(let i=0;i<count;i++){
+    const angle=(Math.PI*2*i)/count;
+    const speed=2+Math.random()*3;
+    const vx=Math.cos(angle)*speed;
+    const vy=Math.sin(angle)*speed;
+    particles.push(new Particle(x,y,vx,vy,color,60+Math.random()*40));
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=particles.length-1;i>=0;i--){
+    particles[i].update();
+    particles[i].draw();
+    if(particles[i].life<=0)particles.splice(i,1);
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ========== FLOATING HEARTS ==========
+function createFloatingHeart(){
+  const heart=document.createElement('div');
+  heart.className='float-heart';
+  heart.textContent=['💖','✨','💫','💗','🌟'][Math.floor(Math.random()*5)];
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.animationDuration=(5+Math.random()*4)+'s';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),9000);
+}
+
+let heartInterval;
+
+// ========== STAGE MANAGEMENT ==========
+let currentStage=1;
+const stages=document.querySelectorAll('.stage');
+
+function switchStage(num){
+  stages.forEach(s=>s.classList.remove('active'));
+  document.getElementById('stage'+num).classList.add('active');
+  currentStage=num;
+}
+
+// ========== STAGE 1: ENVELOPE ==========
+const envelope=document.getElementById('envelope');
+let envelopeOpened=false;
+
+envelope.addEventListener('click',async function(e){
+  e.stopPropagation();
+  if(envelopeOpened)return;
+  envelopeOpened=true;
+  
+  this.classList.add('open','glow');
+  
+  // Fireworks burst
+  await new Promise(r=>setTimeout(r,600));
+  createFirework(innerWidth/2,innerHeight*0.4);
+  await new Promise(r=>setTimeout(r,400));
+  createFirework(innerWidth*0.3,innerHeight*0.5);
+  createFirework(innerWidth*0.7,innerHeight*0.5);
+  
+  await new Promise(r=>setTimeout(r,1500));
+  switchStage(2);
+  startTyping();
+});
+
+// ========== STAGE 2: TYPEWRITER ==========
+const message=`Here's to you,
+Prachiii 💖 tareef karunga to tum bologi ki kya hi bolte rehte ho....
+digest nhi hota...!!
+Kehte h Sharab, gusse or nind me insaan apne aap ko kho deta h....
+or jo uske mn me hota h wo sab bahar aa jata h....
+Sharab me peeta nhi, gusse me dikhata nhi, nind me ye sab soch soch ke type kar ke rakha hu...!!
+toh me apne mn ki baat tumse kehna chahta hu....
+
+wo ek sentence jo tumhe sab samjha dega....
+
+-Butterflies 🦋🌼 can't see their own wings 🧚‍♀️🪶🪽.
+ But everyone else admires their beauty🪷🌹.
+ You are the same way to me....
+
+As this new year begins,
+I wanted you to know something…
+
+She's pretty, she's amazing.
+She's rare, she's beautiful.
+Her heart is pure gold, and She's a Diamond.
+She is YOU🫵.
+
+I'm really grateful you're in my life. And let me tell you one thing...
+No one was ever there to replace you, nor will there ever be.
+
+Once again, me bata duuuu me koi shyr nhi huuuuu....!!
+Programmer huuuu...!! to lines perfect likh deta huuuu...!!
+lekin code me bugs hote h naaa...!!
+So, agar me kabhi galti karu toh please mujhe maaf kar dena...!!
+
+Waise me janta hu tumhe jyada padhna pasand nhi h....!!
+to wo dairy jo tumne snapchat pe save karke rahi h usme likh deta hu...!!
+Mn ho to padh lena...!!
+
+ThankYou for gifting all those moments this year 💖
+
+Or Tum ab buddhe log ki tarah sochna band kar do...!!
+Just be happy, be silly, be weird...!!
+Be YOU...!! Be Prachiii...!!
+
+Happy New Year Prachiii✨`;
+
+const typedText=document.getElementById('typedText');
+const continueBtn=document.getElementById('continueBtn');
+
+async function startTyping(){
+  typedText.textContent='';
+  typedText.scrollTop = 0;
+
+  for(const char of message){
+    typedText.textContent += char;
+
+    // 👉 Auto-scroll to bottom on every new character
+    typedText.scrollTop = typedText.scrollHeight;
+
+    await new Promise(r=>setTimeout(r,70));
+  }
+
+  typedText.style.borderRight='none';
+  await new Promise(r=>setTimeout(r,400));
+
+  continueBtn.classList.add('show');
+
+  createFirework(innerWidth*0.25,innerHeight*0.3);
+  await new Promise(r=>setTimeout(r,300));
+  createFirework(innerWidth*0.75,innerHeight*0.3);
+}
+
+
+continueBtn.addEventListener('click',function(){
+  switchStage(3);
+  startInteractive();
+});
+
+// ========== STAGE 3: INTERACTIVE ==========
+const bigHeart=document.getElementById('bigHeart');
+
+function startInteractive(){
+  // Start floating hearts
+  heartInterval=setInterval(createFloatingHeart,600);
+  
+  // Welcome fireworks
+  setTimeout(()=>{
+    createFirework(innerWidth*0.2,innerHeight*0.3);
+    createFirework(innerWidth*0.8,innerHeight*0.3);
+  },300);
+}
+
+bigHeart.addEventListener('click',function(e){
+  e.stopPropagation();
+  createFirework(innerWidth/2,innerHeight/2);
+  
+  // Burst of hearts
+  for(let i=0;i<5;i++){
+    setTimeout(createFloatingHeart,i*100);
+  }
+});
+
+// Click anywhere for fireworks (stage 3 only)
+document.addEventListener('click',function(e){
+  if(currentStage===3 && e.target.id!=='bigHeart'){
+    createFirework(e.clientX,e.clientY);
+  }
+});
+
+// Touch support
+document.addEventListener('touchstart',function(e){
+  if(currentStage===3 && e.target.id!=='bigHeart'){
+    const touch=e.touches[0];
+    createFirework(touch.clientX,touch.clientY);
+  }
+},{passive:true});
+
+// Auto-start some ambient hearts after 2s
+setTimeout(()=>{
+  setInterval(()=>{
+    if(Math.random()<0.3)createFloatingHeart();
+  },2000);
+},2000);
+
+// ========== BACKGROUND MUSIC ==========
+const bgMusic=document.getElementById('bgMusic');
+const musicToggle=document.getElementById('musicToggle');
+let musicPlaying=false;
+
+bgMusic.volume=0.3; // Set to 30% volume (not too loud)
+
+musicToggle.addEventListener('click',function(){
+  if(musicPlaying){
+    bgMusic.pause();
+    musicToggle.textContent='🔇';
+    musicToggle.classList.remove('playing');
+    musicPlaying=false;
+  }else{
+    bgMusic.play().catch(err=>{
+      console.log('Music play failed:',err);
+    });
+    musicToggle.textContent='🔊';
+    musicToggle.classList.add('playing');
+    musicPlaying=true;
+  }
+});
+
+// Try to start music when envelope is clicked
+envelope.addEventListener('click',function(){
+  if(!musicPlaying){
+    bgMusic.play().then(()=>{
+      musicPlaying=true;
+      musicToggle.textContent='🔊';
+      musicToggle.classList.add('playing');
+    }).catch(err=>{
+      console.log('Auto-play prevented. User can enable manually.');
+    });
+  }
+},true);
+</script>
+
+</body>
+</html>

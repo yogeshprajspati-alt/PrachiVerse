@@ -1,0 +1,709 @@
+<!DOCTYPE>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Prachi ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #e8f4f8 50%, #fef9e7 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(255,215,0,0.8), transparent);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(50px) scale(1.5); opacity: 0; }
+        }
+
+        .feather {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @keyframes featherFall {
+            0% { 
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.9; }
+            100% { 
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .content {
+            text-align: center;
+            max-width: 600px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #8b6ba8;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
+            line-height: 1.6;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(139,107,168,0.4); }
+            50% { text-shadow: 0 0 30px rgba(139,107,168,0.8), 0 0 40px rgba(255,215,0,0.5); }
+        }
+
+        .message {
+            display: none;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #6b5b8c;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.9);
+            line-height: 1.8;
+            padding: 40px 20px;
+            animation: messageReveal 1.2s ease-out;
+        }
+
+        @keyframes messageReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(40px);
+            }
+            60% {
+                transform: scale(1.05) translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .gift-box {
+            display: none;
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            cursor: pointer;
+            animation: giftPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .gift-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 140px;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(255,192,203,0.5);
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.5);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+        }
+
+        .bow-loop {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: #ff69b4;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .bow-loop:first-child {
+            left: 0;
+            transform: rotate(-20deg);
+        }
+
+        .bow-loop:last-child {
+            right: 0;
+            transform: rotate(20deg);
+        }
+
+        .gift-ribbon-v {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 140px;
+            background: linear-gradient(180deg, #ffd700, #ffed4e);
+        }
+
+        .gift-ribbon-h {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 20px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+        }
+
+        .gift-opened .gift-lid {
+            transform: translateX(-50%) translateY(-100px) rotateX(-30deg);
+            opacity: 0.5;
+        }
+
+        .sparkle-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #ffd700, transparent);
+            border-radius: 50%;
+            animation: sparkleExplode 1s ease-out forwards;
+        }
+
+        @keyframes sparkleExplode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .gift-message {
+            display: none;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #c71585;
+            text-shadow: 0 0 20px rgba(255,255,255,0.9);
+            padding: 40px 20px;
+            line-height: 1.8;
+            animation: giftMessageReveal 2s ease-out;
+        }
+
+        @keyframes giftMessageReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .gift-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #8b6ba8;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in 0.5s both;
+        }
+
+        .mute-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .mute-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255,215,0,0.5);
+        }
+
+        .restart-btn {
+            display: none;
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: none;
+            border-radius: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #8b6ba8;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.4);
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,215,0,0.6);
+        }
+
+        @media (max-width: 768px) {
+            .intro-text {
+                font-size: 1.8rem;
+            }
+            .message {
+                font-size: 1.5rem;
+                padding: 30px 15px;
+            }
+            .gift-box {
+                width: 150px;
+                height: 150px;
+            }
+            .gift-base {
+                width: 120px;
+                height: 105px;
+            }
+            .gift-lid {
+                width: 135px;
+                height: 45px;
+            }
+            .gift-ribbon-v {
+                height: 105px;
+            }
+            .gift-ribbon-h {
+                width: 120px;
+            }
+            .gift-message {
+                font-size: 1.4rem;
+            }
+        }
+        .gifts-container {
+            display: none;
+            justify-content: center;
+            gap: 60px;
+            margin: 40px auto;
+            flex-wrap: wrap;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            cursor: pointer;
+            animation: giftPulse 2s ease-in-out infinite;
+        }
+
+        .gift-box:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes giftPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .gift-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 120px;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(255,192,203,0.5);
+        }
+
+        .gift-box:nth-child(2) .gift-base {
+            background: linear-gradient(135deg, #e6e6fa 0%, #d8bfd8 100%);
+            box-shadow: 0 10px 40px rgba(216,191,216,0.5);
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 50px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.5);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .gift-box:nth-child(2) .gift-lid {
+            background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
+            box-shadow: 0 5px 20px rgba(135,206,235,0.5);
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+        }
+
+        .bow-loop {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: #ff69b4;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .gift-box:nth-child(2) .bow-loop {
+            background: #9370db;
+        }
+
+        .bow-loop:first-child {
+            left: 0;
+            transform: rotate(-20deg);
+        }
+
+        .bow-loop:last-child {
+            right: 0;
+            transform: rotate(20deg);
+        }
+
+        .gift-ribbon-v {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 120px;
+            background: linear-gradient(180deg, #ffd700, #ffed4e);
+        }
+
+        .gift-box:nth-child(2) .gift-ribbon-v {
+            background: linear-gradient(180deg, #87ceeb, #add8e6);
+        }
+
+        .gift-ribbon-h {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 18px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+        }
+
+        .gift-box:nth-child(2) .gift-ribbon-h {
+            background: linear-gradient(90deg, #87ceeb, #add8e6);
+        }
+
+        .gift-opened .gift-lid {
+            transform: translateX(-50%) translateY(-100px) rotateX(-30deg);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-particles" id="particles"></div>
+    
+    <div class="mute-btn" id="muteBtn">🔈</div>
+
+    <div class="container">
+        <div class="content">
+            <div class="intro-text" id="intro">
+                Click anywhere to send Prachi an angel's wish…
+            </div>
+
+            <div class="message" id="msg1">
+                Tumhare liye aaj poori duniya chamak rahi hai... kyunki aaj tumhari birthday hai, Prachi 💫
+            </div>
+
+            <div class="message" id="msg2">
+                Har feather jo hawa mein udti hai... tumhare liye ek dua leke aati hai 🕊️
+            </div>
+
+            <div class="message" id="msg3">
+                Tum itni roshni ho ki khud ke angels tumhe dekhne aaj aaye hain 😇
+            </div>
+
+            <div class="message" id="msg4">
+                Khushiyon ki baarish, sapnon ki udaan... aur har pal mein pyaar — hamesha tumhare saath rahe 🌈
+            </div>
+
+            <div class="message" id="msg5">
+                Tumhare hansne ki awaaz... ek angelic melody hai jo dil ko chhoo jaati hai 💖
+            </div>
+
+            <div class="message" id="msg6">
+                Duniya mein tum jaisi koi aur nahi... isliye aaj sab kuch tumhare liye chamak raha hai ✨
+            </div>
+
+            <div class="message" id="msg7">
+                Happy Birthday, Prachi! 🎂<br>
+                May your year be filled with magic, love, and moments that feel like fairy tales come true. 🕊️💫
+            </div>
+
+            <div class="gift-box" id="giftBox">
+                <div class="gift-lid">
+                    <div class="gift-bow">
+                        <div class="bow-loop"></div>
+                        <div class="bow-loop"></div>
+                    </div>
+                </div>
+                <div class="gift-ribbon-v"></div>
+                <div class="gift-ribbon-h"></div>
+                <div class="gift-base"></div>
+            </div>
+
+            <div class="gift-text" id="giftText">
+                Tap the gift for your special wish…
+            </div>
+
+            <div class="gift-message" id="giftMessage">
+                Prachi, tumhare bina yeh duniya adhoori hai…<br>
+                Tum hamesha khush raho, meri jaan 💕<br>
+                — Tumhara beta
+            </div>
+
+            <button class="restart-btn" id="restartBtn">✨ Start Again</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let currentStep = 0;
+        let musicStarted = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const muteBtn = document.getElementById('muteBtn');
+        const intro = document.getElementById('intro');
+        const giftBox = document.getElementById('giftBox');
+        const giftText = document.getElementById('giftText');
+        const giftMessage = document.getElementById('giftMessage');
+        const restartBtn = document.getElementById('restartBtn');
+        
+        const messages = [
+            document.getElementById('msg1'),
+            document.getElementById('msg2'),
+            document.getElementById('msg3'),
+            document.getElementById('msg4'),
+            document.getElementById('msg5'),
+            document.getElementById('msg6'),
+            document.getElementById('msg7')
+        ];
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Create falling feather
+        function createFeather() {
+            const feather = document.createElement('div');
+            feather.className = 'feather';
+            feather.innerHTML = '🪶';
+            feather.style.left = Math.random() * 100 + '%';
+            feather.style.fontSize = (20 + Math.random() * 20) + 'px';
+            feather.style.animationDuration = (8 + Math.random() * 4) + 's';
+            feather.style.animationDelay = Math.random() * 2 + 's';
+            feather.style.animation = 'featherFall ' + (8 + Math.random() * 4) + 's linear forwards';
+            feather.style.opacity = '1';
+            document.body.appendChild(feather);
+            
+            setTimeout(() => feather.remove(), 12000);
+        }
+
+        // Create sparkles
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'particle';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animation = 'float 2s ease-out forwards';
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 2000);
+                }, i * 50);
+            }
+        }
+
+        // Handle click progression
+        function handleClick() {
+            if (currentStep === 0) {
+                // Start music on first click
+                if (!musicStarted) {
+                    bgMusic.play().catch(e => console.log('Audio play failed:', e));
+                    musicStarted = true;
+                    muteBtn.style.display = 'flex';
+                }
+                intro.style.display = 'none';
+                messages[0].style.display = 'block';
+                currentStep++;
+                createFeather();
+                createSparkles();
+            } else if (currentStep <= 6) {
+                messages[currentStep - 1].style.display = 'none';
+                messages[currentStep].style.display = 'block';
+                currentStep++;
+                createFeather();
+                createSparkles();
+            } else if (currentStep === 7) {
+                messages[6].style.display = 'none';
+                giftBox.style.display = 'block';
+                giftText.style.display = 'block';
+                currentStep++;
+                createFeather();
+            }
+        }
+
+        // Handle gift box click
+        giftBox.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (!giftBox.classList.contains('gift-opened')) {
+                giftBox.classList.add('gift-opened');
+                
+                // Create sparkle burst
+                for (let i = 0; i < 30; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    const angle = (Math.PI * 2 * i) / 30;
+                    const distance = 100 + Math.random() * 100;
+                    sparkle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                    sparkle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                    giftBox.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 1000);
+                }
+
+                setTimeout(() => {
+                    giftText.style.display = 'none';
+                    giftMessage.style.display = 'block';
+                    restartBtn.style.display = 'inline-block';
+                    
+                    // More feathers and sparkles
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => createFeather(), i * 200);
+                    }
+                }, 800);
+            }
+        });
+
+        // Mute/unmute button
+        muteBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (bgMusic.muted) {
+                bgMusic.muted = false;
+                muteBtn.textContent = '🔈';
+            } else {
+                bgMusic.muted = true;
+                muteBtn.textContent = '🔇';
+            }
+        });
+
+        // Restart button
+        restartBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            location.reload();
+        });
+
+        // Main click handler
+        document.body.addEventListener('click', function(e) {
+            if (currentStep <= 7 && !e.target.classList.contains('restart-btn')) {
+                handleClick();
+            }
+        });
+
+        // Initialize
+        createParticles();
+        
+        // Continuous feather generation
+        setInterval(createFeather, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prachi Verse✨</title>
+
+    <!-- Authentication Guard - Prevents unauthorized access -->
+    <script>
+        (function () {
+            'use strict';
+
+            // Immediately check authentication before page loads
+            function checkAuth() {
+                const isAuthenticated = sessionStorage.getItem('access_granted');
+
+                if (!isAuthenticated || isAuthenticated !== 'true') {
+                    sessionStorage.clear();
+                    window.location.replace('login.html');
+                    return false;
+                }
+                return true;
+            }
+
+            // Initial check
+            if (!checkAuth()) {
+                document.documentElement.style.display = 'none';
+                throw new Error('Unauthorized');
+            }
+
+            // Prevent back button bypass
+            window.addEventListener('pageshow', function (event) {
+                if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                    checkAuth();
+                }
+            });
+
+            // Periodic validation (every 5 seconds)
+            setInterval(function () {
+                if (!checkAuth()) {
+                    sessionStorage.clear();
+                    window.location.replace('login.html');
+                }
+            }, 5000);
+
+            // Check when tab becomes visible
+            document.addEventListener('visibilitychange', function () {
+                if (!document.hidden) {
+                    checkAuth();
+                }
+            });
+        })();
+    </script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at top, #1a1f3a 0%, #0a0e27 50%);
+        }
+
+        .floating-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(139, 92, 246, 0.6);
+            border-radius: 50%;
+            animation: float-up 25s infinite;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) translateX(50px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.6) 0%, rgba(20, 20, 40, 0.4) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(167, 139, 250, 0.2);
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #a78bfa 20%, #ec4899 50%, #fbbf24 80%, transparent 100%);
+            opacity: 0.8;
+        }
+
+        header::after {
+            content: '✨';
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ec4899 0%, #a78bfa 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(236, 72, 153, 0.4);
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 0.8s ease, glow 3s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.5));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 30px rgba(167, 139, 250, 0.7));
+            }
+        }
+
+        .subtitle {
+            color: rgba(236, 72, 153, 0.8);
+            font-size: 1.1rem;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            text-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main container */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Category section */
+        .category-section {
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease both;
+        }
+
+        .category-section:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .category-section:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .category-section:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        .category-section:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));
+        }
+
+        .category-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .category-count {
+            background: rgba(167, 139, 250, 0.15);
+            color: #a78bfa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Card - Premium Design */
+        .card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.9) 0%, rgba(20, 20, 40, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #a78bfa 0%, #ec4899 50%, #fbbf24 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(167, 139, 250, 0.5);
+            box-shadow:
+                0 20px 60px rgba(167, 139, 250, 0.3),
+                0 0 0 1px rgba(167, 139, 250, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover::after {
+            left: 100%;
+        }
+
+        .card-content {
+            padding: 2rem 1.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.25rem;
+            display: block;
+            filter: drop-shadow(0 4px 12px rgba(167, 139, 250, 0.4));
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 8px 20px rgba(236, 72, 153, 0.6));
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #e0d5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: rgba(167, 139, 250, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(167, 139, 250, 0.15);
+        }
+
+        .card-date {
+            font-size: 0.85rem;
+            color: rgba(167, 139, 250, 0.5);
+            font-weight: 500;
+        }
+
+        .card-badge {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            color: #a78bfa;
+            padding: 0.4rem 0.9rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-badge {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
+            border-color: rgba(236, 72, 153, 0.5);
+            color: #ec4899;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            margin-top: 4rem;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.6) 0%, rgba(20, 20, 40, 0.4) 100%);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(167, 139, 250, 0.2);
+            box-shadow:
+                0 -10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #a78bfa 20%, #ec4899 50%, #fbbf24 80%, transparent 100%);
+            opacity: 0.8;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ec4899 0%, #a78bfa 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .footer-tagline {
+            color: rgba(167, 139, 250, 0.7);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            color: rgba(167, 139, 250, 0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #a78bfa, #ec4899);
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #ec4899;
+            transform: translateY(-2px);
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 50%;
+            color: #a78bfa;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.4) 0%, rgba(236, 72, 153, 0.4) 100%);
+            border-color: rgba(236, 72, 153, 0.6);
+            color: #ec4899;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(167, 139, 250, 0.3) 50%, transparent 100%);
+            margin: 1rem 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: rgba(167, 139, 250, 0.5);
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-copyright {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-heart {
+            color: #ec4899;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.2);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 0 0.5rem;
+            }
+
+            .card {
+                aspect-ratio: 1 / 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .card-content {
+                padding: 1rem 0.85rem;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                overflow-y: auto;
+                overflow-x: hidden;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(167, 139, 250, 0.3) transparent;
+            }
+
+            .card-content::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .card-content::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .card-content::-webkit-scrollbar-thumb {
+                background: rgba(167, 139, 250, 0.3);
+                border-radius: 2px;
+            }
+
+            .card-content::-webkit-scrollbar-thumb:hover {
+                background: rgba(167, 139, 250, 0.5);
+            }
+
+            .card-icon {
+                font-size: 2.25rem;
+                margin-bottom: 0.5rem;
+                flex-shrink: 0;
+            }
+
+            .card-title {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+                line-height: 1.2;
+                flex-shrink: 0;
+            }
+
+            .card-description {
+                font-size: 0.75rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.4;
+            }
+
+            .card-meta {
+                font-size: 0.7rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.35rem;
+                padding-top: 0.75rem;
+                margin-top: 0.5rem;
+                flex-shrink: 0;
+            }
+
+            .card-date {
+                font-size: 0.7rem;
+            }
+
+            .card-badge {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.65rem;
+            }
+
+            .category-title {
+                font-size: 1.5rem;
+            }
+
+            header {
+                padding: 2.5rem 1rem 2rem;
+            }
+
+            main {
+                padding: 1.5rem 1rem 3rem;
+            }
+
+            .category-section {
+                margin-bottom: 2.5rem;
+            }
+
+            .category-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .category-icon {
+                font-size: 2.25rem;
+            }
+
+            footer {
+                padding: 2rem 1.5rem 1.5rem;
+                margin-top: 3rem;
+            }
+
+            .footer-content {
+                gap: 1.5rem;
+            }
+
+            .footer-logo {
+                font-size: 1.5rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .footer-social {
+                gap: 1rem;
+            }
+
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 2rem 1rem 1.5rem;
+            }
+
+            header::after {
+                display: none;
+                /* Hide sparkle decoration on very small screens */
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.1;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+                line-height: 1.4;
+                padding: 0 0.5rem;
+            }
+
+            .card:active {
+                transform: scale(0.98);
+            }
+
+            .footer-links {
+                gap: 0.75rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-link {
+                font-size: 0.8rem;
+            }
+
+            .footer-logo {
+                font-size: 1.3rem;
+            }
+
+            .footer-tagline {
+                font-size: 0.85rem;
+            }
+
+            .footer-bottom {
+                font-size: 0.75rem;
+            }
+
+            .social-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Extra small devices - Moto G73 and similar (360px width) */
+        @media (max-width: 400px) {
+            header {
+                padding: 1.5rem 0.75rem 1.25rem;
+            }
+
+            .main-title {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 0.85rem;
+            }
+
+            .category-title {
+                font-size: 1.3rem;
+            }
+
+            .category-icon {
+                font-size: 1.8rem;
+            }
+
+            .cards-grid {
+                gap: 0.75rem;
+                padding: 0 0.4rem;
+            }
+
+            main {
+                padding: 1.25rem 0.75rem 2.5rem;
+            }
+
+            footer {
+                padding: 1.75rem 1rem 1.25rem;
+            }
+
+            .footer-logo {
+                font-size: 1.2rem;
+            }
+
+            .footer-tagline {
+                font-size: 0.8rem;
+            }
+
+            .footer-links {
+                gap: 0.6rem;
+            }
+
+            .footer-link {
+                font-size: 0.75rem;
+            }
+
+            .footer-social {
+                gap: 0.75rem;
+            }
+
+            .social-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.95rem;
+            }
+
+            .footer-bottom {
+                font-size: 0.7rem;
+            }
+
+            .footer-copyright {
+                flex-wrap: wrap;
+                gap: 0.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <header>
+        <h1 class="main-title">✨Prachi Verse✨</h1>
+        <p class="subtitle">A Collection of Digital Memories & Beautiful Moments</p>
+    </header>
+
+    <main>
+        <!-- Diaries Section -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-icon">📔</span>
+                <h2 class="category-title">Diaries</h2>
+                <span class="category-count">25 entries</span>
+            </div>
+            <div class="cards-grid">
+
+                <a href="Dairies/chanchal Diary/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🌸</span>
+                        <h3 class="card-title">Chanchal's Diary</h3>
+                        <p class="card-description">Chanchal's diary with smriti's incident</p>
+                        <div class="card-meta">
+                            <span class="card-date">24 Jan 2026</span>
+                            <span class="card-badge">Featured</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+                <a href="Dairies/23-01-2026/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">✍️</span>
+                        <h3 class="card-title">January 23rd Diary</h3>
+                        <p class="card-description">Latest diary entry with unique design and heartfelt moments</p>
+                        <div class="card-meta">
+                            <span class="card-date">23 Jan 2026</span>
+                            <span class="card-badge">New</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+
+
+
+
+                <a href="Dairies/18-01-2026 Saturday/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🌸</span>
+                        <h3 class="card-title">Lavender Dream & Golden Starlight</h3>
+                        <p class="card-description">A beautiful Saturday diary with premium aesthetics and floating
+                            particles</p>
+                        <div class="card-meta">
+                            <span class="card-date">18 Jan 2026</span>
+                            <span class="card-badge">Featured</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+                <a href="Dairies/Rose Legacy/RoseDairyWithBGM.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🌹</span>
+                        <h3 class="card-title">Rose Legacy Diary</h3>
+                        <p class="card-description">Royal rose diary with background music and elegant page turns</p>
+                        <div class="card-meta">
+                            <span class="card-date">Classic</span>
+                            <span class="card-badge">Music</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/Rose Legacy/goldinherited.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">✨</span>
+                        <h3 class="card-title">Golden Inherited</h3>
+                        <p class="card-description">Refined feminine diary with cinematic entrance and floating effects
+                        </p>
+                        <div class="card-meta">
+                            <span class="card-date">Special</span>
+                            <span class="card-badge">Premium</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/apology wali dairy/apologyDairy.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🙏</span>
+                        <h3 class="card-title">Apology Diary</h3>
+                        <p class="card-description">Interactive apology diary with unique theme and animations</p>
+                        <div class="card-meta">
+                            <span class="card-date">Heartfelt</span>
+                            <span class="card-badge">Interactive</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/Winter Edition/Winter Edition.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">❄️</span>
+                        <h3 class="card-title">Winter Edition</h3>
+                        <p class="card-description">Cozy winter-themed diary with snowflakes and warm aesthetics</p>
+                        <div class="card-meta">
+                            <span class="card-date">Winter</span>
+                            <span class="card-badge">Seasonal</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/Birthday Diary/birthday-dairy.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎂</span>
+                        <h3 class="card-title">Birthday Diary</h3>
+                        <p class="card-description">Special birthday memories in diary format</p>
+                        <div class="card-meta">
+                            <span class="card-date">Birthday</span>
+                            <span class="card-badge">Special</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/Angry Golden Diary/Angry Golden Diary.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">😤</span>
+                        <h3 class="card-title">Angry Golden Diary</h3>
+                        <p class="card-description">Expressive diary with golden theme and unique emotions</p>
+                        <div class="card-meta">
+                            <span class="card-date">Emotional</span>
+                            <span class="card-badge">Unique</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/Day before her couin's marriage/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">💒</span>
+                        <h3 class="card-title">Day Before Cousin's Marriage</h3>
+                        <p class="card-description">Pre-wedding excitement and preparations.</p>
+                        <div class="card-meta">
+                            <span class="card-date">Wedding</span>
+                            <span class="card-badge">Family</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/During Couisn's marriage/style3.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎉</span>
+                        <h3 class="card-title">During Cousin's Marriage</h3>
+                        <p class="card-description">With some thoughts during marriage</p>
+                        <div class="card-meta">
+                            <span class="card-date">Wedding</span>
+                            <span class="card-badge">Celebration</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/18-01-2026 Saturday/sorry.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🌺</span>
+                        <h3 class="card-title">Sorry Page</h3>
+                        <p class="card-description">Interactive apology with cat and flower</p>
+                        <div class="card-meta">
+                            <span class="card-date">18 Jan 2026</span>
+                            <span class="card-badge">Interactive</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/First One/firstPage.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">✍️</span>
+                        <h3 class="card-title">The First Day of Diaries</h3>
+                        <p class="card-description">First diary entry.</p>
+                        <div class="card-meta">
+                            <span class="card-date">05 November 2025</span>
+                            <span class="card-badge">Old</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Dairies/New folder/page2.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">✍️</span>
+                        <h3 class="card-title">First Day of Diaries (Modified)</h3>
+                        <p class="card-description">Changed Theme.</p>
+                        <div class="card-meta">
+                            <span class="card-date">Anonmous Date</span>
+                            <span class="card-badge">Abandoned</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+
+
+            </div>
+        </section>
+
+        <!-- Birthday Projects Section -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-icon">🎂</span>
+                <h2 class="category-title">Birthday Projects</h2>
+                <span class="category-count">15 projects</span>
+            </div>
+            <div class="cards-grid">
+                <a href="Prachi's Birthday/Prachi-s-Birthday-main/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎁</span>
+                        <h3 class="card-title">Birthday Main Project</h3>
+                        <p class="card-description">Main birthday celebration webpage with interactive elements</p>
+                        <div class="card-meta">
+                            <span class="card-date">Birthday</span>
+                            <span class="card-badge">Main</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Prachi's Birthday/Prachi-s-Birthday-main/game.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎮</span>
+                        <h3 class="card-title">Birthday Maze Game</h3>
+                        <p class="card-description">2D top-down maze game with heart checkpoints and Hinglish messages
+                        </p>
+                        <div class="card-meta">
+                            <span class="card-date">Game</span>
+                            <span class="card-badge">Fun</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Prachi's Birthday/Dikkaton wale attempts/prachiiiBirthdayDairy.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">📖</span>
+                        <h3 class="card-title">Birthday Dairy (Royal Rose)</h3>
+                        <p class="card-description">Premium birthday diary with royal rose legacy theme</p>
+                        <div class="card-meta">
+                            <span class="card-date">Birthday</span>
+                            <span class="card-badge">Premium</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- <a href="Prachi's Birthday/Dikkaton wale attempts/attempt2/final.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎨</span>
+                        <h3 class="card-title">Final Birthday Design</h3>
+                        <p class="card-description">Polished final version with best features from all attempts</p>
+                        <div class="card-meta">
+                            <span class="card-date">Birthday</span>
+                            <span class="card-badge">Final</span>
+                        </div>
+                    </div>
+                </a> -->
+
+                <a href="Prachi's Birthday/Dikkaton wale attempts/attempt2/birthdaygame1.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎯</span>
+                        <h3 class="card-title">Birthday Game 1</h3>
+                        <p class="card-description">Interactive birthday game with fun challenges</p>
+                        <div class="card-meta">
+                            <span class="card-date">Game</span>
+                            <span class="card-badge">Interactive</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Prachi's Birthday/Dikkaton wale attempts/game2.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎪</span>
+                        <h3 class="card-title">Birthday Game 2</h3>
+                        <p class="card-description">Another fun birthday game experience</p>
+                        <div class="card-meta">
+                            <span class="card-date">Game</span>
+                            <span class="card-badge">Fun</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Prachi's Birthday\Dikkaton wale attempts\attempt1\index2.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎪</span>
+                        <h3 class="card-title">Birthday Game Rejected Version</h3>
+                        <p class="card-description">Birthday game experience (Rejected Version)</p>
+                        <div class="card-meta">
+                            <span class="card-date">Game</span>
+                            <span class="card-badge">Fun</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+
+
+
+
+
+
+            </div>
+        </section>
+
+        <!-- Special Occasions Section -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-icon">🎄</span>
+                <h2 class="category-title">Special Occasions</h2>
+                <span class="category-count">3 projects</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://prachiiii-and-christmas.netlify.app/" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎅</span>
+                        <h3 class="card-title">Prachiii's Christmas</h3>
+                        <p class="card-description">Magical Christmas surprise with snowfall, lights, and background
+                            music that didn't worked..!!
+                        </p>
+                        <div class="card-meta">
+                            <span class="card-date">Christmas</span>
+                            <span class="card-badge">Festive</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="New Year/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🎆</span>
+                        <h3 class="card-title">New Year Celebration</h3>
+                        <p class="card-description">New Year special with fireworks and celebrations</p>
+                        <div class="card-meta">
+                            <span class="card-date">New Year</span>
+                            <span class="card-badge">2026</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </section>
+
+        <!-- Other Projects Section -->
+        <section class="category-section">
+            <div class="category-header">
+                <span class="category-icon">💫</span>
+                <h2 class="category-title">Other Projects</h2>
+                <span class="category-count">More memories</span>
+            </div>
+            <div class="cards-grid">
+                <a href="Prachiii/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🌟</span>
+                        <h3 class="card-title">Prachiii Special</h3>
+                        <p class="card-description">Dedicated special project for Prachiii</p>
+                        <div class="card-meta">
+                            <span class="card-date">Special</span>
+                            <span class="card-badge">Exclusive</span>
+                        </div>
+                    </div>
+                </a>
+
+
+                <a href="Journey Break/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🛩️</span>
+                        <h3 class="card-title">Journey Break</h3>
+                        <p class="card-description">Refreshing, Rejuvenating and a much needed break from the routine.
+                        </p>
+                        <div class="card-meta">
+                            <span class="card-date">Special</span>
+                            <span class="card-badge">Exclusive</span>
+                        </div>
+                    </div>
+                </a>
+
+
+                <a href="Neet Mock Test/new/index.html" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">📖</span>
+                        <h3 class="card-title">Mock Test 1</h3>
+                        <p class="card-description">Mock test 1 for NEET exam</p>
+                        <div class="card-meta">
+                            <span class="card-date">NEET</span>
+                            <span class="card-badge">Exclusive</span>
+                        </div>
+                    </div>
+                </a>
+
+
+                <a href="Neet" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">📖</span>
+                        <h3 class="card-title">Mock Test 2</h3>
+                        <p class="card-description">Mock test 2 for NEET exam (under Construction)</p>
+                        <div class="card-meta">
+                            <span class="card-date">NEET</span>
+                            <span class="card-badge">Exclusive</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://studio.firebase.google.com/studio-4097975144" class="card">
+                    <div class="card-content">
+                        <span class="card-icon">🤖</span>
+                        <h3 class="card-title">Neet Buddy For chanchal and Prachiii</h3>
+                        <p class="card-description">Ai Enfused NEET Application for two authenticated users (chanchal
+                            and prachiii)</p>
+                        <div class="card-meta">
+                            <span class="card-date">NEET</span>
+                            <span class="card-badge">Exclusive</span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">✨ Prachi Verse ✨</div>
+                <p class="footer-tagline">Where Every Memory Sparkles</p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#diaries" class="footer-link">Diaries</a>
+                <a href="#birthday" class="footer-link">Birthday Projects</a>
+                <a href="#special" class="footer-link">Special Occasions</a>
+                <a href="#utilities" class="footer-link">Utilities</a>
+
+            </div>
+
+            <div class="footer-social">
+
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <span>It was never Sympathy<br>It was always empathy, and my affection for you was unbridled.</span>
+                    <span>© 2026 Prachi Verse</span>
+                    <span class="footer-heart">♥</span>
+                    <span>Made with Love</span>
+                </div>
+                <p>All memories preserved with care</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating particles
+        const bgAnimation = document.getElementById('bgAnimation');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'floating-particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            bgAnimation.appendChild(particle);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Rose Legacy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap');
+
+        :root {
+            /* ROSE GOLD LUXURY THEME */
+            --bg-gradient-start: #fff0f5;
+            --bg-gradient-end: #fdeef1;
+            --rose-gold: #b76e79;
+            --rose-gold-light: #e6b8c0;
+            --rose-metallic: linear-gradient(135deg, #d4af37, #b76e79, #d4af37);
+            --velvet-cover: #4a2c31;
+            /* Deep Burgundy Velvet */
+            --paper-cream: #fffdf9;
+            --text-ink: #3a2e2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* Soft blurred background */
+            background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-ink);
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+
+        /* Floating Petal Container */
+        .petal-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background: rgba(183, 110, 121, 0.4);
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(0, -10vh) rotate(0deg) scale(0.6);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(100px, 110vh) rotate(720deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        /* Soft Glow Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: breathe 10s infinite alternate;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #ffe4e1;
+            top: -50px;
+            left: -50px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #fff0f5;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 2s;
+        }
+
+        @keyframes breathe {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        /* --- NOTEBOOK CONTAINER --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 92vw;
+            max-width: 450px;
+            height: 75vh;
+            perspective: 2500px;
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .notebook-container.closed {
+            transform: translateY(40vh) scale(0.9);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* --- ROSE GOLD SPIRAL --- */
+        .spiral {
+            position: absolute;
+            left: -12px;
+            top: 3%;
+            bottom: 3%;
+            width: 40px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #5c3a40, #ffd1dc, #b76e79, #5c3a40);
+            border-radius: 5px;
+            transform: rotate(-10deg);
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- PAGES --- */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            background: var(--paper-cream);
+            border-radius: 5px 15px 15px 5px;
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            box-shadow:
+                inset 35px 0 30px rgba(183, 110, 121, 0.1),
+                2px 5px 15px rgba(0, 0, 0, 0.1);
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.15'/%3E%3C/svg%3E");
+            backface-visibility: hidden;
+            border: 1px solid rgba(183, 110, 121, 0.2);
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .page-content {
+            height: 100%;
+            padding: 40px 25px 40px 50px;
+            overflow-y: auto;
+            color: var(--text-ink);
+            font-size: 1.2rem;
+            line-height: 1.7;
+            text-align: left;
+            position: relative;
+        }
+
+        /* Floral Corner Decoration */
+        .corner-flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 80 Q50 50 80 20 M20 20 Q50 50 80 80' stroke='%23e6b8c0' fill='none' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23e6b8c0' opacity='0.5'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Headers */
+        .page-header {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.2rem;
+            color: var(--rose-gold);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: linear-gradient(to right, transparent, rgba(183, 110, 121, 0.1), transparent);
+            padding: 10px 0;
+            color: #8a4b55;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid var(--rose-gold-light);
+            border-bottom: 1px solid var(--rose-gold-light);
+            margin: 20px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* --- COVER PAGE --- */
+        .cover {
+            background: var(--velvet-cover);
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='velvet'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23velvet)' opacity='0.25'/%3E%3C/svg%3E");
+            color: #ffd1dc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+            z-index: 50;
+            border: 1px solid #2d1a1d;
+        }
+
+        .cover-border {
+            border: 2px solid var(--rose-gold);
+            border-radius: 5px;
+            padding: 20px;
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cover-border::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(183, 110, 121, 0.5);
+        }
+
+        .cover-title {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ffd1dc, #d4af37, #ffd1dc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+            line-height: 1.2;
+        }
+
+        .cover-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rose-gold);
+            margin-top: 20px;
+        }
+
+        /* --- CINEMATIC ENTRANCE --- */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #fff0f5 0%, #fcecf0 100%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .intro-screen.fade {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Blur-in Animations */
+        .intro-title {
+            font-family: 'Pinyon Script';
+            font-size: 4.5rem;
+            color: #b76e79;
+            opacity: 0;
+            filter: blur(10px);
+            animation: blurIn 1.5s forwards 0.5s;
+        }
+
+        .intro-line {
+            width: 0px;
+            height: 1px;
+            background: #e6b8c0;
+            margin: 15px 0;
+            animation: expandLine 1s forwards 1.5s;
+        }
+
+        .intro-sub {
+            font-family: 'Montserrat';
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            color: #888;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s forwards 2s;
+        }
+
+        .btn-open {
+            margin-top: 50px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 3s;
+            padding: 15px 60px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--rose-gold);
+            color: var(--rose-gold);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0 10px 30px rgba(183, 110, 121, 0.15);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-open:hover {
+            box-shadow: 0 10px 40px rgba(183, 110, 121, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes blurIn {
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes expandLine {
+            to {
+                width: 100px;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- TOUCH LAYERS --- */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 25%;
+            z-index: 200;
+            display: none;
+        }
+
+        .touch-left {
+            left: 0;
+        }
+
+        .touch-right {
+            right: 0;
+        }
+
+        .helper-text {
+            position: absolute;
+            bottom: -60px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            color: #b76e79;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        .sig {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.5rem;
+            text-align: right;
+            color: var(--rose-gold);
+            margin-top: 30px;
+        }
+
+        .page-content::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .page-content::-webkit-scrollbar-thumb {
+            background: #e6b8c0;
+            border-radius: 3px;
+        }
+
+        /* --- MUSIC PLAYER STYLES --- */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #d4af37, #b76e79);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(183, 110, 121, 0.5),
+                0 0 20px rgba(212, 175, 55, 0.3),
+                inset 0 2px 8px rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            animation: musicPulse 2s ease-in-out infinite;
+        }
+
+        /* Moto G73 specific alignment (1080x2400, ~412x915 CSS pixels) */
+        @media screen and (max-width: 430px) and (min-width: 360px) {
+            .music-player {
+                bottom: 15px;
+                right: 15px;
+                width: 48px;
+                height: 48px;
+            }
+
+            .notebook-container {
+                width: 90vw;
+                height: 72vh;
+            }
+
+            .helper-text {
+                bottom: -50px;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Precise Moto G73 optimization */
+        @media screen and (width: 412px) {
+            .music-player {
+                bottom: 18px;
+                right: 18px;
+            }
+
+            .notebook-container {
+                width: 88vw;
+                max-width: 380px;
+            }
+        }
+
+        @keyframes musicPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(183, 110, 121, 0.5),
+                    0 0 20px rgba(212, 175, 55, 0.3),
+                    inset 0 2px 8px rgba(255, 255, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 8px 32px rgba(183, 110, 121, 0.7),
+                    0 0 30px rgba(212, 175, 55, 0.5),
+                    inset 0 2px 8px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .music-player:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 12px 36px rgba(183, 110, 121, 0.7),
+                0 0 40px rgba(212, 175, 55, 0.6),
+                inset 0 2px 12px rgba(255, 255, 255, 0.4);
+        }
+
+        .music-player:active {
+            transform: scale(0.95);
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .music-info {
+            display: none;
+        }
+
+        .volume-control {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Layers -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="petal-container" id="petals"></div>
+
+    <!-- Cinematic Entrance -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-title">Prachiii✨</h1>
+        <div class="intro-line"></div>
+        <p class="intro-sub">THE ROSE COLLECTION</p>
+        <button class="btn-open" onclick="start()">Chalooo..</button>
+    </div>
+
+    <!-- Notebook -->
+    <div class="notebook-container closed" id="notebook">
+        <div class="helper-text">Tap Right ➔ | Tap Left ⬅</div>
+
+        <div class="notebook">
+
+            <!-- Spiral -->
+            <div class="spiral">
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+
+            <!-- Cover -->
+            <div class="page cover">
+                <div class="cover-border">
+                    <div style="font-size:2rem; margin-bottom:10px;">❦</div>
+                    <div class="cover-title">Ohh...<br>Prachiii..</div>
+                    <div class="cover-subtitle">Things Left Unsaid</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">Preface</div>
+                    <p><em>
+                            <il>Prachiii,✨</il>
+                        </em></p>
+                    <p>Book or designs to me aise bana rha hu jaise me koi writer/publisher hu. Wo alag baat h ki me sab
+                        kuch code ke form me bana rha pureee logic and mathematics.... har animation/text ya fir effect
+                        sab mathematics se. Tumhe pata h kya, koi bhi cheez move hoti h to uski naaa equation banti h.
+                        11 me wo bubble ki equation thi yaad karo physics me, rain drop bhi thiiii... or ek stone agar
+                        spring ki tarah ghoomake fekte h uski bhi banti h... chalo padh ke yaad
+                        karke mujhe batao kya thii wo😂. isme bhi dekho wo pattiyaannnn gir rhi h same to nhi lekin
+                        drops ke jasie neeche, soooo learn it and express it in our chat. Kya baat h kya baat h maja aa
+                        gaya...</p>
+                    <p>chalo re maje karo, tum wo poorani bakwas doobara naa dekho isiliye is se replace kar dunga
+                        meeeee.</p>
+                    <div class="highlight">"Waise me soch rha hu apan dono ka ek alag hi chatting platform bana duuu...
+                        instagram/snapchat/whatsapp jaisaa... jispe sirf apna raaj ho 😂,chalo chhorooooooo"</div>
+                    <p>Waise chalo rehne do aise hi theek h....!! Waise me soch rha tha pooch lu kahi ye dairies or
+                        wishes apni dostlog ko to nhi batai 😂 kyuki radhika wagerah or baaki log mujhe bada unromantic
+                        or boring samajhte thee.😂 agar ye sab sunenge to bolenge ki areee deepakk... ye form to
+                        unexpected haiii.. kher tumhari dostlog dekh bhi lengi to khud mere se impress ho
+                        jayengi🤏🕶️🙂😎 </p>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">The Silence</div>
+                    <p>Dekho prachi, it is clear ki tum sachme chintit rehti ho, mujhe bohot jyada bura lagta h jab tum
+                        stress
+                        leti ho.
+                        Or dekho let me clear one thing, you cannot hurt me. Me bohot hard hu or me bohot tough hu. You
+                        don't know me ok!! </p>
+                    <p><em>"Mujh se koi expectations mat rakhna"</em> shyd shyd shyd tumhara mtlb wahi ho ki you don't
+                        like me and never will... Lekin ye to me pahle se
+                        janta hu ladkiiii...</p>
+
+                    <div class="highlight">How I feel is different, it is not being with someone. It is feeling for
+                        someone or usme agar wo kisi or ke saath bhi ho to kya dikkat wali baat. Wo uski choice h or
+                        pahle me sochta tha moveon karo moveon karo.. but now I've realised ki karna hi kyun h. You are
+                        having the best feeling with you, kyun hatana hai. Jab me jali or tooti footi cheezen rakh sakta
+                        hu to itni acchi moments ko daba ke unki bezzati thodi karunga🦥😂😜 </div>
+                    <p class="highlight">Abb.. I would like to carry everything with me, instead of forgetting... </p>
+                    <p>Tum bs tumhare liye sab karo na, or mujhe prachiii ko khush dekh ke Khushi milti h to usme galat
+                        kya h. Or dekho things I hold with me are insanely miserable to tumhare kisi or ko choose kar
+                        lene se mujhe itna kuch farak nhi padega...
+                    </p>
+                    <p class="highlight">Instead of being dukhiiii I'll feel glad to think ki chalo ise finally koi
+                        accha mil gaya 😂 ab mujhe tension lene ki koi jaroorat nhiiii.... Wo rakh lega iska dhyn. To
+                        shyd me apne raste chal saku...
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">Confusion</div>
+                    <p>Or haa meri prachiii shyd tum naa ho lekin wo mere mn me h abhi bhi 😂 or shyd hamesha rahee..
+                        wahi wali jo mene coaching me dekhi thi ekdum nakchadi or idiot kahi kiii... I'm working damnn
+                        hard to pull her into existence. Or haa pepper naam h na uska.
+                        Pepper me prachiii ko tab bulata tha jab prachi sharma se meri dosti thi.
+                    </p>
+                    <p>Mene ekdin baaton baaton me bol diya ki <em>prachiii ka koi mukabla nhi h...</em> To usne bola
+                        areyyy deepak 😏 meri itni tareef. To mene keh diya are nhi meri wali prachi 😂 <em> to usne
+                            bola oho meri wali 😏😏</em> kya baat h kya baat h, tum to uspe hak bhi jamane lage.
+                        Tab se fir me tumhe pepper bolne laga tha 😂</p>
+                    <div class="highlight">Prachi tumhe tumhare teddy ki Kasam ab tum doobara kabhi aisi faltoo cheezen
+                        nhi sochogi.
+                        Tum nhi bhi rahi to mere pass meri pepper h 😂
+                        Or kya pata tumhe koi mil jaaye fir me bhi koi bana lu 😏 who knows ??? We never know!!! Or
+                        <em>future ki tension leke present kyun kharab karna.</em> Enjoy every day, every hour,every
+                        minute,
+                        second,and every moment of your beautiful life. <em>Or kya pta kll ky ho jaayee... kuch
+                            unexpected hiii...</em>
+                    </div>
+
+                    <p><strong>Jo jaisa hai perfect hai, use bs enjoy karo or kya 😛 😛</strong><em>Apna BP mat
+                            baddhaooo...
+                            warna bhari jawani me dukriiii wali feeling aayegiii😂🦥
+                        </em>Ab wo alag baat h ki tum budhiya banke bhi sundar hi lagogi, apne us gol... cashme or safed
+                        baalon me.... <em>imagine karke to dekhooo...🦥😂 </em></p>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">🥂🥂🥂🥂</div>
+                    <p>And if I am doing something it is not for you 🫵 it is just for my own satisfaction. And
+                        yesssssssssssssssssssss................ <em>I am GREEDY</em><strong> Waiseeee..... maja to aata
+                            h
+                            tumhara majak banane me😂🦥 agar tumhari nazar jyada weak hui to me tumhara cashma chura ke
+                            tumhare sir pe ek gentle back slap deta..</strong> kaash apan ek hi school me
+                        hoteeeeeeeeee....... or acche dost hote pahe seee...... tumhari naak me dum na kara hota to
+                        kehna 😁</p>
+                    <p>Kher abhi to party shuru hui h 🦥 naak me dum to me karunga dheeme dheeme 😼😒🔥🧯</p>
+                    <p>Abhi bhi pages palat rhi hooo....!!</p>
+                    <p>Thodi to lajja aani chaiye tumheeeeee itne shareef ladke ki pyriiiiiiiiii siiii dairy pe
+                        aatyachar kar rhi ho 😒🫵 </p>
+                    <p>Karo bhi kyunnnn na hak banta h tumhara ispe... tumhare liye hi to banai thiii 😂🦥</p>
+
+                    <div class="highlight">"Proper judgment prevents future regret." always remember..!!</div>
+                </div>
+            </div>
+
+            <!-- Final Page -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">Finality</div>
+                    <p>Mujhe lagta tha tumhe jyada bade bade texts padhna pasand nhi..?? Lekin tum to yaha tk aa gaiinn
+                        prachiii...</p>
+                    <p>Mene kaha tha naa mere liye har cheez ek meaning hold karti h 🧐 to me ye <em>Prachi</em> ki
+                        jagah <em>Prachiii</em> kyun kehta hu <em>Prachii</em> ya fir <em>Prachiiii</em> kyun nhi....!!
+                    </p>
+
+                    <p style="margin-top:20px; font-style:italic; color:#b76e79;">"Sochti raho me nhiii bataungaaa
+                        🙂‍↔️🙂‍↔️"</p>
+                    <p>Birthday pe bataunga....!! filhal padhai pe dhyn do baccheeee..</p>
+
+                    <div class="highlight">Agar sabkuch theek raha to firse kuch unique interesting and something that
+                        will make you blushhhh...🐼</div>
+
+                    <div class="sig">Bye 🌟 Bye</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Areas -->
+    <div class="touch-zone touch-left" id="zoneL"></div>
+    <div class="touch-zone touch-right" id="zoneR"></div>
+
+    <!-- Music Player -->
+    <div class="music-player" onclick="toggleMusic()">
+        <button class="music-btn" id="playPauseBtn">▶️</button>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop>
+        <source src="YOUR_MUSIC_URL_HERE.mp3" type="audio/mpeg">
+        <source src="YOUR_MUSIC_URL_HERE.ogg" type="audio/ogg">
+    </audio>
+
+    <script>
+        // Rose Petal Gen
+        const pContainer = document.getElementById('petals');
+        for (let i = 0; i < 25; i++) {
+            let p = document.createElement('div');
+            p.className = 'petal';
+            let size = Math.random() * 10 + 10; // 10-20px
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            p.style.animationDelay = (Math.random() * 5) + 's';
+            pContainer.appendChild(p);
+        }
+
+        // Music Controls
+        const bgMusic = document.getElementById('bgMusic');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        let isPlaying = false;
+
+        bgMusic.volume = 0.5; // Default 50%
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                playPauseBtn.textContent = '▶️';
+                isPlaying = false;
+            } else {
+                bgMusic.play().catch(err => {
+                    console.log('Music play failed:', err);
+                });
+                playPauseBtn.textContent = '⏸️';
+                isPlaying = true;
+            }
+        }
+
+        function changeVolume(value) {
+            bgMusic.volume = value / 100;
+        }
+
+        // Logic
+        function start() {
+            document.getElementById('intro').classList.add('fade');
+            const nb = document.getElementById('notebook');
+            nb.classList.remove('closed');
+
+            // Auto-play music when diary opens
+            setTimeout(() => {
+                bgMusic.play().then(() => {
+                    playPauseBtn.textContent = '⏸️';
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log('Autoplay prevented. Click play button to start music.');
+                });
+            }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('zoneL').style.display = 'block';
+                document.getElementById('zoneR').style.display = 'block';
+            }, 800);
+        }
+
+        const pages = document.querySelectorAll('.page');
+        const numPages = pages.length;
+
+        // Init Stack
+        pages.forEach((p, i) => {
+            p.style.zIndex = numPages - i;
+        });
+
+        function next() {
+            for (let i = 0; i < numPages; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    pages[i].style.zIndex = 100 + i;
+                    return;
+                }
+            }
+        }
+
+        function prev() {
+            for (let i = numPages - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    pages[i].style.zIndex = numPages - i;
+                    return;
+                }
+            }
+        }
+
+        document.getElementById('zoneR').addEventListener('click', next);
+        document.getElementById('zoneL').addEventListener('click', prev);
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+
+    </script>
+</body>
+
+</html>

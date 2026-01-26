@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Prachi's Birthday Maze 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffb3d9 0%, #d9b3ff 50%, #ffb3d9 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .top-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 18px 25px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 182, 193, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            text-align: center;
+            width: 100%;
+            max-width: 360px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .top-panel h1 {
+            color: #8b4a8b;
+            font-size: 22px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 360px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #ff1493, #ff6b9d);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+            animation: shimmer 2s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .instructions {
+            margin-top: 15px;
+            text-align: center;
+            color: rgba(139, 74, 139, 0.8);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25), 0 0 30px rgba(255, 182, 193, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+        }
+
+        .popup.active {
+            display: block;
+            animation: popupFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8) rotate(-5deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+        }
+
+        .popup-message {
+            color: #5a3a5a;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            white-space: pre-line;
+            font-weight: 500;
+        }
+
+        .continue-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ff1493, #c44569);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5), 0 0 15px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes gradientMove {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6), 0 0 20px rgba(255, 20, 147, 0.5);
+        }
+
+        .continue-btn:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .win-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffb3d9 0%, #d9b3ff 50%, #ffb3d9 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .win-screen.active {
+            display: flex;
+            animation: winFadeIn 0.6s ease-out;
+        }
+
+        @keyframes winFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .win-message {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 35px;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25), 0 0 30px rgba(255, 182, 193, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            color: #5a3a5a;
+            font-size: 19px;
+            line-height: 1.9;
+            white-space: pre-line;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+            font-size: 28px;
+            color: #8b4a8b;
+            margin-top: 15px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .confetti {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 1500;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .music-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .music-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .music-toggle.muted {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="music-toggle" id="musicToggle" title="Toggle Music">🎵</button>
+    <div class="top-panel">
+        <h1>🎂 Prachiii's Birthday Maze 🎂</h1>
+    </div>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    <div class="instructions">
+        Swipe to move • Collect all 💖 hearts!
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="messagePopup">
+        <div class="popup-message" id="popupMessage"></div>
+        <button class="continue-btn" id="continueBtn">Continue</button>
+    </div>
+
+    <div class="win-screen" id="winScreen">
+        <div class="win-message" id="winMessage"></div>
+    </div>
+
+    <audio id="backgroundMusic" loop preload="auto" volume="0.7">
+        <!-- 
+        TO ADD MUSIC:
+        1. Place your music file (mp3, ogg, or wav) in the same folder as this HTML file
+        2. Replace the src below with your music file name
+        3. Or use multiple sources for better browser compatibility:
+        -->
+        <source src="birthday-music.mp3" type="audio/mpeg">
+        <source src="birthday-music.ogg" type="audio/ogg">
+        <!-- If no music file is found, the button will still appear but won't play anything -->
+    </audio>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const popup = document.getElementById('messagePopup');
+        const popupMessage = document.getElementById('popupMessage');
+        const winScreen = document.getElementById('winScreen');
+        const winMessage = document.getElementById('winMessage');
+        const continueBtn = document.getElementById('continueBtn');
+        const overlay = document.getElementById('overlay');
+        const progressFill = document.getElementById('progressFill');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicToggle = document.getElementById('musicToggle');
+
+        // Set music volume (0.0 to 1.0)
+        backgroundMusic.volume = 0.6;
+
+        let musicPlaying = false;
+        let firstMoveMade = false;
+
+        // Game constants
+        const GRID_SIZE = 10;
+        let CELL_SIZE = 0;
+        let PLAYER_SIZE = 0;
+        let CHECKPOINT_SIZE = 0;
+        let CAKE_SIZE = 0;
+        let animationFrame = 0;
+
+        // Set canvas size
+        function resizeCanvas() {
+            const container = document.querySelector('.game-container');
+            if (!container) return;
+
+            const size = Math.min(container.clientWidth - 24, 336);
+            if (size <= 0) return;
+
+            canvas.width = size;
+            canvas.height = size;
+
+            // Recalculate sizes based on canvas
+            CELL_SIZE = canvas.width / GRID_SIZE;
+            PLAYER_SIZE = CELL_SIZE * 0.65;
+            CHECKPOINT_SIZE = CELL_SIZE * 0.55;
+            CAKE_SIZE = CELL_SIZE * 0.85;
+
+            if (CELL_SIZE > 0) {
+                drawGame();
+            }
+        }
+
+        // Initialize game
+        function initGame() {
+            setTimeout(() => {
+                requestAnimationFrame(() => {
+                    resizeCanvas();
+                });
+            }, 100);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initGame);
+        } else {
+            initGame();
+        }
+        window.addEventListener('resize', () => {
+            setTimeout(resizeCanvas, 100);
+        });
+
+        // Messages
+        const messages = [
+            "Prachiii, aaj ka yeh safar sirf khazane tak nahi… balki tumhari muskurahat tak le jaayega!",
+            "Tumhare ek message ne kabhi mera din banaya tha… aaj main wapas wahi khushi tumhe dena chahta hoon.",
+            "I don't understand whether you are blessed or not, but one thing is for sure, you are a blessing itself.❤️.",
+            "For you, it might be a normal day :) But for me, it is an occasion — 'That's why I'm here with this hard coded game!'",
+            "Yes Yes Yes, You're Damn special, not on the basis of your looks(face, personality, intelligence, etc.❌), but on the basis of the heart you have.❤️, the innocence you hold✨",
+            "Yaad hai wo din jab apan first row mein baithe the, saath me?\nMujhe ummeed nhi thi tumhe yaad hogi… lekin tumhe thi. ❤️ I can still remember that day clearly.🕵️‍♂️ Thankyouuuuu Ram sir!🥳",
+            "Happy Birthday, Prachiii!\n\nDuniya tumhe har khushi de… par agar na de, toh main hoon na!\nYou can always count on me, for anything and everything!🥳"
+
+        ];
+
+        // Maze layout (1 = wall, 0 = path)
+        const maze = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 1, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+
+        // Checkpoint positions (row, col) - all reachable
+        const checkpoints = [
+            [1, 1], [1, 5], [3, 3], [5, 7],
+            [5, 1], [7, 1], [7, 8]
+        ];
+
+        // Game state
+        let playerPos = { row: 1, col: 1 };
+        let collectedCheckpoints = new Set();
+        let cakeSpawned = false;
+        let cakePos = { row: 8, col: 8 };
+        let gameWon = false;
+        let popupOpen = false;
+
+        // Touch controls
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = (collectedCheckpoints.size / checkpoints.length) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        // Draw functions
+        function drawCell(row, col, color) {
+            if (CELL_SIZE <= 0) return;
+            ctx.fillStyle = color;
+            ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        }
+
+        function drawMaze() {
+            if (CELL_SIZE <= 0) return;
+
+            for (let row = 0; row < GRID_SIZE; row++) {
+                for (let col = 0; col < GRID_SIZE; col++) {
+                    if (maze[row][col] === 1) {
+                        // Pastel wall with gradient
+                        const gradient = ctx.createLinearGradient(
+                            col * CELL_SIZE, row * CELL_SIZE,
+                            (col + 1) * CELL_SIZE, (row + 1) * CELL_SIZE
+                        );
+                        gradient.addColorStop(0, '#ffb3e6');
+                        gradient.addColorStop(1, '#ff99cc');
+                        ctx.fillStyle = gradient;
+                        drawCell(row, col, '#ffb3e6');
+
+                        // Wall border
+                        ctx.strokeStyle = '#ff80b3';
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(col * CELL_SIZE + 1, row * CELL_SIZE + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+                    } else {
+                        // Pastel path
+                        drawCell(row, col, '#ffe6f2');
+                    }
+                }
+            }
+        }
+
+        function drawCheckpoints() {
+            if (CELL_SIZE <= 0) return;
+
+            checkpoints.forEach((pos, index) => {
+                if (!collectedCheckpoints.has(index)) {
+                    const x = pos[1] * CELL_SIZE + CELL_SIZE / 2;
+                    const y = pos[0] * CELL_SIZE + CELL_SIZE / 2;
+
+                    // Pulsing glow effect
+                    const pulse = Math.sin(animationFrame * 0.1 + index) * 0.3 + 0.7;
+                    const glowSize = CHECKPOINT_SIZE * pulse;
+
+                    // Outer glow
+                    const gradient = ctx.createRadialGradient(x, y, 0, x, y, glowSize);
+                    gradient.addColorStop(0, 'rgba(255, 20, 147, 0.8)');
+                    gradient.addColorStop(0.5, 'rgba(255, 105, 180, 0.4)');
+                    gradient.addColorStop(1, 'rgba(255, 20, 147, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(x, y, glowSize, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Heart emoji
+                    ctx.font = `${CHECKPOINT_SIZE}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('💖', x, y);
+                }
+            });
+        }
+
+        function drawPlayer() {
+            if (CELL_SIZE <= 0) return;
+
+            const x = playerPos.col * CELL_SIZE + CELL_SIZE / 2;
+            const y = playerPos.row * CELL_SIZE + CELL_SIZE / 2;
+
+            // Player shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+            ctx.beginPath();
+            ctx.arc(x + 2, y + 2, PLAYER_SIZE * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+
+            // White background circle for better visibility
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.beginPath();
+            ctx.arc(x, y, PLAYER_SIZE * 0.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Player emoji with full opacity
+            ctx.globalAlpha = 1.0;
+            ctx.font = `${PLAYER_SIZE}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🤠', x, y);
+            ctx.globalAlpha = 1.0;
+        }
+
+        function drawCake() {
+            if (CELL_SIZE <= 0 || !cakeSpawned || gameWon) return;
+
+            const x = cakePos.col * CELL_SIZE + CELL_SIZE / 2;
+            const y = cakePos.row * CELL_SIZE + CELL_SIZE / 2;
+
+            // Pulsing glow effect
+            const pulse = Math.sin(animationFrame * 0.15) * 0.3 + 0.7;
+            const glowSize = CAKE_SIZE * pulse;
+
+            // Outer glow
+            const gradient = ctx.createRadialGradient(x, y, 0, x, y, glowSize);
+            gradient.addColorStop(0, 'rgba(255, 215, 0, 0.9)');
+            gradient.addColorStop(0.5, 'rgba(255, 223, 0, 0.5)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(x, y, glowSize, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cake emoji
+            ctx.font = `${CAKE_SIZE}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🎂', x, y);
+        }
+
+        function drawGame() {
+            if (CELL_SIZE <= 0 || canvas.width === 0 || canvas.height === 0) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawMaze();
+            drawCheckpoints();
+            drawCake();
+            drawPlayer();
+
+            animationFrame++;
+            requestAnimationFrame(() => {
+                if (!popupOpen && !gameWon) {
+                    drawGame();
+                }
+            });
+        }
+
+        // Movement
+        function canMove(newRow, newCol) {
+            if (newRow < 0 || newRow >= GRID_SIZE || newCol < 0 || newCol >= GRID_SIZE) {
+                return false;
+            }
+            return maze[newRow][newCol] === 0;
+        }
+
+        function movePlayer(deltaRow, deltaCol) {
+            if (gameWon || popupOpen) return;
+
+            // Auto-play music on first move
+            if (!firstMoveMade) {
+                firstMoveMade = true;
+                if (!musicPlaying) {
+                    backgroundMusic.play().then(() => {
+                        musicPlaying = true;
+                        musicToggle.textContent = '🎵';
+                        musicToggle.classList.remove('muted');
+                    }).catch(e => console.log("Audio play failed:", e));
+                }
+            }
+
+            const newRow = playerPos.row + deltaRow;
+            const newCol = playerPos.col + deltaCol;
+
+            if (canMove(newRow, newCol)) {
+                playerPos.row = newRow;
+                playerPos.col = newCol;
+                checkCheckpoints();
+                checkCake();
+                drawGame();
+            }
+        }
+
+        function checkCheckpoints() {
+            checkpoints.forEach((pos, index) => {
+                if (!collectedCheckpoints.has(index) &&
+                    playerPos.row === pos[0] && playerPos.col === pos[1]) {
+                    collectedCheckpoints.add(index);
+                    updateProgress();
+                    showMessage(messages[index]);
+                }
+            });
+        }
+
+        function checkCake() {
+            if (cakeSpawned && !gameWon &&
+                playerPos.row === cakePos.row && playerPos.col === cakePos.col) {
+                gameWon = true;
+                showWinScreen();
+            }
+        }
+
+        function showMessage(message) {
+            popupOpen = true;
+            popupMessage.textContent = message;
+            popup.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        function closePopup() {
+            popupOpen = false;
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+
+            // Check if all checkpoints collected
+            if (collectedCheckpoints.size === checkpoints.length && !cakeSpawned) {
+                cakeSpawned = true;
+                drawGame();
+            } else {
+                drawGame();
+            }
+        }
+
+        function showWinScreen() {
+            winMessage.innerHTML = messages[6] + '<div class="signature">–Deepak</div>';
+            winScreen.classList.add('active');
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const emojis = ['🎉', '🎊', '🎈', '🎁', '💖', '✨', '🌟', '💝', '🎂', '🥳', '🎀', '🌸'];
+            const confettiCount = 60;
+
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                    confetti.style.fontSize = (Math.random() * 10 + 20) + 'px';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 6000);
+                }, i * 40);
+            }
+        }
+
+        // Event listeners
+        continueBtn.addEventListener('click', closePopup);
+        overlay.addEventListener('click', closePopup);
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (popupOpen) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    closePopup();
+                }
+                return;
+            }
+
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    e.preventDefault();
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    e.preventDefault();
+                    movePlayer(1, 0);
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    e.preventDefault();
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    e.preventDefault();
+                    movePlayer(0, 1);
+                    break;
+            }
+        });
+
+        // Touch controls
+        canvas.addEventListener('touchstart', (e) => {
+            if (popupOpen) return;
+            e.preventDefault();
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            if (popupOpen) return;
+            e.preventDefault();
+            if (!touchStartX || !touchStartY) return;
+
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const touchDuration = Date.now() - touchStartTime;
+
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+
+            const minSwipe = 25;
+            const maxTime = 300;
+
+            if (touchDuration < maxTime) {
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (Math.abs(deltaX) > minSwipe) {
+                        movePlayer(0, deltaX > 0 ? 1 : -1);
+                    }
+                } else {
+                    if (Math.abs(deltaY) > minSwipe) {
+                        movePlayer(deltaY > 0 ? 1 : -1, 0);
+                    }
+                }
+            }
+
+            touchStartX = 0;
+            touchStartY = 0;
+        }, { passive: false });
+
+        // Music controls
+        function toggleMusic() {
+            if (musicPlaying) {
+                backgroundMusic.pause();
+                musicToggle.textContent = '🔇';
+                musicToggle.classList.add('muted');
+                musicPlaying = false;
+            } else {
+                backgroundMusic.play().then(() => {
+                    musicToggle.textContent = '🎵';
+                    musicToggle.classList.remove('muted');
+                    musicPlaying = true;
+                }).catch((error) => {
+                    console.log('Audio play failed:', error);
+                    // If autoplay is blocked, show a message
+                    musicToggle.textContent = '▶️';
+                    musicToggle.title = 'Click to play music (browser may require interaction)';
+                });
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Try to play music on first user interaction
+        let musicInitialized = false;
+        function initMusicOnInteraction() {
+            if (!musicInitialized && backgroundMusic.src) {
+                toggleMusic();
+                musicInitialized = true;
+                // Remove listeners after first interaction
+                document.removeEventListener('click', initMusicOnInteraction);
+                document.removeEventListener('touchstart', initMusicOnInteraction);
+            }
+        }
+
+        // Listen for first user interaction to start music
+        if (backgroundMusic.src) {
+            document.addEventListener('click', initMusicOnInteraction, { once: true });
+            document.addEventListener('touchstart', initMusicOnInteraction, { once: true });
+        }
+
+        // Initial draw
+        updateProgress();
+    </script>
+</body>
+
+</html>

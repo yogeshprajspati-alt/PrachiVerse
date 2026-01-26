@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Fairy 💗</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --pink: #f472b6;
+            --lav: #c084fc;
+            --rose: #fda4af;
+            --bg1: #fde2e4;
+            --bg2: #f3d9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, var(--bg1), var(--bg2), #ffe4e6);
+            background-size: 400% 400%;
+            animation: bgMove 18s ease infinite;
+            min-height: 100vh;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        @keyframes bgMove {
+
+            0%,
+            100% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+        }
+
+        /* 🌸 FALLING FEATHERS */
+        .feathers {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .feather {
+            position: absolute;
+            top: -10vh;
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
+            opacity: 0.7;
+            animation: fall linear infinite;
+            filter: blur(0.3px);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* STAGES */
+        .stage {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.9s ease;
+            z-index: 5;
+        }
+
+        .stage.active {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        /* FAIRY */
+        .fairy {
+            font-size: clamp(5rem, 20vw, 6.8rem);
+            animation: float 3.5s ease-in-out infinite;
+            cursor: pointer;
+            filter: drop-shadow(0 0 35px rgba(244, 114, 182, .9));
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-18px)
+            }
+        }
+
+        .hint {
+            margin-top: 14px;
+            font-size: 1.05rem;
+            opacity: .85;
+        }
+
+        /* MESSAGE BOX */
+        .box {
+            background: rgba(255, 255, 255, .28);
+            backdrop-filter: blur(22px);
+            border-radius: 28px;
+            padding: 28px;
+            width: 100%;
+            max-width: 620px;
+            text-align: center;
+            box-shadow: 0 0 80px rgba(244, 114, 182, .35);
+        }
+
+        .box h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.9rem, 6vw, 3rem);
+            background: linear-gradient(45deg, var(--lav), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 18px;
+        }
+
+        /* TYPEWRITER */
+        #typed {
+            min-height: 150px;
+            max-height: 260px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            line-height: 1.75;
+            font-size: clamp(0.95rem, 3.2vw, 1.1rem);
+            position: relative;
+        }
+
+        #typed::after {
+            content: '';
+            width: 4px;
+            height: 1.2em;
+            background: var(--pink);
+            display: inline-block;
+            margin-left: 4px;
+            animation: blink .8s infinite;
+        }
+
+        #typed.done::after {
+            display: none
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1
+            }
+
+            50.1%,
+            100% {
+                opacity: 0
+            }
+        }
+
+        .next {
+            margin-top: 22px;
+            padding: 13px 36px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--pink), var(--lav));
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.05rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: .4s;
+        }
+
+        .next.show {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        /* GIFT */
+        .gift {
+            font-size: clamp(4.8rem, 18vw, 6rem);
+            animation: pulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.15)
+            }
+        }
+
+        .cards {
+            display: flex;
+            gap: 16px;
+            margin-top: 26px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .32);
+            backdrop-filter: blur(18px);
+            border-radius: 22px;
+            padding: 22px;
+            width: 260px;
+            animation: rise .8s ease forwards;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(25px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* MUSIC */
+        #music {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.4rem;
+            background: rgba(244, 114, 182, .65);
+            color: #fff;
+            cursor: pointer;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FEATHERS -->
+    <div class="feathers" id="feathers"></div>
+
+    <!-- STAGE 1 -->
+    <div class="stage active" id="s1">
+        <div class="fairy">🧚‍♀️💗</div>
+        <div class="hint">Tap the fairy ✨</div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage" id="s2">
+        <div class="box">
+            <h1>Hey You 💕</h1>
+            <div id="typed"></div>
+            <button class="next" id="next">One last thing 🎀</button>
+        </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage" id="s3">
+        <div class="box">
+            <h1>A Little Surprise 💝</h1>
+            <div class="gift" id="gift">🎁</div>
+            <div class="cards" id="cards"></div>
+        </div>
+    </div>
+
+    <button id="music">🔇</button>
+    <audio id="bg" loop>
+        <source src="playdate.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        /* FEATHERS */
+        const feathers = document.getElementById('feathers');
+        const emojis = ['🪶', '✨', '💗'];
+
+        function createFeather() {
+            const f = document.createElement('div');
+            f.className = 'feather';
+            f.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            f.style.left = Math.random() * 100 + 'vw';
+            f.style.animationDuration = (8 + Math.random() * 6) + 's';
+            f.style.fontSize = (18 + Math.random() * 18) + 'px';
+            feathers.appendChild(f);
+            setTimeout(() => f.remove(), 15000);
+        }
+        setInterval(createFeather, 450);
+
+        /* TYPEWRITER */
+        const message = `Some people feel like magic ✨
+
+They make everything softer,
+lighter,
+and a little more beautiful.
+
+You’ve been that fairy for me 💗
+Without even trying.
+
+I just wanted you to know
+how special you are 🌸`;
+
+        const typed = document.getElementById('typed');
+        const next = document.getElementById('next');
+        let i = 0;
+
+        function type() {
+            if (i < message.length) {
+                typed.textContent += message[i++];
+                typed.scrollTop = typed.scrollHeight;
+                setTimeout(type, 80);
+            } else {
+                typed.classList.add('done');
+                next.classList.add('show');
+            }
+        }
+
+        document.querySelector('.fairy').onclick = () => {
+            s1.classList.remove('active');
+            s2.classList.add('active');
+            type();
+            playMusic();
+        };
+
+        next.onclick = () => {
+            s2.classList.remove('active');
+            s3.classList.add('active');
+        };
+
+        gift.onclick = () => {
+            cards.innerHTML = `
+    <div class="card">
+      <h3>🦥🥳</h3>
+      <p><strong>Congratulations!</strong><br>
+      You got a premium membership of my annoying side 🦥🥳</p>
+    </div>
+    <div class="card">
+      <h3>🎧 Spotify</h3>
+      <p><strong>3 months of Spotify Premium Membership</strong></p>
+    </div>`;
+        };
+
+        /* MUSIC */
+        const bg = document.getElementById('bg');
+        const music = document.getElementById('music');
+        let playing = false;
+
+        function playMusic() {
+            if (!playing) {
+                bg.volume = .3;
+                bg.play().catch(() => { });
+                playing = true;
+                music.textContent = '🔊';
+            }
+        }
+        music.onclick = () => playing ? (bg.pause(), playing = false, music.textContent = '🔇') : playMusic();
+    </script>
+
+</body>
+
+</html>

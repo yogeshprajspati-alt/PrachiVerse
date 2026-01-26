@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for mobile */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .heart {
+            position: absolute;
+            font-size: clamp(35px, 8vw, 45px);
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .heart:hover {
+            transform: scale(1.3);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .message {
+            position: absolute;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            font-size: clamp(16px, 4vw, 20px);
+            color: #333;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 85%;
+            text-align: center;
+            pointer-events: none;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes popOut {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: sparkle 1s ease-out forwards;
+        }
+        @keyframes sparkle {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+        #startScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        #startScreen h1 {
+            font-size: clamp(32px, 8vw, 48px);
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ff6b6b; }
+            50% { text-shadow: 0 0 30px #ffd93d, 0 0 40px #ffd93d; }
+        }
+        #startScreen p {
+            font-size: clamp(18px, 4vw, 24px);
+            margin-bottom: 40px;
+        }
+        #startBtn {
+            padding: 15px 40px;
+            font-size: clamp(20px, 5vw, 28px);
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.5);
+        }
+        #startBtn:hover {
+            transform: scale(1.1);
+        }
+        #finalMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: clamp(30px, 6vw, 50px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            text-align: center;
+            z-index: 999;
+            max-width: 90%;
+            width: 90%;
+        }
+        #finalMessage.show {
+            animation: finalPop 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        @keyframes finalPop {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        #finalMessage h1 {
+            font-size: clamp(36px, 8vw, 56px);
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: rainbow 3s linear infinite;
+            background-size: 200% 200%;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        #finalMessage p {
+            font-size: clamp(16px, 4vw, 24px);
+            color: #333;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        .emoji-rain {
+            position: absolute;
+            top: -50px;
+            font-size: 30px;
+            animation: fall 4s linear;
+            pointer-events: none;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+        #counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: clamp(24px, 5vw, 32px);
+            color: white;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="startScreen">
+            <h1>✨ A Special Surprise ✨</h1>
+            <p>Click the hearts to reveal messages</p>
+            <p style="font-size: 18px;">Find all 10 hearts! 💝</p>
+            <button id="startBtn">Start</button>
+        </div>
+        <div id="counter">💝 0/10</div>
+        <div id="finalMessage">
+            <h1>🎉 Happy Birthday! 🎂</h1>
+            <p>You found all the hearts!</p>
+            <p style="font-size: 28px; font-weight: bold; color: #ff6b6b;">You're amazing and special to me! 💖</p>
+            <p>I hope your birthday is as wonderful as you are!</p>
+            <p style="font-size: 20px; margin-top: 30px;">🎈 Wishing you endless joy and happiness! 🎈</p>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const startScreen = document.getElementById('startScreen');
+        const startBtn = document.getElementById('startBtn');
+        const finalMessage = document.getElementById('finalMessage');
+        const counter = document.getElementById('counter');
+
+        const messages = [
+            "You light up every room! ✨",
+            "Your smile is contagious! 😊",
+            "You make everything better! 🌟",
+            "You're incredibly special! 💫",
+            "Your kindness is beautiful! 🌸",
+            "You inspire me every day! 🌈",
+            "You're one of a kind! 🦋",
+            "You deserve the world! 🌍",
+            "Your laugh is the best sound! 🎵",
+            "You make life brighter! ☀️"
+        ];
+
+        let foundHearts = 0;
+        let hearts = [];
+        let gameStarted = false;
+
+        startBtn.addEventListener('click', () => {
+            startScreen.style.display = 'none';
+            gameStarted = true;
+            createHearts();
+            startEmojiRain();
+        });
+
+        function createHearts() {
+            const heartEmojis = ['❤️', '💖', '💝', '💗', '💓', '💕', '💞', '💘'];
+            const padding = 50; // Keep hearts away from edges
+            
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = (Math.random() * (window.innerWidth - padding * 2) + padding) + 'px';
+                heart.style.top = (Math.random() * (window.innerHeight - padding * 2 - 100) + padding + 50) + 'px';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.dataset.messageIndex = i;
+                
+                heart.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    revealMessage(heart, i);
+                });
+                
+                container.appendChild(heart);
+                hearts.push(heart);
+            }
+        }
+
+        function revealMessage(heart, index) {
+            if (heart.classList.contains('found')) return;
+            
+            heart.classList.add('found');
+            foundHearts++;
+            counter.textContent = `💝 ${foundHearts}/10`;
+            
+            // Create particles
+            createParticles(heart.offsetLeft + 20, heart.offsetTop + 20);
+            
+            // Show message
+            const msg = document.createElement('div');
+            msg.className = 'message';
+            msg.textContent = messages[index];
+            
+            // Center message better on screen
+            const msgLeft = Math.max(10, Math.min(window.innerWidth - 200, heart.offsetLeft - 50));
+            const msgTop = Math.max(60, Math.min(window.innerHeight - 100, heart.offsetTop - 50));
+            
+            msg.style.left = msgLeft + 'px';
+            msg.style.top = msgTop + 'px';
+            container.appendChild(msg);
+            
+            // Remove message after 2 seconds
+            setTimeout(() => {
+                msg.style.animation = 'popOut 0.5s forwards';
+                setTimeout(() => msg.remove(), 500);
+            }, 2000);
+            
+            // Make heart spin and fade
+            heart.style.animation = 'none';
+            heart.style.transform = 'scale(1.5) rotate(360deg)';
+            heart.style.opacity = '0.3';
+            
+            // Check if all found
+            if (foundHearts === 10) {
+                setTimeout(() => {
+                    showFinalMessage();
+                }, 1000);
+            }
+        }
+
+        function createParticles(x, y) {
+            const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff'];
+            const shapes = ['●', '★', '♥', '✦'];
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.fontSize = Math.random() * 20 + 10 + 'px';
+                
+                const tx = (Math.random() - 0.5) * 200;
+                const ty = (Math.random() - 0.5) * 200;
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                
+                container.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        function startEmojiRain() {
+            setInterval(() => {
+                if (!gameStarted) return;
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji-rain';
+                emoji.textContent = ['🎂', '🎁', '🎈', '🎉', '🎊', '✨', '🌟', '💫'][Math.floor(Math.random() * 8)];
+                emoji.style.left = Math.random() * window.innerWidth + 'px';
+                container.appendChild(emoji);
+                setTimeout(() => emoji.remove(), 4000);
+            }, 500);
+        }
+
+        function showFinalMessage() {
+            finalMessage.classList.add('show');
+            
+            // Create massive confetti
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    createParticles(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>

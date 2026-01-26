@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Notebook</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Caveat', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: float 15s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .notebook-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .notebook {
+            position: relative;
+            width: 90vw;
+            max-width: 380px;
+            height: 85vh;
+            max-height: 600px;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fffef7;
+            background-image: 
+                linear-gradient(90deg, rgba(255, 182, 193, 0.15) 0%, rgba(255, 182, 193, 0.15) 5px, transparent 5px),
+                repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(173, 216, 230, 0.2) 24px, rgba(173, 216, 230, 0.2) 25px);
+            border-radius: 8px 0 0 8px;
+            box-shadow: 
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                inset 0 0 20px rgba(0, 0, 0, 0.05);
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 30px;
+            padding-left: 45px;
+            font-size: 20px;
+            line-height: 1.8;
+            color: #2c3e50;
+            overflow-y: auto;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .page::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .page.cover {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            background-image: 
+                linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%),
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9InRleHR1cmUiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3RleHR1cmUpIi8+PC9zdmc+');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            color: #d63031;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background-size: cover, 60px 60px;
+            gap: 15px;
+        }
+
+        .cover-subtitle {
+            font-size: 18px;
+            font-family: 'Caveat', cursive;
+            color: #e17055;
+            font-weight: 400;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        .page .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 16px;
+            color: #bdc3c7;
+            font-weight: 700;
+        }
+
+        .page-content {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page:nth-child(1) { z-index: 11; }
+        .page:nth-child(2) { z-index: 10; }
+        .page:nth-child(3) { z-index: 9; }
+        .page:nth-child(4) { z-index: 8; }
+        .page:nth-child(5) { z-index: 7; }
+        .page:nth-child(6) { z-index: 6; }
+
+        .spiral {
+            position: absolute;
+            left: -12px;
+            top: 0;
+            width: 24px;
+            height: 100%;
+            background: linear-gradient(to right, #95a5a6 0%, #bdc3c7 50%, #95a5a6 100%);
+            border-radius: 12px;
+            box-shadow: 
+                inset 0 0 8px rgba(0, 0, 0, 0.3),
+                0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 12;
+        }
+
+        .spiral-ring {
+            position: absolute;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle, #ecf0f1 0%, #95a5a6 100%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .controls {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 13;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            min-width: 90px;
+            transition: all 0.3s ease;
+            font-family: 'Caveat', cursive;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .emoji {
+            display: inline-block;
+            font-size: 24px;
+            margin: 0 5px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(255, 223, 0, 0.3) 0%, rgba(255, 223, 0, 0.5) 100%);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 480px) {
+            .notebook {
+                width: 95vw;
+                height: 80vh;
+                max-height: 550px;
+            }
+            .page {
+                font-size: 18px;
+                padding: 20px;
+                padding-left: 40px;
+            }
+            .page.cover {
+                font-size: 28px;
+            }
+            .cover-subtitle {
+                font-size: 16px;
+            }
+            .controls {
+                bottom: -55px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 15px;
+                min-width: 80px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .notebook {
+                height: 75vh;
+            }
+            .controls {
+                bottom: -50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notebook-container">
+        <div class="notebook">
+            <div class="spiral">
+                <div class="spiral-ring" style="top: 8%;"></div>
+                <div class="spiral-ring" style="top: 20%;"></div>
+                <div class="spiral-ring" style="top: 32%;"></div>
+                <div class="spiral-ring" style="top: 44%;"></div>
+                <div class="spiral-ring" style="top: 56%;"></div>
+                <div class="spiral-ring" style="top: 68%;"></div>
+                <div class="spiral-ring" style="top: 80%;"></div>
+                <div class="spiral-ring" style="top: 92%;"></div>
+            </div>
+            
+            <div class="page cover">
+                <div>Billu Bilote ki Book<span class="emoji">✨</span></div>
+                <div class="cover-subtitle">Aaiii mene banai h 😒. Thodi tareef to banti h</div>
+            </div>
+            
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">1</div>
+                    <p><span class="emoji">🌟</span> <span class="highlight">Hey there!</span></p>
+                    <p>Hellewwwwwwwwwwww Prachiiii, jab mene bola tha ki tum kitni acchii ho, mera bohot mn kar rha tha tumhari khoob saariii tareef karne kaa..😂😁 </p>
+                    <p>Lekin fir shaam ko mene socha chhoro yr😂, kuch kuch socha, fir kuch kuch aurrr socha, or ruk gaya..</p>
+                    <p>Tum to aaj bhi utni hi idiot or bewakoof lagti ho door se jitni tab lagti thi jab apan sab coaching aate the😂, Lekin ho to innocent or rare❤️ </p>
+                    <p>Tum yr pata nhi kis duniya se aai ho 😂, agar 21 century ke doraemon ho to gadget dedo🫲🫲</p>
+                    
+                </div>
+            </div>
+            
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">2</div>
+                    <p><span class="emoji">💭</span> <span class="highlight">Thoughts</span></p>
+                    <p>Ek to meri poori sigma personality ki dhajiya ud jaati h tumhare samne  😂</p>
+                    <p>Koi itni bholi or saaf mn ki ladki kaise ho sakti yr😒, sab ko dekhta hu fi tumhara sochta hu to lagta h iska mn kitne patience ke saath design kara hoga bhagwan ne❤️</p>
+                    <p>Mujhe to ye samajh nhi ata ki tumhare pass option bhi tha, lekin tum jaane ki jagah wapis aake text kar diyaa, shyd us time tum sirf bohot gussa thi mere se, aurrr me tumhe time time pe gussa dilata rahunga😁</p>
+                    <p>Agar wo Lahenga pink h to bs kisi ke compliment ki jaroorat nhi, pink colour tumhare liye hi bana h 😂❤️ </p>
+                </div>
+            </div>
+            
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">3</div>
+                    <p><span class="emoji">🎨</span> <span class="highlight">Isme scroll ka option h BTW</span></p>
+                    <p>Tumko to makeup ki bhi jaroorat nhi 😂, bs lip-balm lagao aur all set....</p>
+                    <p>Aur us se yaad aya ki apne lips ka dhyn rakhna 😂. Itne lambe h aur tumpe suit karte h. Mere to thandi ki wajah se patthar jaise kadak ho gaye the🪨 abhi sahi kare h 😂 tum lipstick 💄 laga lena.</p>
+                    <p>Aur wo saturday ko me kuch bhejne wala tha lekin nhi bheja tha. Meri baat hui thi meri ek dost se. Adha ghanta baat kari or last me usne 2 naam le liye, Tumhara or chanchal ka. Ki wo dono kaisi h 😐 Meri to fat gai thi 😂 tumhara naam sunke. Mujhe sab kuch yaad aya uske call ke baad, ki mene kitni bekar situations create kardi😐 Lekin tum fir bhi bhagi nhi😂</p>
+                    <p>Me sachme manta hu mene bohot galat kara, lekin ye us sab ke samne kuchh nhi jo mene kuch doore log ke saaath kari, lekin atleast sab sahi h mere hard descisions ke baad( tumhe batana tha lekinnn nhiiii)</p>
+                    <p>Kabhi kabhi lagta h me bohot bura hu. Lekin mere se koi nhi bolta me bura hu😂 sab ke liye kuch na kuch accha karta hu unke hisab se❤️ </p>
+                    <p>Tumhare liye bhi me kuch to karungaaa, debt me hu aisa feel hota h kabhi kabhi. You don't know tumne mujhe kya diya h. </p>
+                </div>
+            </div>
+            
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">4</div>
+                    <p><span class="emoji">🌙</span> <span class="highlight">Midnight Musings</span></p>
+                    <p>Tum thodi kamzoor lag rhi thi. Thoda dhyn rakha karo khaane peene pe or rest lene me (rest ka bol bhi kaun rha h 😂) </p>
+                    <p>Aur haa mera ye mtlb bilkul nhi h ki tum sundar nhi ho, you are a literal ferry🦋🕊️ Sundar bhi ho aur saath hi saath hadddd se jyada kind❤️ (jo tumhare alawa mene kisi me itni nhi dekhi)</p>
+                    <p>Ab tum to ye socho ki ready kasie hona h 😂 Me poochunga ki kitne ladkon ne approach kara 😏😏. Maje bhi lunga 😹😼</p>
+                    <p>Dekho bs khaane peene pe dhyn do thoda. Or padhai karo 2 ghante daily. Aur neet clear hoga ya nhi iski tension mat liya karo. Tum agar kuch naa kar paaao or motivation khatam hone lage to me tumhe acchi acchi cheezen sikhaunga fir. Lekin mujhe lagta nhi h iski naubat aayegi, mujhe to intezaar h vprachiii ke daily vlog ka. </p>
+                </div>
+            </div>
+            
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">5</div>
+                    <p><span class="emoji">💫</span> <span class="highlight">Ab kya book banvaogi ise😂</span></p>
+                    <p>Haaa Haaa me book zaroor likhunga ya likh rha hu (tumko thodi bataunga). Publish karunga jab me kuch major achieve karunga, itna to banta h yr😂</p>
+                    <p>Oye or asia nhi h ki mere pass bohot khaali waqt h, aisa bhi nhi h ki me isme barbaad kar rha hu. "🧸This is a thing that I really like to do🧸" aur isiliye me time nikal ke ye banata hu aur online publish kar deta hu🐣🐤🐥</p>
+                    <p>Tum padhti ho to accha bhi lagta fir 😂🧸 </p>
+                    <p>Or agar meri is chhoti si cheez se meri Little Angle Miss ka din accha ho sakta h to, why not to built it!!</p>
+                    <p>Batana zaroor ye wali design kaisi lagi 🧸 I'll wait </p>
+                    <p style="text-align: center; margin-top: 30px; font-size: 24px;">✨ Chalo jao reeee ✨</p>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="backBtn" disabled>← Back</button>
+                <button id="nextBtn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const backBtn = document.getElementById('backBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const totalPages = pages.length;
+
+        function updateButtons() {
+            backBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+            
+            if (currentPage === totalPages - 1) {
+                nextBtn.textContent = 'Finished ✓';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+        }
+
+        function flipPage(direction) {
+            if (direction === 'next' && currentPage < totalPages - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            } else if (direction === 'back' && currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove('flipped');
+            }
+            updateButtons();
+        }
+
+        nextBtn.addEventListener('click', () => flipPage('next'));
+        backBtn.addEventListener('click', () => flipPage('back'));
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.querySelector('.notebook').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - go to next page
+                    flipPage('next');
+                } else {
+                    // Swipe right - go to previous page
+                    flipPage('back');
+                }
+            }
+        }
+
+        // Click on page to advance (except on buttons)
+        pages.forEach((page, index) => {
+            page.addEventListener('click', (e) => {
+                if (!e.target.closest('.controls')) {
+                    if (index === currentPage && currentPage < totalPages - 1) {
+                        flipPage('next');
+                    }
+                }
+            });
+        });
+
+        updateButtons();
+    </script>
+</body>
+</html>

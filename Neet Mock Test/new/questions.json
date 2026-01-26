@@ -1,0 +1,1479 @@
+{
+  "physics": [
+    {
+      "id": 1,
+      "section": "A",
+      "question": " (Kinematics) \nA particle moves along a straight line. Its velocity–time graph is a straight line through the \norigin with positive slope. The ratio of distance travelled to displacement in time t is:",
+      "options": ["1:1", "1:2", "2:1", "1:4"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 2,
+      "section": "A",
+      "question": "(Experimental Skills) \nIn a Vernier Calipers, 10 Vernier scale divisions coincide with 9 main scale divisions. One \nmain scale division = 1 mm. What is the least count?",
+      "options": ["0.1 mm", "0.01 mm", "0.09 mm", "0.05 mm"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 3,
+      "section": "A",
+      "question": " (Laws of Motion) \nMasses m, 2m, 3m are connected by massless strings on a frictionless table. A force F is \napplied on mass m. Tension between 2m and 3m is: ",
+      "options": ["F/6", "F/3", "F/2", "5F/6"],
+      "correct": 3,
+      "subject": "Physics"
+    },
+    {
+      "id": 4,
+      "section": "A",
+      "question": "(Work, Energy, Power) \nA body moves in a vertical circle. At the highest point tension is zero. What is total \nmechanical energy at the lowest point? (Take potential at lowest point = 0.)",
+      "options": ["2.5 mgR", "2 mgR", "3.5 mgR", "5mgR"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 5,
+      "section": "A",
+      "question": " (Gravitation) \nTwo satellites orbit a planet at radii R and 4R. If time period of first satellite = T, time period \nof second is: ",
+      "options": ["2T", "4T", "8T", "16T"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 6,
+      "section": "A",
+      "question": "(Fluids) \nA capillary tube dipped in water shows rise h. If tube is cut at h/2, the meniscus at top will \nbe: ",
+      "options": ["Convex", "Concave with adjusted curvature", "Flat", "Overflowing"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 7,
+      "section": "A",
+      "question": "(Electrostatics) \nA parallel plate capacitor with air is charged to V. Dielectric of K = 4 is inserted, battery remains connected. Which quantity stays constant? ",
+      "options": ["Energy Stored", "Electric Field", "Potential Difference", "Charge"],
+      "correct": 3,
+      "subject": "Physics"
+    },
+    {
+      "id": 8,
+      "section": "A",
+      "question": " (Current Electricity) \nIn a circuit with battery and variable load resistor RL, maximum power is transferred when \nRL equals: ",
+      "options": ["0", "Infinite", "Internal Resistance", "2r"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 9,
+      "section": "A",
+      "question": " (Magnetism) \nElectron moves in helical path in uniform B-field. Pitch of helix is proportional to: ",
+      "options": [" Perpendicular velocity component", "Parallel velocity component", "Magnetic field B", "Charge"],
+      "correct": 1,
+      "subject": "Physics"
+    },
+    {
+      "id": 10,
+      "section": "A",
+      "question": "(AC Circuits) \nAt resonance in LCR series circuit, impedance equals:",
+      "options": ["ωL ", "1/ωC ", "R", " √(R² + (ωL)²) "],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 11,
+      "section": "A",
+      "question": "(Modern Physics) \nElectron and proton accelerated through same potential V. Ratio of de Broglie wavelengths \nλe : λp is: ",
+      "options": ["√(mp/me) ", "mp/me ", "√(me/mp) ", "1"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 12,
+      "section": "A",
+      "question": "  (Photoelectric Effect) \nStopping potential vs frequency graph is a straight line. Slope represents:",
+      "options": [" Planck’s constant h ", " Work function φ ", "h/e ", " e/h"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 13,
+      "section": "A",
+      "question": " (Semiconductors) \nTruth table: \nA=0,B=0→1 \nA=0,B=1→1 \nA=1,B=0→1 \nA=1,B=1→0 \nGate is:  ",
+      "options": ["NAND", "NOR", "XOR", "AND"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 14,
+      "section": "A",
+      "question": " (Ray Optics) \nPrism angle A = 60°, minimum deviation = 30°. Refractive index is:",
+      "options": ["√2", "1.5", " √3 ", "4/3"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 15,
+      "section": "A",
+      "question": " (Wave Optics) \nIn YDSE, slit separation halved, screen distance doubled. Fringe width becomes: ",
+      "options": ["Same", "Half", "Double", "Four Times"],
+      "correct": 3,
+      "subject": "Physics"
+    },
+    {
+      "id": 16,
+      "section": "A",
+      "question": " (Thermodynamics) \nFor a triangular PV cycle ABCA, net work done is:",
+      "options": ["Area inside the triangle", "Zero", "Negative of area", "PΔV"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 17,
+      "section": "A",
+      "question": "(Thermodynamics) \nIn an adiabatic process: ",
+      "options": ["ΔQ=0 and temperature constant ", "ΔQ=0 and internal energy changes", "ΔU=0 and work zero", "Heat exchanged "],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 18,
+      "section": "A",
+      "question": "  (Electrostatics) \nA hollow metal sphere radius R is uniformly charged. Electric field at distance r: \nA) Zero for r < R \nB) Constant for r > R \nC) Proportional to r for r < R \nD) Zero for r > R ",
+      "options": [" Zero for r < R ", "Constant for r > R", "Proportional to r for r < R", "Zero for r > R"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 19,
+      "section": "A",
+      "question": "  (Current Electricity) \nThree identical bulbs in series. One fuses. If remaining two are reconnected in series to same \nsupply, brightness: ",
+      "options": ["Increases", "Decreases", "Same", "Will not glow"],
+      "correct": 1,
+      "subject": "Physics"
+    },
+    {
+      "id": 20,
+      "section": "A",
+      "question": " (Magnetism) \nA current loop in uniform magnetic field has maximum torque when angle between area \nvector and field is: ",
+      "options": ["0°", " 45°", " 90°", " 180°"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 21,
+      "section": "A",
+      "question": " (EMI) \nA magnet dropped through copper tube. Acceleration: ",
+      "options": ["Always g", "Always > g", "Initially g then decreases ", "Initially 0 then increases"],
+      "correct": 2,
+      "subject": "Physics"
+    },
+    {
+      "id": 22,
+      "section": "A",
+      "question": " (AC Circuits) \nIn a purely inductive circuit, current: ",
+      "options": ["Leads voltage by 90° ", "Lags voltage by 90° ", " In phase ", "Leads by 180°"],
+      "correct": 1,
+      "subject": "Physics"
+    },
+    {
+      "id": 23,
+      "section": "A",
+      "question": "(EM Waves) \nRatio B₀/E₀ of EM wave is: ",
+      "options": ["c", "1/c", "√c", "1"],
+      "correct": 1,
+      "subject": "Physics"
+    },
+    {
+      "id": 24,
+      "section": "A",
+      "question": " (Dual Nature) \nIf momentum of electron doubles, de Broglie wavelength becomes:",
+      "options": ["Twice", "Half", "Four Times", "Same"],
+      "correct": 1,
+      "subject": "Physics"
+    },
+    {
+      "id": 25,
+      "section": "A",
+      "question": " (Atoms) \nRatio of kinetic energy to total energy of electron in Bohr orbit:  ",
+      "options": ["1 : –1", "1 : 1 ", "1 : –2", "2 : –1 "],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 26,
+      "section": "A",
+      "question": " (Nuclei) \nMass defect = 0.05 u. Energy released:",
+      "options": ["46.5 MeV ", " 931 MeV", "18.6 MeV", "4.65 MeV "],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+      "id": 27,
+      "section": "A",
+      "question": " (Semiconductors) \nIn p-type semiconductor, majority carriers are: ",
+      "options": ["Electrons", "Holes", "Neutrons", "Protons"],
+      "correct": 1,
+      "subject": "Physics"
+    },
+    {
+      "id": 28,
+      "section": "A",
+      "question": " (Units & Dimensions) \nDimensional formula of thermal conductivity: ",
+      "options": [" M L T⁻³ K⁻¹ ", "M L T⁻² K⁻¹ ", "M L² T⁻³ K ", " M L T⁻³ K"],
+      "correct": 0,
+      "subject": "Physics"
+    },
+    {
+    "id": 29,
+    "section": "A",
+    "question": "Ball thrown up with velocity u. Distance in last t seconds of ascent:",
+    "options": ["ut", "½ gt²", "ut – ½ gt²", "(u + gt)t"],
+    "correct": 1,
+    "subject": "Physics (Motion in 1D)"
+  },
+  {
+    "id": 30,
+    "section": "A",
+    "question": "If |A + B| = |A – B|, angle between A and B is:",
+    "options": ["45°", "60°", "90°", "120°"],
+    "correct": 2,
+    "subject": "Physics (Vectors)"
+  },
+  {
+    "id": 31,
+    "section": "A",
+    "question": "Block of mass m on smooth wedge angle θ. System accelerated so block doesn’t slip. Required acceleration:",
+    "options": ["g sinθ", "g cosθ", "g tanθ", "g / tanθ"],
+    "correct": 2,
+    "subject": "Physics (Laws of Motion)"
+  },
+  {
+    "id": 32,
+    "section": "A",
+    "question": "Spring constant k stretched by x has work W. Additional x requires work:",
+    "options": ["W", "2W", "3W", "4W"],
+    "correct": 2,
+    "subject": "Physics (Work Energy)"
+  },
+  {
+    "id": 33,
+    "section": "A",
+    "question": "Meter stick balanced at 50 cm. Two 5 g coins placed at 12 cm shift balance to 45 cm. Mass of meter stick:",
+    "options": ["66 g", "50 g", "75 g", "100 g"],
+    "correct": 0,
+    "subject": "Physics (Rotational Motion)"
+  },
+  {
+    "id": 34,
+    "section": "A",
+    "question": "Escape velocity from Earth = ve. For planet with double radius and same density:",
+    "options": ["2ve", "ve", "√2 ve", "4ve"],
+    "correct": 2,
+    "subject": "Physics (Gravitation)"
+  },
+  {
+    "id": 35,
+    "section": "A",
+    "question": "Bernoulli’s theorem is consequence of conservation of:",
+    "options": ["Mass", "Linear momentum", "Angular momentum", "Energy"],
+    "correct": 3,
+    "subject": "Physics (Fluids)"
+  },
+  {
+    "id": 36,
+    "section": "A",
+    "question": "Two rods same length/material transfer heat in 12 s in series. In parallel they take:",
+    "options": ["3 s", "6 s", "24 s", "48 s"],
+    "correct": 0,
+    "subject": "Physics (Thermal Properties)"
+  },
+  {
+    "id": 37,
+    "section": "A",
+    "question": "In SHM with amplitude A, displacement at which KE = PE:",
+    "options": ["A/2", "A/√2", "A√2", "A/4"],
+    "correct": 1,
+    "subject": "Physics (SHM)"
+  },
+  {
+    "id": 38,
+    "section": "A",
+    "question": "Closed pipe length L and open pipe length L. Ratio of fundamental frequencies:",
+    "options": ["1:1", "1:2", "2:1", "1:4"],
+    "correct": 1,
+    "subject": "Physics (Waves)"
+  },
+  {
+    "id": 39,
+    "section": "A",
+    "question": "Electric potential V = 4x². Electric field at (1,0,2) is:",
+    "options": ["8 along –x", "8 along +x", "16 along –x", "Zero"],
+    "correct": 0,
+    "subject": "Physics (Electrostatics)"
+  },
+  {
+    "id": 40,
+    "section": "A",
+    "question": "Capacitors 2 µF, 3 µF, 6 µF in series. Equivalent capacitance:",
+    "options": ["1 µF", "11 µF", "6 µF", "2/3 µF"],
+    "correct": 0,
+    "subject": "Physics (Capacitors)"
+  },
+  {
+    "id": 41,
+    "section": "A",
+    "question": "Wire of 4 Ω stretched to double length. New resistance:",
+    "options": ["4 Ω", "8 Ω", "16 Ω", "2 Ω"],
+    "correct": 2,
+    "subject": "Physics (Current Electricity)"
+  },
+  {
+    "id": 42,
+    "section": "A",
+    "question": "Proton and alpha particle enter magnetic field with same velocity ⟂ B. Ratio of radii rp : rα is:",
+    "options": ["1:2", "2:1", "1:4", "1:1"],
+    "correct": 0,
+    "subject": "Physics (Moving Charges)"
+  },
+  {
+    "id": 43,
+    "section": "A",
+    "question": "Magnetic susceptibility negative for:",
+    "options": ["Diamagnetic", "Paramagnetic", "Ferromagnetic", "Superconductor"],
+    "correct": 0,
+    "subject": "Physics (Magnetism)"
+  },
+  {
+    "id": 44,
+    "section": "A",
+    "question": "Critical angle w.r.t air = 45°. Refractive index is:",
+    "options": ["1.414", "1.5", "1.33", "2.0"],
+    "correct": 0,
+    "subject": "Physics (Ray Optics)"
+  },
+  {
+    "id": 45,
+    "section": "A",
+    "question": "In common-emitter amplifier, input is applied across:",
+    "options": ["Base–Emitter", "Collector–Base", "Emitter–Collector", "Anywhere"],
+    "correct": 0,
+    "subject": "Physics (Semiconductors)"
+  }
+  ],
+  "chemistry": [
+    {
+    "id": 46,
+    "section": "A",
+    "question": "The ratio of the radius of the 2nd orbit of Li²⁺ to the 3rd orbit of Be³⁺ is:",
+    "options": ["8:27", "4:9", "16:27", "27:8"],
+    "correct": 2,
+    "subject": "Chemistry (Structure of Atom)"
+  },
+  {
+    "id": 47,
+    "section": "A",
+    "question": "According to Molecular Orbital Theory, which of the following species is diamagnetic?",
+    "options": ["O₂", "O₂⁻", "O₂²⁻", "O₂⁺"],
+    "correct": 2,
+    "subject": "Chemistry (Chemical Bonding)"
+  },
+  {
+    "id": 48,
+    "section": "A",
+    "question": "For the reaction: 2Cl(g) → Cl₂(g), the signs of ΔH and ΔS are respectively:",
+    "options": ["+, +", "+, –", "–, –", "–, +"],
+    "correct": 2,
+    "subject": "Chemistry (Thermodynamics)"
+  },
+  {
+    "id": 49,
+    "section": "A",
+    "question": "The solubility product (Ksp) of Ag₂CrO₄ is S. Its solubility in a 0.1 M AgNO₃ solution would be:",
+    "options": ["S²", "Ksp / 0.01", "√Ksp", "Ksp / 0.1"],
+    "correct": 1,
+    "subject": "Chemistry (Equilibrium)"
+  },
+  {
+    "id": 50,
+    "section": "A",
+    "question": "For the cell reaction: Zn + Cu²⁺ → Zn²⁺ + Cu, the standard EMF is 1.10 V. If the concentration of Zn²⁺ increases, the EMF will:",
+    "options": ["Increase", "Decrease", "Remain same", "Become zero"],
+    "correct": 1,
+    "subject": "Chemistry (Electrochemistry)"
+  },
+  {
+    "id": 51,
+    "section": "A",
+    "question": "Which of the following complexes can exhibit optical isomerism?",
+    "options": ["[Co(NH₃)₆]³⁺", "[Co(NH₃)₅Cl]²⁺", "cis-[Co(en)₂Cl₂]⁺", "trans-[Co(en)₂Cl₂]⁺"],
+    "correct": 2,
+    "subject": "Chemistry (Coordination Compounds)"
+  },
+  {
+    "id": 52,
+    "section": "A",
+    "question": "Arrange the following carbocations in increasing order of stability: (I) Benzyl (II) Allyl (III) Isopropyl (IV) Methyl",
+    "options": ["IV < III < II < I", "IV < III < I < II", "I < II < III < IV", "III < IV < II < I"],
+    "correct": 1,
+    "subject": "Chemistry (GOC)"
+  },
+  {
+    "id": 53,
+    "section": "A",
+    "question": "Phenol is treated with Zn dust to give ‘A’. ‘A’ reacts with CH₃Cl in presence of anhydrous AlCl₃ to give ‘B’. ‘B’ on oxidation with alkaline KMnO₄ gives ‘Z’. Identify Z.",
+    "options": ["Benzaldehyde", "Benzoic Acid", "Toluene", "Benzene"],
+    "correct": 1,
+    "subject": "Chemistry (Organic – Synthesis)"
+  },
+  {
+    "id": 54,
+    "section": "A",
+    "question": "Which of the following compounds will NOT undergo Aldol Condensation?",
+    "options": ["Acetaldehyde", "Propanone", "Methanal (Formaldehyde)", "Ethanal"],
+    "correct": 2,
+    "subject": "Chemistry (Aldehydes & Ketones)"
+  },
+  {
+    "id": 55,
+    "section": "A",
+    "question": "Which of the following aqueous solutions has the highest boiling point (assuming 100% dissociation)?",
+    "options": ["0.1 M Glucose", "0.1 M NaCl", "0.1 M CaCl₂", "0.1 M Al₂(SO₄)₃"],
+    "correct": 3,
+    "subject": "Chemistry (Solutions)"
+  },
+  {
+    "id": 56,
+    "section": "A",
+    "question": "For a zero-order reaction, the half-life (t₁/₂) is proportional to:",
+    "options": ["Initial concentration [R]₀", "1 / [R]₀", "[R]₀²", "Independent of [R]₀"],
+    "correct": 0,
+    "subject": "Chemistry (Kinetics)"
+  },
+  {
+    "id": 57,
+    "section": "A",
+    "question": "A solution containing 10 g of non-volatile solute in 100 g of water has a vapor pressure of __. Relative lowering of vapor pressure is equal to:",
+    "options": ["Mole fraction of solute", "Mole fraction of solvent", "Molality", "Molarity"],
+    "correct": 0,
+    "subject": "Chemistry (Solutions)"
+  },
+  {
+    "id": 58,
+    "section": "A",
+    "question": "A transition metal ion has magnetic moment 3.87 BM. The number of unpaired electrons is:",
+    "options": ["2", "3", "4", "5"],
+    "correct": 1,
+    "subject": "Chemistry (d-Block)"
+  },
+  {
+    "id": 59,
+    "section": "A",
+    "question": "The IUPAC name of [Pt(NH₃)₂Cl(NO₂)] is:",
+    "options": ["Diamminechloridonitrito-N-platinum(II)", "Diamminechloridonitroplatinum(II)", "Diamminechloridonitrito-N-platinate(II)", "Diamminechloridonitroplatinate(II)"],
+    "correct": 1,
+    "subject": "Chemistry (Coordination Compounds)"
+  },
+  {
+    "id": 60,
+    "section": "A",
+    "question": "Which hydride of Group 15 is the strongest reducing agent?",
+    "options": ["NH₃", "PH₃", "AsH₃", "BiH₃"],
+    "correct": 3,
+    "subject": "Chemistry (p-Block)"
+  },
+  {
+    "id": 61,
+    "section": "A",
+    "question": "The shape of XeF₄ is:",
+    "options": ["Tetrahedral", "Square planar", "Pyramidal", "Octahedral"],
+    "correct": 1,
+    "subject": "Chemistry (p-Block)"
+  },
+  {
+    "id": 62,
+    "section": "A",
+    "question": "In an SN1 reaction, the intermediate formed is:",
+    "options": ["Carbanion", "Free radical", "Carbocation", "Transition state"],
+    "correct": 2,
+    "subject": "Chemistry (Haloalkanes)"
+  },
+  {
+    "id": 63,
+    "section": "A",
+    "question": "Lucas reagent is a mixture of:",
+    "options": ["Conc. HCl + anhydrous ZnCl₂", "Conc. HNO₃ + anhydrous ZnCl₂", "Conc. HCl + hydrous ZnCl₂", "Conc. H₂SO₄ + Zn"],
+    "correct": 0,
+    "subject": "Chemistry (Alcohols)"
+  },
+  {
+    "id": 64,
+    "section": "A",
+    "question": "Which reagent distinguishes between propanal and propanone?",
+    "options": ["Schiff’s reagent", "Tollen’s reagent", "Fehling’s solution", "All of the above"],
+    "correct": 1,
+    "subject": "Chemistry (Aldehydes)"
+  },
+  {
+    "id": 65,
+    "section": "A",
+    "question": "Basic strength order of methyl-substituted amines in aqueous solution:",
+    "options": ["2° > 1° > 3° > NH₃", "2° > 3° > 1° > NH₃", "3° > 2° > 1° > NH₃", "1° > 2° > 3° > NH₃"],
+    "correct": 1,
+    "subject": "Chemistry (Amines)"
+  },
+  {
+    "id": 66,
+    "section": "A",
+    "question": "Glucose on reaction with HI gives:",
+    "options": ["n-Hexane", "Gluconic acid", "Saccharic acid", "Hexanoic acid"],
+    "correct": 0,
+    "subject": "Chemistry (Biomolecules)"
+  },
+  {
+    "id": 67,
+    "section": "A",
+    "question": "Ozonolysis of 2-butene followed by Zn/H₂O gives:",
+    "options": ["Propanal", "Ethanal", "Methanal", "Butanal"],
+    "correct": 1,
+    "subject": "Chemistry (Hydrocarbons)"
+  },
+  {
+    "id": 68,
+    "section": "A",
+    "question": "Which of the following is an electrophile?",
+    "options": ["H₂O", "NH₃", "BF₃", "R-OH"],
+    "correct": 2,
+    "subject": "Chemistry (GOC)"
+  },
+  {
+    "id": 69,
+    "section": "A",
+    "question": "The pH of 0.001 M NaOH is:",
+    "options": ["3", "11", "10", "4"],
+    "correct": 1,
+    "subject": "Chemistry (Equilibrium)"
+  },
+  {
+    "id": 70,
+    "section": "A",
+    "question": "One Faraday corresponds to:",
+    "options": ["96500 C", "Charge on 1 mole of electrons", "Both A and B", "Charge on 1 electron"],
+    "correct": 2,
+    "subject": "Chemistry (Electrochemistry)"
+  },
+  {
+    "id": 71,
+    "section": "A",
+    "question": "For an ideal solution:",
+    "options": ["ΔHmix = 0, ΔVmix = 0", "ΔHmix > 0, ΔVmix > 0", "ΔHmix < 0, ΔVmix < 0", "ΔHmix = 0, ΔVmix > 0"],
+    "correct": 0,
+    "subject": "Chemistry (Solutions)"
+  },
+  {
+    "id": 72,
+    "section": "A",
+    "question": "Unit of rate constant for a first-order reaction:",
+    "options": ["mol L⁻¹ s⁻¹", "s⁻¹", "L mol⁻¹ s⁻¹", "Dimensionless"],
+    "correct": 1,
+    "subject": "Chemistry (Kinetics)"
+  },
+  {
+    "id": 73,
+    "section": "A",
+    "question": "Equivalent weight of KMnO₄ in acidic medium (M = molar mass):",
+    "options": ["M/1", "M/3", "M/5", "M/6"],
+    "correct": 2,
+    "subject": "Chemistry (d-Block)"
+  },
+  {
+    "id": 74,
+    "section": "A",
+    "question": "Oxidation state of Ni in [Ni(CO)₄]:",
+    "options": ["+2", "+4", "0", "–1"],
+    "correct": 2,
+    "subject": "Chemistry (Coordination)"
+  },
+  {
+    "id": 75,
+    "section": "A",
+    "question": "Chlorobenzene + Mg (dry ether) gives:",
+    "options": ["Benzene", "Phenol", "Phenyl magnesium chloride", "No reaction"],
+    "correct": 3,
+    "subject": "Chemistry (Haloarenes)"
+  },
+  {
+    "id": 76,
+    "section": "A",
+    "question": "Reimer-Tiemann reaction introduces which group at ortho?",
+    "options": ["–COOH", "–CHO", "–CH₃", "–OH"],
+    "correct": 1,
+    "subject": "Chemistry (Phenols)"
+  },
+  {
+    "id": 77,
+    "section": "A",
+    "question": "Which acid is strongest?",
+    "options": ["CH₃COOH", "ClCH₂COOH", "Cl₂CHCOOH", "CCl₃COOH"],
+    "correct": 3,
+    "subject": "Chemistry (Carboxylic Acids)"
+  },
+  {
+    "id": 78,
+    "section": "A",
+    "question": "Gabriel phthalimide synthesis prepares:",
+    "options": ["Primary aromatic amines", "Secondary amines", "Primary aliphatic amines", "Tertiary amines"],
+    "correct": 2,
+    "subject": "Chemistry (Amines)"
+  },
+  {
+    "id": 79,
+    "section": "A",
+    "question": "Deficiency causing night blindness:",
+    "options": ["Vitamin A", "Vitamin B1", "Vitamin C", "Vitamin D"],
+    "correct": 0,
+    "subject": "Chemistry (Biomolecules)"
+  },
+  {
+    "id": 80,
+    "section": "A",
+    "question": "HBr + propene (peroxide) gives:",
+    "options": ["1-Bromopropane", "2-Bromopropane", "Propane", "Propyne"],
+    "correct": 0,
+    "subject": "Chemistry (Hydrocarbons)"
+  },
+  {
+    "id": 81,
+    "section": "A",
+    "question": "Max electrons in subshell with l = 2:",
+    "options": ["6", "10", "14", "2"],
+    "correct": 1,
+    "subject": "Chemistry (Structure of Atom)"
+  },
+  {
+    "id": 82,
+    "section": "A",
+    "question": "Bond angle in water is approx.:",
+    "options": ["109.5°", "120°", "104.5°", "180°"],
+    "correct": 2,
+    "subject": "Chemistry (Bonding)"
+  },
+  {
+    "id": 83,
+    "section": "A",
+    "question": "Which is an intensive property?",
+    "options": ["Mass", "Volume", "Temperature", "Enthalpy"],
+    "correct": 2,
+    "subject": "Chemistry (Thermodynamics)"
+  },
+  {
+    "id": 84,
+    "section": "A",
+    "question": "For N₂ + 3H₂ ⇌ 2NH₃ + heat, forward reaction favored at:",
+    "options": ["High T, Low P", "Low T, High P", "High T, High P", "Low T, Low P"],
+    "correct": 1,
+    "subject": "Chemistry (Equilibrium)"
+  },
+  {
+    "id": 85,
+    "section": "A",
+    "question": "Corrosion of iron is:",
+    "options": ["Oxidation", "Reduction", "Polymerization", "Displacement"],
+    "correct": 0,
+    "subject": "Chemistry (Electrochemistry)"
+  },
+  {
+    "id": 86,
+    "section": "A",
+    "question": "Activation energy is obtained from slope of:",
+    "options": ["ln k vs T", "ln k vs 1/T", "k vs T", "k vs 1/T"],
+    "correct": 1,
+    "subject": "Chemistry (Kinetics)"
+  },
+  {
+    "id": 87,
+    "section": "A",
+    "question": "Most abundant noble gas in atmosphere:",
+    "options": ["He", "Ne", "Ar", "Kr"],
+    "correct": 2,
+    "subject": "Chemistry (p-Block)"
+  },
+  {
+    "id": 88,
+    "section": "A",
+    "question": "Which ion is colorless?",
+    "options": ["Ti³⁺", "Cu²⁺", "Sc³⁺", "Fe²⁺"],
+    "correct": 2,
+    "subject": "Chemistry (d-Block)"
+  },
+  {
+    "id": 89,
+    "section": "A",
+    "question": "Which is a bidentate ligand?",
+    "options": ["CN⁻", "Cl⁻", "en (ethylenediamine)", "H₂O"],
+    "correct": 2,
+    "subject": "Chemistry (Coordination)"
+  },
+  {
+    "id": 90,
+    "section": "A",
+    "question": "Test to distinguish 1°, 2°, 3° alcohols:",
+    "options": ["Lucas test", "Victor Meyer test", "Both A and B", "Iodoform test"],
+    "correct": 2,
+    "subject": "Chemistry (Organic)"
+  }
+  ],
+  "biology": [
+    {
+    "id": 91,
+    "section": "A",
+    "question": "In a dihybrid cross AABB × aabb, what is the probability of obtaining an offspring with genotype AABb in the F2 generation?",
+    "options": ["1/16", "2/16", "4/16", "1/8"],
+    "correct": 3,
+    "subject": "Biology (Genetics)"
+  },
+  {
+    "id": 92,
+    "section": "A",
+    "question": "Identify the INCORRECT statement regarding the structure of B-DNA:",
+    "options": [
+      "The two chains have anti-parallel polarity.",
+      "The backbone is constituted by sugar-phosphate.",
+      "Adenine pairs with Thymine through three hydrogen bonds.",
+      "The pitch of the helix is 3.4 nm."
+    ],
+    "correct": 3,
+    "subject": "Biology (Molecular Basis)"
+  },
+  {
+    "id": 93,
+    "section": "A",
+    "question": "Arrange the steps of PCR in the correct sequence:",
+    "options": [
+      "Denaturation → Extension → Annealing",
+      "Annealing → Extension → Denaturation",
+      "Denaturation → Annealing → Extension",
+      "Extension → Denaturation → Annealing"
+    ],
+    "correct": 2,
+    "subject": "Biology (Biotech)"
+  },
+  {
+    "id": 94,
+    "section": "A",
+    "question": "Which of the following is a characteristic of C4 plants but NOT C3 plants?",
+    "options": ["Presence of Rubisco", "Kranz Anatomy", "Photorespiration", "Formation of PGA"],
+    "correct": 1,
+    "subject": "Biology (Plant Phys)"
+  },
+  {
+    "id": 95,
+    "section": "A",
+    "question": "Match Column I with Column II: a. CCK (iii. Pancreas), b. GIP (ii. Gastric Glands), c. ANF (iv. Heart), d. ADH (i. Kidney)",
+    "options": [
+      "a-iii, b-ii, c-iv, d-i",
+      "a-ii, b-iii, c-i, d-iv",
+      "a-iv, b-ii, c-iii, d-i",
+      "a-iii, b-iv, c-ii, d-i"
+    ],
+    "correct": 1,
+    "subject": "Biology (Human Physiology)"
+  },
+  {
+    "id": 96,
+    "section": "A",
+    "question": "According to Robert May's global estimate, the total species diversity on Earth is approximately:",
+    "options": ["1.5 million", "7 million", "20–50 million", "1.7–1.8 million"],
+    "correct": 1,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 97,
+    "section": "A",
+    "question": "During which phase of meiosis do homologous chromosomes separate while sister chromatids remain associated at their centromeres?",
+    "options": ["Anaphase I", "Anaphase II", "Metaphase I", "Telophase I"],
+    "correct": 0,
+    "subject": "Biology (Cell Cycle)"
+  },
+  {
+    "id": 98,
+    "section": "A",
+    "question": "Which of the following is a hormone-releasing IUD?",
+    "options": ["Lippes Loop", "Cu7", "LNG-20", "Multiload 375"],
+    "correct": 2,
+    "subject": "Biology (Reproductive Health)"
+  },
+  {
+    "id": 99,
+    "section": "A",
+    "question": "In a pedigree analysis, a square symbol represents:",
+    "options": ["Female", "Male", "Sex unspecified", "Affected individual"],
+    "correct": 1,
+    "subject": "Biology (Genetics)"
+  },
+  {
+    "id": 100,
+    "section": "A",
+    "question": "Which of the following is an example of Codominance?",
+    "options": [
+      "Pink flower in Snapdragon",
+      "ABO blood grouping in humans",
+      "Skin color in humans",
+      "Tallness in pea plants"
+    ],
+    "correct": 1,
+    "subject": "Biology (Genetics)"
+  },
+  {
+    "id": 101,
+    "section": "A",
+    "question": "The enzyme required for transcription is:",
+    "options": ["DNA Polymerase", "RNA Polymerase", "Ligase", "Helicase"],
+    "correct": 1,
+    "subject": "Biology (Molecular Basis)"
+  },
+  {
+    "id": 102,
+    "section": "A",
+    "question": "Homologous organs indicate:",
+    "options": [
+      "Convergent evolution",
+      "Divergent evolution",
+      "Co-evolution",
+      "Saltation"
+    ],
+    "correct": 1,
+    "subject": "Biology (Evolution)"
+  },
+  {
+    "id": 103,
+    "section": "A",
+    "question": "The plasmid pBR322 has resistance genes for:",
+    "options": [
+      "Ampicillin and Tetracycline",
+      "Ampicillin and Kanamycin",
+      "Chloramphenicol and Tetracycline",
+      "Only Ampicillin"
+    ],
+    "correct": 0,
+    "subject": "Biology (Biotech)"
+  },
+  {
+    "id": 104,
+    "section": "A",
+    "question": "RNA interference (RNAi) involves silencing of a specific mRNA due to a complementary:",
+    "options": ["dsDNA", "ssDNA", "dsRNA", "ssRNA"],
+    "correct": 2,
+    "subject": "Biology (Biotech App)"
+  },
+  {
+    "id": 105,
+    "section": "A",
+    "question": "'Smack' is chemically:",
+    "options": ["Diacetylmorphine", "Cannabinoid", "Cocaine", "Barbiturate"],
+    "correct": 0,
+    "subject": "Biology (Human Health)"
+  },
+  {
+    "id": 106,
+    "section": "A",
+    "question": "Cyclosporin A, an immunosuppressive agent, is produced by:",
+    "options": ["Trichoderma polysporum", "Monascus purpureus", "Saccharomyces cerevisiae", "Penicillium notatum"],
+    "correct": 0,
+    "subject": "Biology (Microbes)"
+  },
+  {
+    "id": 107,
+    "section": "A",
+    "question": "The primary CO2 acceptor in C3 plants is:",
+    "options": ["PEP", "OAA", "RuBP", "PGA"],
+    "correct": 2,
+    "subject": "Biology (Photosynthesis)"
+  },
+  {
+    "id": 108,
+    "section": "A",
+    "question": "The final electron acceptor in the electron transport system (ETS) is:",
+    "options": ["Cytochrome c", "Oxygen", "Hydrogen", "Water"],
+    "correct": 1,
+    "subject": "Biology (Respiration)"
+  },
+  {
+    "id": 109,
+    "section": "A",
+    "question": "Which hormone is responsible for apical dominance?",
+    "options": ["Auxin", "Gibberellin", "Cytokinin", "Ethylene"],
+    "correct": 0,
+    "subject": "Biology (Plant Growth)"
+  },
+  {
+    "id": 110,
+    "section": "A",
+    "question": "The pacemaker of the human heart is:",
+    "options": ["AV Node", "SA Node", "Bundle of His", "Purkinje fibers"],
+    "correct": 1,
+    "subject": "Biology (Circulation)"
+  },
+  {
+    "id": 111,
+    "section": "A",
+    "question": "The functional unit of kidney is:",
+    "options": ["Neuron", "Nephron", "Alveoli", "Villi"],
+    "correct": 1,
+    "subject": "Biology (Excretion)"
+  },
+  {
+    "id": 112,
+    "section": "A",
+    "question": "The joint between atlas and axis is:",
+    "options": ["Hinge joint", "Pivot joint", "Saddle joint", "Gliding joint"],
+    "correct": 1,
+    "subject": "Biology (Locomotion)"
+  },
+  {
+    "id": 113,
+    "section": "A",
+    "question": "The resting membrane potential of a neuron is maintained chiefly by:",
+    "options": ["Sodium-Potassium pump", "Calcium pump", "Chloride channels", "Simple diffusion"],
+    "correct": 0,
+    "subject": "Biology (Neural)"
+  },
+  {
+    "id": 114,
+    "section": "A",
+    "question": "Which hormone regulates the 24-hour (diurnal) rhythm of our body?",
+    "options": ["Melatonin", "Thyroxine", "Adrenaline", "Cortisol"],
+    "correct": 0,
+    "subject": "Biology (Chemical Coordination)"
+  },
+  {
+    "id": 115,
+    "section": "A",
+    "question": "The cells of Leydig secrete:",
+    "options": ["Estrogen", "Progesterone", "Androgens (Testosterone)", "FSH"],
+    "correct": 2,
+    "subject": "Biology (Reproduction)"
+  },
+  {
+    "id": 116,
+    "section": "A",
+    "question": "Saheli, an oral contraceptive for females, contains:",
+    "options": ["Steroidal preparation", "Non-steroidal preparation (Centchroman)", "Progesterone only", "Estrogen only"],
+    "correct": 1,
+    "subject": "Biology (Reproductive Health)"
+  },
+  {
+    "id": 117,
+    "section": "A",
+    "question": "Down's syndrome is caused by:",
+    "options": ["Trisomy 21", "Trisomy 18", "Monosomy X", "XXY genotype"],
+    "correct": 0,
+    "subject": "Biology (Genetics)"
+  },
+  {
+    "id": 118,
+    "section": "A",
+    "question": "According to Hardy-Weinberg principle, allele frequencies in a population remain constant if:",
+    "options": ["There is random mating", "No mutation", "No gene flow", "All of the above"],
+    "correct": 3,
+    "subject": "Biology (Evolution)"
+  },
+  {
+    "id": 119,
+    "section": "A",
+    "question": "Bt toxin is coded by gene:",
+    "options": ["cry", "trp", "lac", "his"],
+    "correct": 0,
+    "subject": "Biology (Biotech)"
+  },
+  {
+    "id": 120,
+    "section": "A",
+    "question": "An interaction where one species is harmed and other is unaffected is called:",
+    "options": ["Amensalism", "Commensalism", "Parasitism", "Predation"],
+    "correct": 0,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 121,
+    "section": "A",
+    "question": "Which pyramid is always upright?",
+    "options": ["Pyramid of Number", "Pyramid of Biomass", "Pyramid of Energy", "None"],
+    "correct": 2,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 122,
+    "section": "A",
+    "question": "The powerhouse of the cell is:",
+    "options": ["Chloroplast", "Mitochondria", "Ribosome", "Lysosome"],
+    "correct": 1,
+    "subject": "Biology (Cell)"
+  },
+  {
+    "id": 123,
+    "section": "A",
+    "question": "Crossing over occurs in:",
+    "options": ["Leptotene", "Zygotene", "Pachytene", "Diplotene"],
+    "correct": 2,
+    "subject": "Biology (Cell Cycle)"
+  },
+  {
+    "id": 124,
+    "section": "A",
+    "question": "Double fertilization is a characteristic feature of:",
+    "options": ["Algae", "Bryophytes", "Pteridophytes", "Angiosperms"],
+    "correct": 3,
+    "subject": "Biology (Plant Kingdom)"
+  },
+  {
+    "id": 125,
+    "section": "A",
+    "question": "Water vascular system is found in:",
+    "options": ["Porifera", "Echinodermata", "Mollusca", "Arthropoda"],
+    "correct": 1,
+    "subject": "Biology (Animal Kingdom)"
+  },
+  {
+    "id": 126,
+    "section": "A",
+    "question": "Radial symmetry is found in flowers of:",
+    "options": ["Mustard", "Pea", "Gulmohar", "Cassia"],
+    "correct": 0,
+    "subject": "Biology (Morphology)"
+  },
+  {
+    "id": 127,
+    "section": "A",
+    "question": "Casparian strips are found in:",
+    "options": ["Epidermis", "Endodermis", "Pericycle", "Cortex"],
+    "correct": 1,
+    "subject": "Biology (Anatomy)"
+  },
+  {
+    "id": 128,
+    "section": "A",
+    "question": "In cockroach, the body is divided into:",
+    "options": ["Head, Thorax, Abdomen", "Head, Trunk, Tail", "Cephalothorax, Abdomen", "Head, Neck, Trunk"],
+    "correct": 0,
+    "subject": "Biology (Structural Org)"
+  },
+  {
+    "id": 129,
+    "section": "A",
+    "question": "Which of the following is a non-reducing sugar?",
+    "options": ["Glucose", "Sucrose", "Maltose", "Lactose"],
+    "correct": 1,
+    "subject": "Biology (Biomolecules)"
+  },
+  {
+    "id": 130,
+    "section": "A",
+    "question": "How many ATP and NADPH are required to fix one molecule of CO2 in C3 cycle?",
+    "options": ["2 ATP, 2 NADPH", "3 ATP, 2 NADPH", "3 ATP, 3 NADPH", "2 ATP, 3 NADPH"],
+    "correct": 1,
+    "subject": "Biology (Photosynthesis)"
+  },
+  {
+    "id": 131,
+    "section": "A",
+    "question": "RQ (Respiratory Quotient) for fats is:",
+    "options": ["1", "> 1", "< 1 (approx 0.7)", "Infinity"],
+    "correct": 2,
+    "subject": "Biology (Respiration)"
+  },
+  {
+    "id": 132,
+    "section": "A",
+    "question": "Vernalization is:",
+    "options": ["Effect of light on flowering", "Effect of low temperature on flowering", "Effect of pressure on growth", "Effect of chemicals on growth"],
+    "correct": 1,
+    "subject": "Biology (Plant Growth)"
+  },
+  {
+    "id": 133,
+    "section": "A",
+    "question": "The volume of air remaining in the lungs even after a forcible expiration is:",
+    "options": ["Tidal Volume", "Residual Volume", "Expiratory Reserve Volume", "Vital Capacity"],
+    "correct": 1,
+    "subject": "Biology (Breathing)"
+  },
+  {
+    "id": 134,
+    "section": "A",
+    "question": "Erythroblastosis fetalis can occur if:",
+    "options": ["Mother is Rh+ and Fetus is Rh-", "Mother is Rh- and Fetus is Rh+", "Both are Rh+", "Both are Rh-"],
+    "correct": 1,
+    "subject": "Biology (Body Fluids)"
+  },
+  {
+    "id": 135,
+    "section": "A",
+    "question": "Which of the following is an anti-diuretic hormone?",
+    "options": ["Oxytocin", "Vasopressin (ADH)", "Insulin", "Glucagon"],
+    "correct": 1,
+    "subject": "Biology (Excretion)"
+  },
+  {
+    "id": 136,
+    "section": "A",
+    "question": "Which protein filaments slide over each other during muscle contraction?",
+    "options": ["Actin over Myosin", "Myosin over Actin", "Troponin over Tropomyosin", "Collagen over Elastin"],
+    "correct": 0,
+    "subject": "Biology (Locomotion)"
+  },
+  {
+    "id": 137,
+    "section": "A",
+    "question": "The part of brain responsible for balance and posture is:",
+    "options": ["Cerebrum", "Cerebellum", "Medulla", "Hypothalamus"],
+    "correct": 1,
+    "subject": "Biology (Neural)"
+  },
+  {
+    "id": 138,
+    "section": "A",
+    "question": "Graves' disease is caused by:",
+    "options": ["Hypothyroidism", "Hyperthyroidism", "Hypoadrenalism", "Hyperadrenalism"],
+    "correct": 1,
+    "subject": "Biology (Chemical Coord)"
+  },
+  {
+    "id": 139,
+    "section": "A",
+    "question": "The process of release of ovum from a mature follicle is called:",
+    "options": ["Ovulation", "Oogenesis", "Parturition", "Implantation"],
+    "correct": 0,
+    "subject": "Biology (Reproduction)"
+  },
+  {
+    "id": 140,
+    "section": "A",
+    "question": "Which ART method involves transfer of embryo at 8 blastomere stage into fallopian tube?",
+    "options": ["IUT", "ZIFT", "GIFT", "AI"],
+    "correct": 1,
+    "subject": "Biology (Reproductive Health)"
+  },
+  {
+    "id": 141,
+    "section": "A",
+    "question": "Linkage was discovered by:",
+    "options": ["Mendel", "Morgan", "Sutton", "Bateson"],
+    "correct": 1,
+    "subject": "Biology (Genetics)"
+  },
+  {
+    "id": 142,
+    "section": "A",
+    "question": "The coding sequences of DNA are known as:",
+    "options": ["Introns", "Exons", "Cistrons", "Transposons"],
+    "correct": 1,
+    "subject": "Biology (Molecular Basis)"
+  },
+  {
+    "id": 143,
+    "section": "A",
+    "question": "The brain capacity of Neanderthal man was:",
+    "options": ["650 cc", "900 cc", "1400 cc", "1650 cc"],
+    "correct": 2,
+    "subject": "Biology (Evolution)"
+  },
+  {
+    "id": 144,
+    "section": "A",
+    "question": "Widal test is used for diagnosis of:",
+    "options": ["Malaria", "Pneumonia", "Typhoid", "AIDS"],
+    "correct": 2,
+    "subject": "Biology (Human Health)"
+  },
+  {
+    "id": 145,
+    "section": "A",
+    "question": "The first antibiotic discovered was:",
+    "options": ["Streptomycin", "Penicillin", "Tetracycline", "Neomycin"],
+    "correct": 1,
+    "subject": "Biology (Microbes)"
+  },
+  {
+    "id": 146,
+    "section": "A",
+    "question": "Restriction endonucleases cut DNA at specific sites called:",
+    "options": ["Palindromic sequences", "Promoters", "Terminators", "Origin of replication"],
+    "correct": 0,
+    "subject": "Biology (Biotech)"
+  },
+  {
+    "id": 147,
+    "section": "A",
+    "question": "Golden rice is genetically modified to produce:",
+    "options": ["Vitamin B", "Vitamin A", "Vitamin C", "Iron"],
+    "correct": 1,
+    "subject": "Biology (Biotech App)"
+  },
+  {
+    "id": 148,
+    "section": "A",
+    "question": "The most important cause of biodiversity loss is:",
+    "options": ["Over-exploitation", "Alien species invasion", "Habitat loss and fragmentation", "Co-extinctions"],
+    "correct": 2,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 149,
+    "section": "A",
+    "question": "Montreal Protocol acts to control:",
+    "options": ["Global warming", "Ozone depletion", "Water pollution", "Noise pollution"],
+    "correct": 1,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 150,
+    "section": "A",
+    "question": "Which organelle is associated with protein synthesis?",
+    "options": ["Smooth ER", "Rough ER", "Golgi body", "Lysosome"],
+    "correct": 1,
+    "subject": "Biology (Cell)"
+  },
+  {
+    "id": 151,
+    "section": "A",
+    "question": "DNA replication occurs in:",
+    "options": ["G1 phase", "S phase", "G2 phase", "M phase"],
+    "correct": 1,
+    "subject": "Biology (Cell Cycle)"
+  },
+  {
+    "id": 152,
+    "section": "A",
+    "question": "Peat is obtained from:",
+    "options": ["Sphagnum", "Funaria", "Marchantia", "Riccia"],
+    "correct": 0,
+    "subject": "Biology (Plant Kingdom)"
+  },
+  {
+    "id": 153,
+    "section": "A",
+    "question": "Which phylum has a pseudocoelom?",
+    "options": ["Platyhelminthes", "Aschelminthes", "Annelida", "Arthropoda"],
+    "correct": 1,
+    "subject": "Biology (Animal Kingdom)"
+  },
+  {
+    "id": 154,
+    "section": "A",
+    "question": "Pneumatophores are found in:",
+    "options": ["Rhizophora", "Banyan", "Maize", "Sugarcane"],
+    "correct": 0,
+    "subject": "Biology (Morphology)"
+  },
+  {
+    "id": 155,
+    "section": "A",
+    "question": "Bulliform cells are found in:",
+    "options": ["Dicot leaf", "Monocot leaf", "Dicot stem", "Monocot root"],
+    "correct": 1,
+    "subject": "Biology (Anatomy)"
+  },
+  {
+    "id": 156,
+    "section": "A",
+    "question": "Frogs are:",
+    "options": ["Ureotelic", "Uricotelic", "Ammonotelic", "Guanotelic"],
+    "correct": 0,
+    "subject": "Biology (Structural Org)"
+  },
+  {
+    "id": 157,
+    "section": "A",
+    "question": "The bond between two amino acids is:",
+    "options": ["Glycosidic bond", "Peptide bond", "Phosphodiester bond", "Ester bond"],
+    "correct": 1,
+    "subject": "Biology (Biomolecules)"
+  },
+  {
+    "id": 158,
+    "section": "A",
+    "question": "Which pigment is the reaction center?",
+    "options": ["Chlorophyll b", "Chlorophyll a", "Carotene", "Xanthophyll"],
+    "correct": 1,
+    "subject": "Biology (Photosynthesis)"
+  },
+  {
+    "id": 159,
+    "section": "A",
+    "question": "Glycolysis occurs in:",
+    "options": ["Mitochondria", "Cytoplasm", "Chloroplast", "Peroxisome"],
+    "correct": 1,
+    "subject": "Biology (Respiration)"
+  },
+  {
+    "id": 160,
+    "section": "A",
+    "question": "Which hormone induces fruit ripening?",
+    "options": ["IAA", "GA3", "Ethylene", "ABA"],
+    "correct": 2,
+    "subject": "Biology (Plant Growth)"
+  },
+  {
+    "id": 161,
+    "section": "A",
+    "question": "The partial pressure of oxygen (pO2) in oxygenated blood is:",
+    "options": ["40 mm Hg", "95 mm Hg", "45 mm Hg", "104 mm Hg"],
+    "correct": 1,
+    "subject": "Biology (Breathing)"
+  },
+  {
+    "id": 162,
+    "section": "A",
+    "question": "Universal donor blood group is:",
+    "options": ["AB+", "O-", "O+", "AB-"],
+    "correct": 1,
+    "subject": "Biology (Body Fluids)"
+  },
+  {
+    "id": 163,
+    "section": "A",
+    "question": "Loop of Henle is meant for:",
+    "options": ["Absorption of glucose", "Concentration of urine", "Secretion of K+", "Filtration"],
+    "correct": 1,
+    "subject": "Biology (Excretion)"
+  },
+  {
+    "id": 164,
+    "section": "A",
+    "question": "Total number of bones in human skeletal system is:",
+    "options": ["200", "206", "300", "210"],
+    "correct": 1,
+    "subject": "Biology (Locomotion)"
+  },
+  {
+    "id": 165,
+    "section": "A",
+    "question": "The gap between two neurons is called:",
+    "options": ["Dendrite", "Axon", "Synapse", "Node of Ranvier"],
+    "correct": 2,
+    "subject": "Biology (Neural)"
+  },
+  {
+    "id": 166,
+    "section": "A",
+    "question": "Which gland is both exocrine and endocrine?",
+    "options": ["Thyroid", "Adrenal", "Pancreas", "Pituitary"],
+    "correct": 2,
+    "subject": "Biology (Chemical Coord)"
+  },
+  {
+    "id": 167,
+    "section": "A",
+    "question": "In humans, fertilization takes place in:",
+    "options": ["Uterus", "Ampullary region of fallopian tube", "Isthmus", "Vagina"],
+    "correct": 1,
+    "subject": "Biology (Reproduction)"
+  },
+  {
+    "id": 168,
+    "section": "A",
+    "question": "MTP is considered safe up to:",
+    "options": ["12 weeks of pregnancy", "20 weeks", "24 weeks", "18 weeks"],
+    "correct": 0,
+    "subject": "Biology (Reproductive Health)"
+  },
+  {
+    "id": 169,
+    "section": "A",
+    "question": "Sex determination in birds is:",
+    "options": ["XX-XY type", "ZZ-ZW type", "XX-XO type", "Haplo-diploid"],
+    "correct": 1,
+    "subject": "Biology (Genetics)"
+  },
+  {
+    "id": 170,
+    "section": "A",
+    "question": "The codon AUG codes for:",
+    "options": ["Methionine", "Valine", "Phenylalanine", "Glycine"],
+    "correct": 0,
+    "subject": "Biology (Molecular Basis)"
+  },
+  {
+    "id": 171,
+    "section": "A",
+    "question": "Analogous structures result from:",
+    "options": ["Convergent evolution", "Divergent evolution", "Genetic drift", "Artificial selection"],
+    "correct": 0,
+    "subject": "Biology (Evolution)"
+  },
+  {
+    "id": 172,
+    "section": "A",
+    "question": "Malignant malaria is caused by:",
+    "options": ["Plasmodium vivax", "Plasmodium malariae", "Plasmodium falciparum", "Plasmodium ovale"],
+    "correct": 2,
+    "subject": "Biology (Human Health)"
+  },
+  {
+    "id": 173,
+    "section": "A",
+    "question": "Biogas typically contains:",
+    "options": ["Methane, H2S, CO2", "Methane, O2, CO2", "Ethane, H2S, CO2", "Methane only"],
+    "correct": 0,
+    "subject": "Biology (Microbes)"
+  },
+  {
+    "id": 174,
+    "section": "A",
+    "question": "DNA fragments are separated by:",
+    "options": ["Centrifugation", "PCR", "Gel Electrophoresis", "Blotting"],
+    "correct": 2,
+    "subject": "Biology (Biotech)"
+  },
+  {
+    "id": 175,
+    "section": "A",
+    "question": "Which nematode infects tobacco roots?",
+    "options": ["Meloidogyne incognita", "Ascaris lumbricoides", "Wuchereria bancrofti", "Caenorhabditis elegans"],
+    "correct": 0,
+    "subject": "Biology (Biotech App)"
+  },
+  {
+    "id": 176,
+    "section": "A",
+    "question": "Natality refers to:",
+    "options": ["Death rate", "Birth rate", "Number of individuals leaving", "Number of individuals entering"],
+    "correct": 1,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 177,
+    "section": "A",
+    "question": "In an aquatic ecosystem, the limiting factor for productivity is usually:",
+    "options": ["Light", "Temperature", "Oxygen", "Carbon dioxide"],
+    "correct": 0,
+    "subject": "Biology (Ecology)"
+  },
+  {
+    "id": 178,
+    "section": "A",
+    "question": "Ribosomes are composed of:",
+    "options": ["DNA and Protein", "RNA and Protein", "RNA and Lipid", "DNA and Lipid"],
+    "correct": 1,
+    "subject": "Biology (Cell)"
+  },
+  {
+    "id": 179,
+    "section": "A",
+    "question": "The stage between two meiotic divisions is called:",
+    "options": ["Interphase", "Interkinesis", "G0 phase", "Karyokinesis"],
+    "correct": 1,
+    "subject": "Biology (Cell Cycle)"
+  },
+  {
+    "id": 180,
+    "section": "A",
+    "question": "Which algae is used as food by space travellers?",
+    "options": ["Chlamydomonas", "Chlorella", "Spirogyra", "Volvox"],
+    "correct": 1,
+    "subject": "Biology (Plant Kingdom)"
+  }
+
+  ]
+}

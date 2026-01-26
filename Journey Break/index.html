@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>For You 💗</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<style>
+:root {
+    --pink: #ffd6e8;
+    --lavender: #e6d9ff;
+    --peach: #ffd4c8;
+    --text: #5a3d5c;
+    --glow: rgba(255, 143, 207, 0.4);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100svh;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--lavender) 50%, var(--peach) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 4vw;
+}
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+/* FLOATING BACKGROUND */
+.floating {
+    position: absolute;
+    bottom: -40px;
+    animation: floatUp linear infinite;
+    opacity: 0;
+    filter: drop-shadow(0 0 8px var(--glow));
+}
+.heart {
+    width: 16px;
+    height: 16px;
+    background: #ff8fcf;
+    transform: rotate(45deg);
+}
+.heart::before,
+.heart::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: #ff8fcf;
+    border-radius: 50%;
+    position: absolute;
+}
+.heart::before { top: -8px; left: 0; }
+.heart::after { left: -8px; top: 0; }
+.star {
+    font-size: 18px;
+}
+.sparkle {
+    font-size: 14px;
+}
+@keyframes floatUp {
+    0% { 
+        transform: translateY(0) rotate(0deg); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 0.7; 
+    }
+    90% { 
+        opacity: 0.7; 
+    }
+    100% { 
+        transform: translateY(-120svh) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+/* MAIN CARD */
+.card {
+    width: min(92vw, 420px);
+    max-width: 100%;
+    max-height: 75svh;
+    padding: 40px 28px 36px;
+    margin: 0 auto;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+        0 8px 32px rgba(138, 43, 226, 0.1),
+        0 2px 8px rgba(255, 143, 207, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    animation: cardEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 32px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(255, 143, 207, 0.3), rgba(230, 217, 255, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.6;
+}
+/* BEAR */
+#bear {
+    width: 200px;
+    max-width: 60vw;
+    height: auto;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 4px 12px rgba(138, 43, 226, 0.15));
+}
+/* MESSAGES */
+#messages {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.message {
+    width: 100%;
+    margin-top: 18px;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    animation: messageAppear 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+    border-radius: 18px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.message:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.15);
+}
+@keyframes messageAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.message:first-child {
+    font-weight: 600;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, rgba(255, 214, 232, 0.8), rgba(230, 217, 255, 0.8));
+}
+/* PULSE EFFECT ON FIRST MESSAGE */
+.message:first-child::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--pink), var(--lavender));
+    opacity: 0;
+    z-index: -1;
+    animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.05); }
+}
+/* DECORATIVE ELEMENTS */
+.deco {
+    position: absolute;
+    font-size: 32px;
+    opacity: 0;
+    animation: decoAppear 1s ease forwards;
+}
+.deco.top-left { top: 20px; left: 20px; animation-delay: 0.5s; }
+.deco.top-right { top: 20px; right: 20px; animation-delay: 0.7s; }
+.deco.bottom-left { bottom: 20px; left: 20px; animation-delay: 0.9s; }
+.deco.bottom-right { bottom: 20px; right: 20px; animation-delay: 1.1s; }
+@keyframes decoAppear {
+    to {
+        opacity: 0.6;
+        transform: rotate(15deg);
+    }
+}
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    body {
+        padding: 16px 3vw;
+    }
+    .card {
+        width: 94vw;
+        max-height: 70svh;
+        padding: 28px 18px 24px;
+        margin: 0 auto;
+        border-radius: 24px;
+    }
+    #bear {
+        width: 160px;
+        max-width: 55vw;
+    }
+    .message {
+        font-size: 0.95rem;
+        padding: 12px 14px;
+        margin-top: 14px;
+    }
+    .message:first-child {
+        font-size: 1.05rem;
+    }
+    .deco {
+        font-size: 24px;
+    }
+    .deco.top-left, .deco.bottom-left { left: 12px; }
+    .deco.top-right, .deco.bottom-right { right: 12px; }
+    .deco.top-left, .deco.top-right { top: 12px; }
+    .deco.bottom-left, .deco.bottom-right { bottom: 12px; }
+}
+@media (max-width: 360px) {
+    body {
+        padding: 16px 2vw;
+    }
+    .card {
+        width: 96vw;
+        max-height: 68svh;
+        padding: 24px 16px 20px;
+    }
+    #bear {
+        width: 140px;
+    }
+    .message {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+        margin-top: 12px;
+    }
+    .deco {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+<body>
+<script>
+/* Floating elements with variety */
+const emojis = ['✨', '💫', '⭐', '💖', '🌸', '🌟', '🌺'];
+for (let i = 0; i < 30; i++) {
+    const el = document.createElement('div');
+    const isHeart = Math.random() > 0.6;
+    el.className = 'floating ' + (isHeart ? 'heart' : (Math.random() > 0.5 ? 'star' : 'sparkle'));
+    if (!isHeart) {
+        el.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+    }
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = 8 + Math.random() * 8 + 's';
+    el.style.animationDelay = Math.random() * 6 + 's';
+    document.body.appendChild(el);
+}
+</script>
+<div class="card">
+    <div class="deco top-left">🌸</div>
+    <div class="deco top-right">✨</div>
+    <div class="deco bottom-left">🌺</div>
+    <div class="deco bottom-right">🌟</div>
+    <div id="bear"></div>
+    <div id="messages"></div>
+</div>
+<script>
+/* Bear animation */
+lottie.loadAnimation({
+    container: document.getElementById('bear'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'https://assets6.lottiefiles.com/packages/lf20_jbrw3hcz.json'
+});
+/* Messages with staggered animation */
+const messages = [
+    "Hey… just checking-in on you 🐼",
+    "I know you've been working really hard lately, can clearly see that! 🌟",
+    "Even on tired days, you're doing amazing ✨",
+    "Please be gentle with yourself 🌸",
+    "Take a deep breath and keep studying ⭐",
+    "Same consistency and ALL SET... 💖",
+    "Remember to take breaks and hydrate 💧",
+    "Ever feel low, then text me simply",
+    "One Day all those efforts will pay off! 🌟",
+    "I'm always cheering for you 🐻",
+    "No need to respond, just know you're appreciated 😊",
+    "Just react with a 🕊️ if you read this!",
+    "Mark my words, you're destined for greatness! 🚀",
+    "And remember, You are Amazing!🐼✨"
+
+];
+const box = document.getElementById('messages');
+messages.forEach((text, i) => {
+    const msg = document.createElement('div');
+    msg.className = 'message';
+    msg.style.animationDelay = `${0.5 + i * 1.4}s`;
+    msg.style.position = 'relative';
+    msg.textContent = text;
+    box.appendChild(msg);
+});
+</script>
+</body>
+</html>

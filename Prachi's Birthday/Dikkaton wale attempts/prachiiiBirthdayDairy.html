@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prachiii's Birthday Diary 🌹</title>
+    <!-- Fonts: Cinzel Decorative for Royal Titles, Crimson Text for Body, Great Vibes for signature -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Palette: Royal Rose Legacy */
+            --bg-dark: #4a0404;
+            /* Deepest Red */
+            --bg-light: #9f1239;
+            /* Rose Red */
+            --paper: #fffdd0;
+            /* Cream / Parchment */
+            --gold: #d4af37;
+            /* Metallic Gold */
+            --gold-shine: #fcd34d;
+            /* Lighter Gold */
+            --text-main: #4a0404;
+            /* Dark Red Text */
+            --text-gold: #b45309;
+            /* Bronze Text */
+
+            --book-width: 340px;
+            --book-height: 500px;
+            --duration: 0.8s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Luxurious Background */
+            background: radial-gradient(circle at center, #881337 0%, #4a0404 60%, #000 100%);
+            font-family: 'Crimson Text', serif;
+            overflow: hidden;
+            perspective: 2500px;
+        }
+
+        /* --- FLOATING PETALS --- */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, #fb7185, #e11d48);
+            border-radius: 5px 50%;
+            opacity: 0.7;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* --- BOOK CONTAINER --- */
+        .stage {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-container {
+            position: relative;
+            width: var(--book-width);
+            height: var(--book-height);
+            perspective: 2000px;
+            transform: rotateX(5deg);
+            /* Slight tilt for elegance */
+            z-index: 10;
+        }
+
+        /* --- GOLDEN SPIRAL --- */
+        .spiral {
+            position: absolute;
+            left: -20px;
+            top: 2%;
+            bottom: 2%;
+            width: 35px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .coil {
+            width: 100%;
+            height: 12px;
+            background: repeating-linear-gradient(90deg, #b45309, #fcd34d 40%, #b45309 60%, #78350f 100%);
+            border-radius: 10px;
+            transform: rotate(-10deg);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- PAGES --- */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform var(--duration) cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .page-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--paper);
+            backface-visibility: hidden;
+            border-radius: 2px 10px 10px 2px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border: 1px solid #e5e5e5;
+
+            /* Vintage Texture */
+            background-image:
+                radial-gradient(circle at center, transparent 0%, rgba(160, 82, 45, 0.05) 100%),
+                linear-gradient(to right, rgba(0, 0, 0, 0.05) 0%, transparent 10%);
+
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Gold Border Frame inside pages */
+        .frame-border {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 2px solid var(--gold);
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .frame-border::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            border: 1px solid var(--gold-shine);
+            opacity: 0.6;
+        }
+
+        /* Corner Flourishes */
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--gold);
+            transition: all 0.3s;
+        }
+
+        .tl {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .tr {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .bl {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .br {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            border-radius: 10px 2px 2px 10px;
+        }
+
+        .back .page-content {
+            background: var(--paper);
+            background-image:
+                radial-gradient(circle at center, transparent 0%, rgba(160, 82, 45, 0.05) 100%),
+                linear-gradient(to left, rgba(0, 0, 0, 0.05) 0%, transparent 10%);
+        }
+
+        /* --- COVER DESIGN (Page 1 Front) --- */
+        #p1 .front .page-content {
+            background: linear-gradient(135deg, #9f1239 0%, #881337 100%);
+            border: 4px solid var(--gold);
+        }
+
+        #p1 .front h1 {
+            color: var(--gold-shine);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #p1 .front .frame-border {
+            border-color: var(--gold-shine);
+        }
+
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2.5rem;
+            color: var(--text-main);
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.8rem;
+            color: #9f1239;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+            color: #5c2b2b;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .highlight {
+            color: #9f1239;
+            font-weight: 600;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--gold);
+            /* Use darker gold contrast? */
+            color: #b45309;
+            margin-top: 20px;
+        }
+
+        /* --- DECOR --- */
+        .rose-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .divider {
+            height: 1px;
+            width: 60px;
+            background: var(--gold);
+            margin: 10px auto;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '♦';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--paper);
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        /* --- PAGE FLIP LOGIC --- */
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 20px;
+            color: var(--gold-shine);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        /* Media Query */
+        @media (max-width: 600px) {
+            :root {
+                --book-width: 85vw;
+                --book-height: 70vh;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .rose-icon {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="petals" id="petals"></div>
+    <div class="hint">Tap Right ➡ Next | Tap Left ⬅ Back</div>
+
+    <div class="stage" id="stage">
+        <div class="book-container">
+
+            <!-- Golden Spiral -->
+            <div class="spiral" id="spiral">
+                <!-- Coils injected via JS -->
+            </div>
+
+            <!-- PAGE 1 -->
+            <div class="page" id="p1" style="z-index: 4;">
+                <div class="front page-content">
+                    <div class="frame-border"></div>
+                    <div style="font-size: 4rem; color: #fff; margin-bottom: 20px;">👑</div>
+                    <h1>The Royal<br>Chronicles</h1>
+                    <div class="divider" style="background:var(--gold-shine); color:var(--gold-shine);"></div>
+                    <p style="color: #fcd34d; opacity: 0.9; margin-top: 10px;">Of Prachiii</p>
+                </div>
+                <div class="back page-content">
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+
+                    <div class="rose-icon">🌹</div>
+                    <h2>A Royal Decree</h2>
+                    <p>"On this special day, let it be known that one absolute
+                        <span class="highlight">Queen</span> was born."
+                    </p>
+                    <div class="divider"></div>
+                </div>
+            </div>
+
+            <!-- PAGE 2 -->
+            <div class="page" id="p2" style="z-index: 3;">
+                <div class="front page-content">
+                    <div class="frame-border"></div>
+                    <h2>Happy Birthday!</h2>
+                    <p>May your reign over this new year be filled with:<br>
+                        <br>✨ Endless Joy<br>✨ Boundless Love<br>✨ Infinite Success
+                    </p>
+                    <div class="rose-icon">🍷</div>
+                </div>
+                <div class="back page-content">
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+
+                    <div class="rose-icon">💎</div>
+                    <h2>You are Rare</h2>
+                    <p>Like a diamond in the rough,<br>you shine brighter than all.</p>
+                    <p style="font-size: 1rem;">"Keep your heels, head, and standards high."</p>
+                </div>
+            </div>
+
+            <!-- PAGE 3 -->
+            <div class="page" id="p3" style="z-index: 2;">
+                <div class="front page-content">
+                    <div class="frame-border"></div>
+                    <h2>The Legacy</h2>
+                    <p>From the first chapter (Row 1)...<br>To this beautiful moment.</p>
+                    <p style="margin-top: 20px;"><i>Every memory is treasured.</i></p>
+                    <div class="divider"></div>
+                </div>
+                <div class="back page-content">
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+
+                    <div style="font-size: 4rem; color: #9f1239;">❤️</div>
+                    <h2>Forever & Always</h2>
+                    <p>Wishing you the happiest of birthdays.</p>
+                    <div class="signature">- Deepak</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- INJECT GOLD COILS ---
+        const spiral = document.getElementById('spiral');
+        for (let i = 0; i < 25; i++) {
+            const d = document.createElement('div');
+            d.classList.add('coil');
+            spiral.appendChild(d);
+        }
+
+        // --- CREATE FALLING PETALS ---
+        const petalContainer = document.getElementById('petals');
+        const petalColors = ['#fb7185', #e11d48', '#fecdd3'];
+        
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.classList.add('petal');
+
+            // Random Size
+            const size = Math.random() * 10 + 10;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+
+            // Random Pos
+            p.style.left = Math.random() * 100 + 'vw';
+
+            // Random Anim
+            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            p.style.animationDelay = (Math.random() * 5) + 's';
+
+            petalContainer.appendChild(p);
+        }
+
+        // --- NAVIGATION (Strict Left/Right) ---
+        const stage = document.getElementById('stage');
+        const pages = Array.from(document.querySelectorAll('.page'));
+        const total = pages.length;
+
+        stage.addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) goNext();
+            else goBack();
+        });
+
+        function goNext() {
+            for (let i = 0; i < total; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    return;
+                }
+            }
+        }
+
+        function goBack() {
+            for (let i = total - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    return;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

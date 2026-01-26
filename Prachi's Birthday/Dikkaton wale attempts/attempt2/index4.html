@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Fairy 💗</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --pink: #f472b6;
+            --lav: #c084fc;
+            --dark: #3b1d2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fce7f3, #ede9fe, #ffe4e6);
+            min-height: 100vh;
+            overflow: hidden;
+            color: #2b1220;
+        }
+
+        /* FEATHERS */
+        .feathers {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .feather {
+            position: absolute;
+            top: -10vh;
+            font-size: 20px;
+            opacity: .6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0
+            }
+        }
+
+        /* STAGES */
+        .stage {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .7s;
+            z-index: 5;
+        }
+
+        .stage.active {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        /* FAIRY */
+        .fairy {
+            font-size: 6rem;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-18px)
+            }
+        }
+
+        /* GLASS BOX (HIGH CONTRAST) */
+        .box {
+            background: rgba(255, 255, 255, .92);
+            border-radius: 28px;
+            padding: 28px;
+            width: 100%;
+            max-width: 640px;
+            text-align: center;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, .15);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: #6b1438;
+            margin-bottom: 16px;
+        }
+
+        /* TYPEWRITER */
+        #typed {
+            min-height: 160px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #3b1d2a;
+            white-space: pre-wrap;
+        }
+
+        #typed::after {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: #ec4899;
+            margin-left: 4px;
+            animation: blink .8s infinite;
+        }
+
+        #typed.done::after {
+            display: none
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        button {
+            margin-top: 22px;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 40px;
+            background: linear-gradient(45deg, #ec4899, #c084fc);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        /* GIFT */
+        .gift {
+            font-size: 5.5rem;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.15)
+            }
+        }
+
+        .cards {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 26px;
+        }
+
+        .card {
+            width: 260px;
+            background: #fff;
+            border-radius: 22px;
+            padding: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+            transition: .3s;
+        }
+
+        .card:active {
+            transform: scale(.96)
+        }
+
+        /* SUB PAGES */
+        .subpage {
+            text-align: left;
+        }
+
+        .back {
+            margin-top: 20px;
+            background: #ddd;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="feathers" id="feathers"></div>
+
+    <!-- STAGE 1 -->
+    <div class="stage active" id="s1">
+        <div style="text-align:center">
+            <div class="fairy">🧚‍♀️💗</div>
+            <p>Tap the fairy ✨</p>
+        </div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage" id="s2">
+        <div class="box">
+            <h1>Hey You 💕</h1>
+            <div id="typed"></div>
+            <button id="next">One last thing 🎀</button>
+        </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage" id="s3">
+        <div class="box">
+            <h1>A Little Surprise 💝</h1>
+            <div class="gift" id="gift">🎁</div>
+            <div class="cards" id="cards"></div>
+        </div>
+    </div>
+
+    <!-- FRIENDSHIP PAGE -->
+    <div class="stage" id="friend">
+        <div class="box subpage">
+            <h1>💗 From Me</h1>
+            <p>
+                This is your official membership to my silly jokes,
+                random thoughts, unnecessary care,
+                and a lot of laughter.
+                <br><br>
+                No expiry. No refunds.
+                Only us 🌸
+            </p>
+            <button class="back" onclick="goBack()">⬅ Back</button>
+        </div>
+    </div>
+
+    <!-- SPOTIFY PAGE -->
+    <div class="stage" id="spotify">
+        <div class="box subpage">
+            <h1>🎧 Spotify Premium</h1>
+            <p>
+                1. Open Spotify App<br>
+                2. Go to Account → Redeem<br>
+                3. Enter the code I’ll give you 💚<br><br>
+                Enjoy ad-free music for 3 months ✨
+            </p>
+            <button class="back" onclick="goBack()">⬅ Back</button>
+        </div>
+    </div>
+
+    <script>
+        /* FEATHERS */
+        const fBox = document.getElementById('feathers');
+        setInterval(() => {
+            const f = document.createElement('div');
+            f.className = 'feather';
+            f.textContent = '🪶';
+            f.style.left = Math.random() * 100 + 'vw';
+            f.style.animationDuration = 8 + Math.random() * 6 + 's';
+            fBox.appendChild(f);
+            setTimeout(() => f.remove(), 15000);
+        }, 500);
+
+        /* TYPEWRITER */
+        const msg = `Some people feel like magic ✨
+
+They make everything softer,
+lighter,
+and warmer.
+
+You’ve been that fairy for me 💗
+And I’m grateful.`;
+
+        let i = 0;
+        function type() {
+            if (i < msg.length) {
+                typed.textContent += msg[i++];
+                setTimeout(type, 70);
+            } else {
+                typed.classList.add('done');
+            }
+        }
+
+        /* NAV */
+        const stages = document.querySelectorAll('.stage');
+        const show = id => {
+            stages.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        };
+
+        document.querySelector('.fairy').onclick = () => {
+            show('s2'); type();
+        };
+        next.onclick = () => show('s3');
+
+        gift.onclick = () => {
+            cards.innerHTML = `
+    <div class="card" onclick="show('friend')">
+      🦥🥳<br><b>Friendship Membership</b>
+    </div>
+    <div class="card" onclick="show('spotify')">
+      🎧<br><b>Spotify Premium</b>
+    </div>`;
+        };
+
+        function goBack() { show('s3'); }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lavender Dream</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap');
+
+        :root {
+            /* LAVENDER DREAM THEME - REFINED */
+            --bg-lavender-start: #f3e5f5;
+            --bg-lavender-mid: #e1bee7;
+            --bg-lavender-end: #ce93d8;
+            --deep-violet: #2a0a3b;
+            --gold-accent: #d4af37;
+            --gold-light: #f9f7d8;
+            /* Vintage Paper Colors */
+            --paper-parchment: #f4e4bc;
+            --text-ink: #3e2723;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-lavender-start), var(--bg-lavender-mid), var(--bg-lavender-end));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Lora', serif;
+            color: var(--text-ink);
+        }
+
+        /* Global Noise Overlay for "Film Grain" look */
+        .global-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 900;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- ATMOSPHERE --- */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.6;
+            animation: floatUp linear infinite;
+        }
+
+        .sparkle {
+            background: var(--gold-accent);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Soft Glow Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: breathe 8s infinite alternate;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 350px;
+            height: 350px;
+            background: #ffffff;
+            top: -100px;
+            left: -100px;
+            mix-blend-mode: soft-light;
+        }
+
+        .orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #e1bee7;
+            bottom: -50px;
+            right: -50px;
+            mix-blend-mode: overlay;
+            animation-delay: 2s;
+        }
+
+        @keyframes breathe {
+            from {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            to {
+                transform: scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        /* --- NOTEBOOK --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            max-width: 420px;
+            height: 72vh;
+            perspective: 2000px;
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+        }
+
+        .notebook-container.closed {
+            transform: translateY(50vh) scale(0.8);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Golden Spiral - More detailed */
+        .spiral {
+            position: absolute;
+            left: -18px;
+            top: 2%;
+            bottom: 2%;
+            width: 45px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(0deg, #b8860b 0%, #ffd700 50%, #b8860b 100%);
+            border-radius: 10px;
+            transform: rotate(-6deg);
+            box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        .ring::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%);
+            opacity: 0.6;
+        }
+
+        /* Pages - Linen Texture */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            background-color: var(--paper-parchment);
+            border-radius: 4px 12px 12px 4px;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+
+            /* Realistic Shadow & Linen Texture + Vignette for Aged Look */
+            box-shadow:
+                inset 0 0 50px rgba(62, 39, 35, 0.2),
+                /* Vignette/Burnt edges */
+                inset 15px 0 25px rgba(0, 0, 0, 0.06), 2px 2px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            /* Darker border for aged feel */
+            backface-visibility: hidden;
+
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f4e4bc' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='1'/%3E%3C/svg%3E"),
+                linear-gradient(to right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.05));
+            /* Subtle grime */
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* Cover Specifics - Crushed Velvet / Leather */
+        .cover {
+            background-color: var(--deep-violet);
+            color: var(--gold-accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            /* Deep Velvet Texture */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='velvet'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeSpecularLighting surfaceScale='2' specularConstant='0.7' specularExponent='20' lighting-color='%236a1b9a' result='specular'%3E%3CfePointLight x='100' y='100' z='200'/%3E%3C/feSpecularLighting%3E%3CfeComposite operator='in' in='specular' in2='SourceAlpha'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23velvet)' opacity='0.3'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #2a0a3b 0%, #1a0525 100%);
+
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), inset 5px 0 10px rgba(255, 255, 255, 0.1);
+            border: 1px solid #10021a;
+        }
+
+        .cover-frame {
+            border: 2px solid var(--gold-accent);
+            padding: 2rem;
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cover-frame::before,
+        .cover-frame::after {
+            content: "✦";
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--gold-light);
+        }
+
+        .cover-frame::before {
+            top: 10px;
+        }
+
+        .cover-frame::after {
+            bottom: 10px;
+        }
+
+        .cover-title {
+            font-family: 'Parisienne', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #FFD700, #FFFACD, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+            line-height: 1.2;
+        }
+
+        /* Content Styling */
+        .page-content {
+            height: 100%;
+            padding: 2.5rem 1.5rem 2.5rem 2.5rem;
+            overflow-y: auto;
+            color: var(--text-ink);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .journal-header {
+            font-family: 'Parisienne', cursive;
+            font-size: 2.2rem;
+            color: #5D3FD3;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* Floral Corner Decoration */
+        .corner-flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            /* Recolored to Lavender/Violet for this theme */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 80 Q50 50 80 20 M20 20 Q50 50 80 80' stroke='%239370DB' fill='none' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%239370DB' opacity='0.5'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(to right, transparent, rgba(147, 112, 219, 0.1), transparent);
+            padding: 10px 0;
+            color: #4B0082;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid #D8BFD8;
+            border-bottom: 1px solid #D8BFD8;
+            margin: 20px 0;
+            border-left: none;
+            /* Removing old border */
+            border-radius: 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* INTRO */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0518;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease;
+        }
+
+        .intro-screen.fade {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-text {
+            font-family: 'Parisienne', cursive;
+            font-size: 4rem;
+            color: #E6E6FA;
+            opacity: 0;
+            animation: fadeInBlur 2s forwards 0.5s;
+        }
+
+        .intro-btn {
+            margin-top: 40px;
+            padding: 12px 40px;
+            background: transparent;
+            border: 1px solid #DAA520;
+            color: #DAA520;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            opacity: 0;
+            animation: slideInUp 1s forwards 2s;
+            transition: 0.3s;
+        }
+
+        .intro-btn:hover {
+            background: rgba(218, 165, 32, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(218, 165, 32, 0.3);
+        }
+
+        @keyframes fadeInBlur {
+            from {
+                opacity: 0;
+                filter: blur(20px);
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Music Controls */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Touch Zones */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 20%;
+            z-index: 200;
+        }
+
+        .zone-left {
+            left: 0;
+        }
+
+        .zone-right {
+            right: 0;
+        }
+
+        .helper-text {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6A5ACD;
+            opacity: 0.7;
+        }
+
+        /* --- RESPONSIVE / MOBILE OPTIMIZATION --- */
+        /* Targets modern mobile phones (Moto G73 is ~412x915 active viewport) */
+        @media screen and (max-width: 480px) {
+            .intro-text {
+                font-size: 3rem;
+            }
+
+            .notebook-container {
+                width: 94vw;
+                /* Slightly wider on mobile */
+                height: 68vh;
+                /* Adjust height to fit comfortably with bars */
+                max-height: 800px;
+            }
+
+            /* Adjust Cover Title for smaller screens */
+            .cover-title {
+                font-size: 2.8rem;
+            }
+
+            /* Content Padding & Text */
+            .page-content {
+                padding: 1.5rem 1rem 1.5rem 1.5rem;
+                /* Reduced padding */
+                font-size: 1rem;
+            }
+
+            .journal-header {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+
+            .highlight-box {
+                padding: 10px;
+                margin: 15px 0;
+                font-size: 0.95rem;
+            }
+
+            /* Spirals - reduce size slightly */
+            .spiral {
+                width: 35px;
+                left: -14px;
+            }
+
+            .ring {
+                height: 10px;
+            }
+
+            /* Music Toggle Position */
+            .music-toggle {
+                bottom: 25px;
+                right: 25px;
+                width: 45px;
+                height: 45px;
+            }
+
+            /* Intro Button */
+            .intro-btn {
+                padding: 10px 30px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Landscape Mode Optimization (if they rotate) */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .notebook-container {
+                height: 85vh;
+                width: 70vw;
+            }
+
+            .page-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-texture"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Intro -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-text">Lavender Dream</h1>
+        <button class="intro-btn" onclick="openDiary()">Open Diary</button>
+    </div>
+
+    <!-- Diary -->
+    <div class="notebook-container closed" id="notebook">
+        <!-- Spiral Binding -->
+        <div class="spiral">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+
+        <div class="notebook">
+            <!-- Cover -->
+            <div class="page cover">
+                <div class="cover-frame">
+                    <div class="cover-title">Prachiii</div>
+                    <div
+                        style="font-family:'Montserrat'; letter-spacing:2px; font-size:0.8rem; margin-top:10px; color:#F0E68C;">
+                        SATURDAY, 18 JAN</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">Dearest Prachiii</div>
+                    <p>Hey, there billu bilote. Do you know how hard it is, not to text you 🦥. Yeah... snapchat bohot
+                        accha tha, me aaram se text kar leta tha. But on Telegram... When I want to text you, I stop
+                        typing and think.. ki shyd wo padhne aayegi or mere text ko dekh ke distract ho jayegi yr🙂</p>
+                    <p>Sometimes I send message and delete it the next minute after sending it... 😅</p>
+                    <p>Kyki mujhe aisa lagta h ki shyd usne mere chakkar me delete kara ho/ ki shyd me bhool jaun...
+                        dheeme dheeme, wo feeling weak ho jaaye or mujhe jyda takleef na ho..!!</p>
+                    <p>Fir mene pooch hi liya tha lastly, ki kya baat h..?? we talked and you said ki pahle se decided
+                        tha ki birthday pe karungiii.. are batana to tha pgl 🦥🦥</p>
+                    <div class="highlight-box">"Pata nhi mujhe aisa kyun lagta h, tum mere baare me chanchal se baat
+                        karti ho to meri WHATT.. lag jaati h..!!"</div>
+                    <p></p>
+
+
+
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">Just For You</div>
+                    <p>Ummmmmmmmmmmmmm...... shyd mene sachme jyada kar diya yrrrr 🙃. Wo wishes, wo dairy, wo game, or
+                        last me wo mock test.</p>
+                    <p>Shyd tumhe firse wo feeling aai ho.. or tum dar gai ho../ ajeeb lagne laga ho.. or tumne achanak
+                        se delete maar diya ho.. (jaise last time dar ke remove kar diya tha mujhe🙃🙂) kyuki shyd agar
+                        tummm... mere se bolti to me manta nhii... or me fir
+                        convince kar leta hamesha ki tarah ya aur kuch karta.. </p>
+                    <div class="highlight-box">"Lekin radhika ko mene wo ferry wali design se wish kara, wo to khush ho
+                        gai..!!"</div>
+                    <p>Tumhe pata h mene next day text kara tha poochne ke liye ki radhika ko konsi bheju.. wait kiya..
+                        lekin tumne delete kar diya tha snapchat, lekin tumne wo dairy or mock test save kar liya
+                        tha.. me wait kar rha tha aur....</p>
+                    <p>Therefore I thought, maybe it was because of me...</p>
+                    <p>Take a moment, breathe, and just swipe through.</p>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">My Message</div>
+                    <p><em></em></p>
+                    <p>I'm not sure what to say exactly today, but I know that I want you to feel appreciated. Every
+                        single day.</p>
+                    <div class="highlight-box">Remember to smile. It suits you perfectly.</div>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">My Message</div>
+                    <p>Today I am ready to accept that it was not just liking. <em> It was something more than
+                            that...</em> And the only reason why I was not ready to accept it is because I was not ready
+                        to loose you..</p>
+                    <p>But for people like me<em> it is hard to move on (Because I never faked anything, My intentions
+                            were Damn pure, and only I know what are those things that I've burnt for you.)</em> It is
+                        not because I never tried, it is
+                        whenever I see any girl in spectacles, mujhe lagta h ye prachi hi h..!! for some seconds. Or ye
+                        tabki baat h jab wo prachi shrama wala scene hua tha.</p>
+                    <p>I know that I can't keep this up forever... Lekin jitna ho sake keech rha tha me. One More
+                        moment, actually good moment, or shyd me zabardasti keech rha tha.</p>
+
+                    <p>Ek cheez aur jaan lo, ha starting me sachme obsessed tha me, lekin ab nhi hu. Starting me I had
+                        more than enough to get everything very very easily, you cannot even imagine those things.</p>
+                    <p></p>
+                    <p>I never gave privalages to someone like this, but I did to you. </p>
+                    <p><em>I am still thinking ki shyd firse mood-swings ho. Lekin shraddha or anukriti ke bhi hote h,
+                            wo log nhi karte aise.</em> Ab ye mera ghatiya dimag suggest kar rha h ki "Har insaan same
+                        nhi hota, kisi kisi ko jyada chid-chid hoti h. You cannot understand because you're a boy..!!"
+                    </p>
+                    <p>If you are mad because I unfollowed you on insta. WO isiliye kyuki mene tumse samne se bola tha
+                        or shyd me tumhari privacy invade kar rha tha, to mene unfollow kar diya tha. Or tumne bhi
+                        follow back nhi kiya to highlighted lag rha tha.</p>
+
+                    <div class="highlight-box">The CURSE of knowing the answer but not ready to accept it..!!</div>
+                    <div class="highlight-box">I wish tumko kabhi aisa kuch feel hi na ho, aur agar ho to ladka
+                        genuinely accha ho..!! Becaue It offers you a physical pain that cannot be controlled..!!</div>
+                    <div class="highlight-box">And yes I never wanted to feel like this cringe, but I did..!! This God
+                        always put me things that slashes my head , whenever i put my knees off.</div>
+                    <p>I think this time i'm going to end this chapter..!! The Old me was much better who dosen't cared
+                        about anything, and anyone.</p>
+                    </p>
+                </div>
+            </div>
+
+
+
+            <!-- Page 5 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">My Message</div>
+                    <p><em>Maybe You'll never read this... ya padhogi jab to kaafi time baad</em></p>
+                    <p>It is because I'm not sure ki ye dairy tumhe kaisa feel kara de, and I don't wanna hurt you......
+                    </p>
+                    <div class="highlight-box">Remember to smile. It suits you perfectly.</div>
+                </div>
+            </div>
+
+            <!-- Back Cover -->
+            <div class="page cover">
+                <div class="cover-frame">
+                    <div class="cover-title" style="font-size: 2.5rem;">Sweet Dreams</div>
+                    <div
+                        style="font-family:'Montserrat'; letter-spacing:1px; font-size:0.7rem; color:#F0E68C; margin-top:20px;">
+                        UNTIL IDK WHEN</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="helper-text">Tap Sides to Flip</div>
+    </div>
+
+    <!-- Touch Zones -->
+    <div class="touch-zone zone-left" onclick="flipPrev()"></div>
+    <div class="touch-zone zone-right" onclick="flipNext()"></div>
+
+    <!-- Music -->
+    <div class="music-toggle" onclick="toggleAudio()">
+        <span id="music-icon" style="font-size:1.5rem;">🎵</span>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="../background.mp3" type="audio/mpeg">
+        <!-- Fallback or empty if not present -->
+    </audio>
+
+    <script>
+        // --- Particles ---
+        const container = document.getElementById('particles');
+        const particleCount = 20;
+
+        function createParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                let p = document.createElement('div');
+                p.classList.add('particle');
+
+                // Randomize sparkle vs circle
+                if (Math.random() > 0.7) p.classList.add('sparkle');
+
+                let size = Math.random() * 6 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // --- Diary Logic ---
+        const notebook = document.getElementById('notebook');
+        const pages = document.querySelectorAll('.page');
+        let totalPages = pages.length;
+
+        // Z-Index Stacking
+        pages.forEach((page, index) => {
+            page.style.zIndex = totalPages - index;
+        });
+
+        function openDiary() {
+            document.getElementById('intro').classList.add('fade');
+            setTimeout(() => {
+                notebook.classList.remove('closed');
+                playAudio();
+            }, 800);
+        }
+
+        function flipNext() {
+            for (let i = 0; i < totalPages; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    // Adjust z-index to ensure it sits on top of the left stack correctly if needed
+                    // For simple stack, just flipping is enough, but we want it to layer properly
+                    pages[i].style.zIndex = 100 + i;
+                    return;
+                }
+            }
+        }
+
+        function flipPrev() {
+            for (let i = totalPages - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    pages[i].style.zIndex = totalPages - i;
+                    return;
+                }
+            }
+        }
+
+        // --- One-sided turn logic (simple stack) ---
+        // Right side click -> Flip top-most unflipped page
+        // Left side click -> Unflip top-most flipped page
+
+        // --- Audio ---
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        function playAudio() {
+            audio.volume = 0.5;
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.textContent = '⏸';
+            }).catch(e => console.log("Audio autoplay blocked"));
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.textContent = '🎵';
+            } else {
+                audio.play();
+                isPlaying = true;
+                musicIcon.textContent = '⏸';
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        #blackScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .center-dot {
+            width: 15px;
+            height: 15px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: none;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            color: white;
+            background: rgba(0,0,0,0.2);
+        }
+        .footer {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .login-container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 300px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 95%;
+        }
+        .project-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(255,20,147,0.3);
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+<div id="blackScreen">
+    <div class="center-dot"></div>
+</div>
+
+<div class="navbar">
+    <div style="color:white;font-size:18px;font-weight:bold;">PrachiVerse</div>
+    <div style="color:white;">Welcome</div>
+</div>
+
+<div class="header">
+    <h1 style="font-size:24px;">✨ Welcome to Prachi's World ✨</h1>
+    <p style="font-size:14px;">Your special moments stored forever</p>
+</div>
+
+<div id="contentArea">
+    <div style="display:flex;justify-content:center;align-items:center;height:60vh;">
+        <div class="login-container">
+            <h2 style="text-align:center;color:white;margin-bottom:20px;">🔐 Login</h2>
+            <input type="text" id="id" placeholder="Enter ID"><br>
+            <input type="password" id="pwd" placeholder="Enter Password"><br>
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 PrachiVerse | Moto G73 Optimized
+</div>
+
+<script>
+    let touchStartTime;
+    let touchTimer;
+
+    document.getElementById('blackScreen').addEventListener('touchstart', (e) => {
+        touchStartTime = Date.now();
+        touchTimer = setTimeout(() => {
+            document.getElementById('blackScreen').style.display = 'none';
+            document.body.style.display = 'block';
+        }, 3000);
+    });
+
+    document.getElementById('blackScreen').addEventListener('touchmove', () => {
+        clearTimeout(touchTimer);
+    });
+
+    document.getElementById('blackScreen').addEventListener('touchend', () => {
+        clearTimeout(touchTimer);
+    });
+
+    function login() {
+        if(document.getElementById('id').value === 'prachi' && document.getElementById('pwd').value === 'billu') {
+            document.getElementById('contentArea').innerHTML = `
+                    <div class="card-grid">
+                        <div class="project-card" onclick="openProject('christmas')">🎄 Christmas</div>
+                        <div class="project-card" onclick="openProject('newyear')">🎉 New Year</div>
+                        <div class="project-card" onclick="openProject('birthday')">🎂 Birthday</div>
+                        <div class="project-card" onclick="openProject('apology')">💝 Apology</div>
+                        <div class="project-card" onclick="openProject('valentine')">💕 Valentine</div>
+                        <div class="project-card" onclick="openProject('anniversary')">💍 Anniversary</div>
+                    </div>
+                `;
+        } else alert('Invalid credentials!');
+    }
+
+    function openProject(name) {
+        window.location.href = name + '.html';
+    }
+</script>
+</body>
+</html>

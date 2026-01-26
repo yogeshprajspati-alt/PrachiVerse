@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Prachi ki 7 Yaadein 🎂</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #fdf2f8, #e6f7ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      touch-action: none;
+    }
+    #gameContainer {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    canvas {
+      background: #fffafd;
+      display: block;
+    }
+    #uiPanel {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 8px;
+      text-align: center;
+      color: #5a2d4f;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    #messageScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(253, 242, 248, 0.95);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      z-index: 10;
+    }
+    #messageText {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #5a2d4f;
+      max-width: 280px;
+    }
+    .btn {
+      background: #ff9ec6;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    #winScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(253, 242, 248, 0.95);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      z-index: 10;
+    }
+    #winMessage {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #5a2d4f;
+      max-width: 280px;
+    }
+    .signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: #ff9ec6;
+    }
+    #confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="gameContainer">
+    <div id="uiPanel">🎂 7 Yaadein • Prachi</div>
+    <canvas id="gameCanvas" width="320" height="320"></canvas>
+    
+    <div id="messageScreen">
+      <div id="messageText"></div>
+      <button class="btn" id="continueBtn">Continue 💖</button>
+    </div>
+    
+    <div id="winScreen">
+      <div id="winMessage"></div>
+      <div class="signature">–Deepak</div>
+      <div id="confetti"></div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const messageScreen = document.getElementById('messageScreen');
+    const messageTextEl = document.getElementById('messageText');
+    const continueBtn = document.getElementById('continueBtn');
+    const winScreen = document.getElementById('winScreen');
+    const winMessageEl = document.getElementById('winMessage');
+    const confettiEl = document.getElementById('confetti');
+
+    const CELL_SIZE = 32;
+    const ROWS = 10;
+    const COLS = 10;
+    const WALL = 1;
+    const PATH = 0;
+    const CHECKPOINT = 2;
+    const TREASURE = 3;
+
+    let playerX = 1;
+    let playerY = 1;
+    let collectedCheckpoints = 0;
+    const totalCheckpoints = 7;
+
+    // Your 7 messages
+    const messages = [
+      "Prachi, aaj ka yeh safar sirf khazane tak nahi… balki tere muskurahat tak le jaayega!",
+      "Tumhare ek message ne kabhi mera din banaya tha… aaj main wapas wahi khushi tumhe dena chahta hoon.",
+      "Duniya mein kitne log honge jinke liye tum bas ‘ek aur ladki’ ho… par mere liye? Tum ho meri peace.",
+      "Raaton ko jab sochta hoon, toh sirf yehi aata hai — ‘Kash Prachi aaj khush ho!’",
+      "Tumhare saath baat karna, chahe real ho ya texts… hamesha lagta hai jaise ghar pahunch gaya hoon.",
+      "Yaad hai wo din jab apan first desk row mein baithe the, saath me?\nMujhe ummeed nhi thi tumhe yaad hogi… lekin tumhe thi. ❤️",
+      "Happy Birthday, Prachi!\n\nDuniya tumhe har khushi de… par agar na de, toh main hoon na!\nHamesha muskurate raho, Beta!"
+    ];
+
+    // Generate maze with open corridors
+    function generateMaze() {
+      const maze = Array(ROWS).fill().map(() => Array(COLS).fill(WALL));
+      
+      // Create open grid
+      for (let y = 1; y < ROWS; y += 2) {
+        for (let x = 1; x < COLS; x += 2) {
+          maze[y][x] = PATH;
+          if (x < COLS - 1) maze[y][x + 1] = PATH;
+          if (y < ROWS - 1) maze[y + 1][x] = PATH;
+        }
+      }
+
+      // Borders
+      for (let i = 0; i < COLS; i++) {
+        maze[0][i] = WALL;
+        maze[ROWS - 1][i] = WALL;
+      }
+      for (let i = 0; i < ROWS; i++) {
+        maze[i][0] = WALL;
+        maze[i][COLS - 1] = WALL;
+      }
+
+      return maze;
+    }
+
+    let maze = generateMaze();
+
+    // Predefined checkpoint positions (ensured reachable)
+    const checkpointPositions = [
+      {x: 3, y: 1}, {x: 5, y: 1}, {x: 7, y: 3},
+      {x: 7, y: 5}, {x: 5, y: 7}, {x: 3, y: 7}, {x: 1, y: 5}
+    ];
+
+    checkpointPositions.forEach(pos => {
+      maze[pos.y][pos.x] = CHECKPOINT;
+    });
+
+    // Treasure appears after 7 collected
+    let treasurePlaced = false;
+    let treasureX = -1, treasureY = -1;
+
+    function placeTreasure() {
+      treasureX = 9;
+      treasureY = 9;
+      maze[treasureY][treasureX] = TREASURE;
+      treasurePlaced = true;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw maze
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          const px = x * CELL_SIZE;
+          const py = y * CELL_SIZE;
+
+          if (maze[y][x] === WALL) {
+            ctx.fillStyle = '#f0e6f5';
+            ctx.strokeStyle = '#e0d0eb';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(px + 2, py + 2, CELL_SIZE - 4, CELL_SIZE - 4, 6);
+            ctx.fill();
+            ctx.stroke();
+          } else if (maze[y][x] === CHECKPOINT) {
+            ctx.fillStyle = '#ff9ec6';
+            ctx.shadowColor = '#ff9ec6';
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.arc(px + CELL_SIZE/2, py + CELL_SIZE/2, CELL_SIZE/4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('❤️', px + CELL_SIZE/2, py + CELL_SIZE/2 + 4);
+          } else if (maze[y][x] === TREASURE) {
+            ctx.fillStyle = '#ffd700';
+            ctx.shadowColor = '#ffd700';
+            ctx.shadowBlur = 12;
+            ctx.beginPath();
+            ctx.arc(px + CELL_SIZE/2, py + CELL_SIZE/2, CELL_SIZE/3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('🎂', px + CELL_SIZE/2, py + CELL_SIZE/2 + 6);
+          }
+        }
+      }
+
+      // Draw player
+      const playerPx = playerX * CELL_SIZE + CELL_SIZE / 2;
+      const playerPy = playerY * CELL_SIZE + CELL_SIZE / 2;
+      ctx.fillStyle = '#ff4d94';
+      ctx.shadowColor = '#ff4d94';
+      ctx.shadowBlur = 10;
+      ctx.font = `${CELL_SIZE - 4}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.fillText('🙂', playerPx, playerPy + 6);
+      ctx.shadowBlur = 0;
+    }
+
+    function movePlayer(dx, dy) {
+      const newX = playerX + dx;
+      const newY = playerY + dy;
+
+      if (newX >= 0 && newX < COLS && newY >= 0 && newY < ROWS) {
+        if (maze[newY][newX] !== WALL) {
+          playerX = newX;
+          playerY = newY;
+
+          // Checkpoint collection
+          if (maze[newY][newX] === CHECKPOINT) {
+            collectedCheckpoints++;
+            maze[newY][newX] = PATH; // remove checkpoint
+
+            showMessage(collectedCheckpoints - 1); // 0-indexed
+
+            if (collectedCheckpoints === totalCheckpoints && !treasurePlaced) {
+              placeTreasure();
+            }
+          }
+
+          // Treasure collection
+          if (maze[newY][newX] === TREASURE) {
+            showWin();
+          }
+        }
+      }
+      draw();
+    }
+
+    function showMessage(index) {
+      messageTextEl.innerHTML = messages[index].replace(/\n/g, '<br>');
+      messageScreen.style.display = 'flex';
+    }
+
+    function showWin() {
+      winMessageEl.innerHTML = messages[6].replace(/\n/g, '<br>') + '<br><br><span class="signature">–Deepak</span>';
+      winScreen.style.display = 'flex';
+      createConfetti();
+    }
+
+    function createConfetti() {
+      confettiEl.innerHTML = '';
+      const emojis = ['🎉', '💖', '✨', '🎁', '🎈', '💐'];
+      for (let i = 0; i < 80; i++) {
+        const span = document.createElement('span');
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.position = 'absolute';
+        span.style.top = '-20px';
+        span.style.left = Math.random() * 100 + '%';
+        span.style.fontSize = (Math.random() * 16 + 14) + 'px';
+        span.style.opacity = Math.random();
+        span.style.animation = `fall ${Math.random() * 2 + 1}s linear forwards`;
+        confettiEl.appendChild(span);
+      }
+
+      if (!document.getElementById('confetti-style')) {
+        const style = document.createElement('style');
+        style.id = 'confetti-style';
+        style.textContent = `@keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }`;
+        document.head.appendChild(style);
+      }
+    }
+
+    continueBtn.onclick = () => {
+      messageScreen.style.display = 'none';
+      draw();
+    };
+
+    // Controls
+    window.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'ArrowUp': movePlayer(0, -1); break;
+        case 'ArrowDown': movePlayer(0, 1); break;
+        case 'ArrowLeft': movePlayer(-1, 0); break;
+        case 'ArrowRight': movePlayer(1, 0); break;
+      }
+    });
+
+    // Touch
+    let touchStartX = 0, touchStartY = 0;
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    });
+    canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+      if (absDx > 30 || absDy > 30) {
+        if (absDx > absDy) movePlayer(dx > 0 ? 1 : -1, 0);
+        else movePlayer(0, dy > 0 ? 1 : -1);
+      }
+    });
+
+    // Mouse (for testing)
+    canvas.addEventListener('mousedown', (e) => {
+      touchStartX = e.clientX;
+      touchStartY = e.clientY;
+      const onMouseUp = (me) => {
+        const dx = me.clientX - touchStartX;
+        const dy = me.clientY - touchStartY;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+        if (absDx > 20 || absDy > 20) {
+          if (absDx > absDy) movePlayer(dx > 0 ? 1 : -1, 0);
+          else movePlayer(0, dy > 0 ? 1 : -1);
+        }
+        canvas.removeEventListener('mouseup', onMouseUp);
+      };
+      canvas.addEventListener('mouseup', onMouseUp);
+    });
+
+    draw();
+  </script>
+</body>
+</html>

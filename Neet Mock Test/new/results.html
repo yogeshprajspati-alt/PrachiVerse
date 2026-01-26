@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET 2026 Mock Test - Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SVG Gradients Definition -->
+    <svg style="display: none;" width="0" height="0">
+        <defs>
+            <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color: var(--primary-color); stop-opacity: 1" />
+                <stop offset="100%" style="stop-color: var(--secondary-color); stop-opacity: 1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="results-wrapper">
+        <!-- Hero Section with Score -->
+        <div class="results-hero">
+            <div class="hero-content">
+                <div class="score-showcase">
+                    <div class="score-ring">
+                        <svg viewBox="0 0 120 120" class="score-svg">
+                            <circle class="score-circle-bg" cx="60" cy="60" r="54"/>
+                            <circle class="score-circle-progress" id="scoreCircleProgress" cx="60" cy="60" r="54" 
+                                    style="stroke-dasharray: 0, 340"/>
+                        </svg>
+                        <div class="score-content">
+                            <div class="score-number" id="totalScore">0</div>
+                            <div class="score-max">/720</div>
+                        </div>
+                    </div>
+                    <div class="score-info">
+                        <div class="score-percentage" id="totalPercentage">0%</div>
+                        <div class="score-rank">Strong Performance</div>
+                    </div>
+                </div>
+
+                <div class="candidate-card">
+                    <div class="candidate-row">
+                        <span class="candidate-label">Candidate Name</span>
+                        <span class="candidate-value" id="resultName">-</span>
+                    </div>
+                    <div class="candidate-row">
+                        <span class="candidate-label">Roll Number</span>
+                        <span class="candidate-value" id="resultRoll">-</span>
+                    </div>
+                    <div class="candidate-row">
+                        <span class="candidate-label">Test Date</span>
+                        <span class="candidate-value" id="testDate">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Quick View -->
+        <div class="container">
+            <div class="quick-stats">
+                <div class="quick-stat-item">
+                    <div class="quick-stat-icon correct">✓</div>
+                    <div class="quick-stat-label">Correct</div>
+                    <div class="quick-stat-value" id="totalCorrect">0</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-icon incorrect">✕</div>
+                    <div class="quick-stat-label">Incorrect</div>
+                    <div class="quick-stat-value" id="totalIncorrect">0</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-icon unattempted">○</div>
+                    <div class="quick-stat-label">Unattempted</div>
+                    <div class="quick-stat-value" id="totalUnattempted">0</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-icon marks">★</div>
+                    <div class="quick-stat-label">Total Marks</div>
+                    <div class="quick-stat-value" id="totalMarks">0</div>
+                </div>
+            </div>
+
+            <!-- Subject Performance Cards -->
+            <div class="subject-section">
+                <div class="section-header">
+                    <h2>Subject Performance</h2>
+                    <p class="section-subtitle">Detailed breakdown by subject</p>
+                </div>
+                <div class="subject-performance-grid">
+                    <!-- Physics Card -->
+                    <div class="performance-card physics-card">
+                        <div class="card-header">
+                            <span class="card-icon">⚛️</span>
+                            <h3>Physics</h3>
+                        </div>
+                        <div class="performance-stats">
+                            <div class="stat-row">
+                                <div class="stat-item">
+                                    <span class="stat-label">Correct</span>
+                                    <span class="stat-val correct-text" id="physicsCorrect">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Incorrect</span>
+                                    <span class="stat-val incorrect-text" id="physicsIncorrect">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Unattempted</span>
+                                    <span class="stat-val unattempted-text" id="physicsUnattempted">0</span>
+                                </div>
+                            </div>
+                            <div class="marks-bar">
+                                <span class="marks-label">Marks Scored</span>
+                                <span class="marks-value" id="physicsMarks">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chemistry Card -->
+                    <div class="performance-card chemistry-card">
+                        <div class="card-header">
+                            <span class="card-icon">🧪</span>
+                            <h3>Chemistry</h3>
+                        </div>
+                        <div class="performance-stats">
+                            <div class="stat-row">
+                                <div class="stat-item">
+                                    <span class="stat-label">Correct</span>
+                                    <span class="stat-val correct-text" id="chemistryCorrect">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Incorrect</span>
+                                    <span class="stat-val incorrect-text" id="chemistryIncorrect">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Unattempted</span>
+                                    <span class="stat-val unattempted-text" id="chemistryUnattempted">0</span>
+                                </div>
+                            </div>
+                            <div class="marks-bar">
+                                <span class="marks-label">Marks Scored</span>
+                                <span class="marks-value" id="chemistryMarks">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biology Card -->
+                    <div class="performance-card biology-card">
+                        <div class="card-header">
+                            <span class="card-icon">🧬</span>
+                            <h3>Biology</h3>
+                        </div>
+                        <div class="performance-stats">
+                            <div class="stat-row">
+                                <div class="stat-item">
+                                    <span class="stat-label">Correct</span>
+                                    <span class="stat-val correct-text" id="biologyCorrect">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Incorrect</span>
+                                    <span class="stat-val incorrect-text" id="biologyIncorrect">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Unattempted</span>
+                                    <span class="stat-val unattempted-text" id="biologyUnattempted">0</span>
+                                </div>
+                            </div>
+                            <div class="marks-bar">
+                                <span class="marks-label">Marks Scored</span>
+                                <span class="marks-value" id="biologyMarks">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Section -->
+            <div class="review-section">
+                <div class="section-header">
+                    <h2>Question Review</h2>
+                    <p class="section-subtitle">Analyze your answers in detail</p>
+                </div>
+                <div class="review-filter">
+                    <button class="filter-btn active" onclick="filterReview('all')">All</button>
+                    <button class="filter-btn" onclick="filterReview('correct')">
+                        <span class="filter-icon correct">✓</span> Correct
+                    </button>
+                    <button class="filter-btn" onclick="filterReview('incorrect')">
+                        <span class="filter-icon incorrect">✕</span> Incorrect
+                    </button>
+                    <button class="filter-btn" onclick="filterReview('unattempted')">
+                        <span class="filter-icon unattempted">○</span> Unattempted
+                    </button>
+                </div>
+                <div class="review-container" id="reviewContainer">
+                    <!-- Reviews inserted here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="results-footer">
+                <button class="btn btn-primary" onclick="window.location.href='index.html'">
+                    <span>🔄</span> Take Another Test
+                </button>
+                <button class="btn btn-secondary" onclick="window.print()">
+                    <span>🖨️</span> Print Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="results.js"></script>
+</body>
+</html>
+

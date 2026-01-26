@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lavender Mist</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap');
+
+        :root {
+            /* LAVENDER MIST THEME */
+            --bg-deep: #1a0b2e;
+            --bg-mid: #2d1b4e;
+            --bg-light: #432c7a;
+            --accent-gold: #ffd700;
+            --accent-silver: #e0e0e0;
+            --paper-color: #f3e5f5;
+            --text-color: #4a148c;
+            --highlight-bg: rgba(123, 31, 162, 0.1);
+            --highlight-border: #ab47bc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-mid), var(--bg-deep));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Lato', sans-serif;
+            color: var(--text-color);
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        .global-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatOrb 15s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #7b1fa2;
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #512da8;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, 30px) scale(1.1);
+            }
+        }
+
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: rise 10s infinite linear;
+        }
+
+        .firefly {
+            background: #ffd700;
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(110vh) translateX(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* --- INTRO SCREEN --- */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #120524;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+        }
+
+        .intro-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #e1bee7;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInTitle 2s forwards 0.5s;
+            text-shadow: 0 0 15px rgba(225, 190, 231, 0.5);
+        }
+
+        .intro-btn {
+            margin-top: 50px;
+            padding: 15px 40px;
+            border: 1px solid #ba68c8;
+            background: transparent;
+            color: #ba68c8;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 50px;
+            opacity: 0;
+            animation: fadeInBtn 1.5s forwards 2s;
+            transition: all 0.3s ease;
+        }
+
+        .intro-btn:hover {
+            background: rgba(186, 104, 200, 0.1);
+            box-shadow: 0 0 20px rgba(186, 104, 200, 0.4);
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInTitle {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInBtn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- DIARY CONTAINER --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            max-width: 440px;
+            height: 75vh;
+            perspective: 2500px;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .notebook-container.closed {
+            transform: translateY(60vh) scale(0.6) rotateX(15deg);
+            opacity: 0;
+        }
+
+        .notebook {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* --- SPIRAL BINDING --- */
+        .spiral {
+            position: absolute;
+            left: -20px;
+            top: 20px;
+            bottom: 20px;
+            width: 40px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(90deg, #555, #ddd 40%, #555);
+            border-radius: 6px;
+            transform: rotate(-5deg);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- PAGES --- */
+        .page {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--paper-color);
+            border-radius: 5px 15px 15px 5px;
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            box-shadow: inset 20px 0 30px rgba(0, 0, 0, 0.05), 5px 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #d1c4e9;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        .page-content {
+            padding: 2.5rem 2rem;
+            flex-grow: 1;
+            overflow-y: auto;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .page-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page-content::-webkit-scrollbar-thumb {
+            background: #ce93d8;
+            border-radius: 2px;
+        }
+
+        /* --- COVER DESIGN --- */
+        .cover {
+            background-color: #2e1a47;
+            /* Deep matte purple */
+            background-image: radial-gradient(circle at 50% 30%, #4527a0, transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239c27b0' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            color: #eceff1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #5e35b1;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .cover-content {
+            border: 2px double #b39ddb;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            background: rgba(49, 27, 146, 0.4);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 0 20px rgba(179, 157, 219, 0.2);
+        }
+
+        .cover-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #e1bee7, #fff, #e1bee7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- CONTENT TYPOGRAPHY --- */
+        .journal-date {
+            font-family: 'Cinzel', serif;
+            color: #7b1fa2;
+            text-align: center;
+            border-bottom: 1px solid #e1bee7;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            border-left: 3px solid var(--highlight-border);
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #6a1b9a;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+        }
+
+        .corner-deco {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            user-select: none;
+        }
+
+        .tr {
+            top: 15px;
+            right: 15px;
+            color: #8e24aa;
+        }
+
+        .bl {
+            bottom: 15px;
+            left: 15px;
+            color: #8e24aa;
+            transform: rotate(180deg);
+        }
+
+        /* --- APOLOGY OVERLAY --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 5, 36, 0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(123, 31, 162, 0.5);
+            position: relative;
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #f3e5f5;
+        }
+
+        .card h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #4a148c;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 8px 25px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .btn-yes {
+            background: #ab47bc;
+            color: white;
+        }
+
+        .btn-no {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Moving No Button Logic */
+        .btn-no.moving {
+            position: absolute;
+        }
+
+        /* Helper Text & Zones */
+        .helper {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+            z-index: 5;
+        }
+
+        .zone {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 20%;
+            z-index: 20;
+        }
+
+        .z-left {
+            left: 0;
+        }
+
+        .z-right {
+            right: 0;
+        }
+
+        /* Music Toggle */
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        @media (max-width: 480px) {
+            .notebook-container {
+                width: 92vw;
+                height: 70vh;
+            }
+
+            .cover-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="global-texture"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Intro -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-title">Lavender Mist</h1>
+        <button class="intro-btn" onclick="enterDiary()">OPEN DIARY</button>
+    </div>
+
+    <!-- Diary Book -->
+    <div class="notebook-container closed" id="book">
+        <div class="spiral">
+            <!-- 10 Rings -->
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+
+        <div class="notebook" id="pagesContainer">
+            <!-- Cover -->
+            <div class="page cover" style="z-index: 10;">
+                <div class="cover-content">
+                    <div class="cover-title">Lavender<br>Mist</div>
+                    <div style="font-size: 0.9rem; letter-spacing: 2px; color: #d1c4e9;">26 JANUARY 2026</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page" style="z-index: 9;">
+                <div class="corner-deco tr">✿</div>
+                <div class="page-content">
+                    <div class="journal-date">Billu ko Over Explain karne aya hu</div>
+                    <p>Actually I have forgotten your name, so can I call you mine..... Janta hu janta hu bohot ghatiya
+                        aur poorani line h.</p>
+                    <p>To fir can I, can I call you Billu Bilota 👾 Actually Badmosh Billu Bilota. I know you will kill
+                        me for this lekin maja ata h🦥.</p>
+                    <div class="highlight">"I wish I had a time machine. Wapis wo coaching me jaake beth jata. Agle din
+                        fir repeat karta. Or fir tabtak Jabtak mera talktime Khatam naa ho jaaye."</div>
+                    <p>Well..... your probability of looking at this diary is nearly 0.47, ye mat poochna kaise
+                        calculate karli. Remember I am an overthinker, I can calculate anything. Wo alag baat h ki
+                        tumhare samne sab fail hota rehta h 😭.</p>
+                    <p>Kya timepass laga rakha h mene. Chalo point pe aatte h</p>
+                    <div class="highlight">Ab dekho mene iske pahle wali diary me bola tha na ki tumhare periods ke time
+                        hi mere se kuch kaand ho jata h 👾🦥 Aur tum bhi us time gusse me rehti ho🦥 patterns dekho ab
+                        🙃 hamesha yahi hota h 🙃 jabki mene likh ke rakha tha ki is time pange nhi lene.</div>
+                    <p>Is baar maafi bhi kis muh see mangu.. gusse or dar me sab to ugal diya mene..........</p>
+                    <p>Tum alag hi gussa dila rhi thi, baar baar sympathy bolke 🦥 Are dada sympathy to thiii hi nhi
+                        kabhi. Or behes bhi nhiii.... request kar riyaaaa tha mee... mana rha tha tumko... 🦥 mujhe to
+                        mera behaviour hi samajh
+                        nhi ata. Ek pal me itna gussa aajata h fir sorry sorry nikalne lagta h. 🦥🦥🦥</p>
+
+                    <div class="highlight">Mene us time bohot control kara tha lekin, nikal hi gaya sab. Or kuch der ke
+                        liye laga sab khatam ho gaya... 🦥 Ab kuch nhi ho sakta 🦥🦥</div>
+                    <p>Shyd sachme ho gaya... 🦥🦥🦥 </p>
+                    <p>Ek to tum bhi ajeeb ho, pahle nhi bata sakti thi ki chanchal meri side leti thi 🗿😭<br> tumhara
+                        wo word "Efforts" mere to kaan taras gaye the sunne ko, haa yr diye the efforts to... me koi web
+                        developer nhi hu.... Ai Engineer hu bhaisab, ab ai wali cheezen thodi boring hoti h. Tumko
+                        pasand nhi aati, although pahle mujhe bare minimum cheezen aati thi. Tabhi to tumhare phone me
+                        wo hang si ho gai thii... 🦥🦥</p>
+                    <p>Mene 8 ghante straight beth ke typescript(new language seekhi thi...) Taaki wo Ho Ho Ho karne
+                        wala santa bana sakun... 🦥🦥🦥<br> Shuru shuru me to designs bhi itni acchi nhi thi, ab
+                        dekhoooo.. Seekh jata hu re jaldi.</p>
+                    <p>Are kya bolne aya tha or kya bole jaaa rha me.....</p>
+
+
+                </div>
+                <div class="corner-deco bl">✿</div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page" style="z-index: 8;">
+                <div class="corner-deco tr">✦</div>
+                <div class="page-content">
+                    <div class="journal-date">Reflections</div>
+                    <p>Idk how you are feeling currently, but I hope you are happy. Janti ho me sab kuch over-explain
+                        kyun karta thaaaaa... 🦥🦥</p>
+                    <p>1). Dar bana rehta tha ki tum kahi, chali.... naaa..... jaoooo...🦥🦥</p>
+                    <p>2). Pepper ne mere se ek din bola thaa.... Girl's heart is 4 times softer than boy's... 🦥🦥 <br>
+                        If you make her feel depressed, a small vein of her heart gets cut... 🦥🦥<br> Also when she
+                        goes through disappointment she loses 72 days of her memory... koisi bhi ho sakti h wo.. 🦥🦥
+                        <br> And that's why my dear deep, never ever hurt a girl. 🦥🦥
+                    </p>
+                    <p>If you do <em>It means you gifted her a physical pain dear,</em> tumhe to uski parwah thi na???
+                        to kaise kar sakte ho aisa. 🦥🦥</p>
+                    <div class="highlight">"Or bs ye hamesha dimag me aajata h or me fir tumko sab explain karne lagta
+                        hu(Over Explain🦥😂)."</div>
+                    <p>Mujhe ab jaake samajh aya ki us din tumne sab clear karne ke liye group kyun banaya. 🦥🦥 You
+                        always wanted ki kabhi koi misunderstanding na ho. 🦥🦥 Mujhe to pata bhi nhi tha aisa.</p>
+                    <center><button class="btn btn-yes" style="margin-top:20px;" onclick="openApology()">Click for a
+                            Surprise</button></center>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page" style="z-index: 7;">
+                <div class="corner-deco tr">✨</div>
+                <div class="page-content">
+                    <div class="journal-date">The End</div>
+                    <p>Ram sir mujhe kyun nhi pasand despite his very good behaviour to me... 🦥🦥 bata deta hu
+                        aaj..ruko tummmmm....</p>
+                    <img src="img1.png" alt="A picture of me smiling" width="300">
+                    <img src="image.png" alt="A picture of me smiling" width="300">
+                    <p>Look at my reply.... Mere se koi 100 baaten bol de shyd me tolerate karlu, lekin mere chooze ko
+                        koi ek baar kuch kahe to sb khatam uske liye meri side se...</p>
+                    <div class="highlight">Aise hi uske class ki koi English teacher thi, ye seedhi ladki h. To daba rhi
+                        thi ise aur sabke samne ispe comment pass kar rhi thi, ye pgl ghar aake kisi ko kuch nhi bataya
+                        or rone beth gai. Fir kya. Or jab mujhe pata chala ki kya hua h to me turant chala gaya ,
+                        principal se hi ladne, even though he knows me, me seedha bol rha tha aap wo teacher ko laao
+                        mere samne. Unhone bol diya wo half day me ghar chali gain thi 😂Me itne gusse me gaya tha ki
+                        agle din se fir wo teacher straight path pe aa gain. </div>
+
+                    <p>Iska ram sir se kya relation.... Actually ye setup tha tumko batane ke liye. <br> Hua ye, ki ram
+                        sir ki coaching mene isko join kara di thi shuru me. Accha padhate the yr wo, lekin wo convent
+                        ki majority ke chakkar me kabhi kabhi insult kar dete the inlog ki. Isne mere se bola ki aisa h.
+                        To mene band kara di coaching. Or yahi karan h ki mujhe sir itne nhi pasand. Ummmm mera chooza
+                        mere bacche jaisa h.... Kuch bhi hota h to bolti h "pata h alooooo aaj kya hua 😂, ek time pe
+                        mere se mmy bolti thi...." abhi bol rhi thi kya hua.... prachi didi se baat kyun nhi ho rhi😂
+                        daal gali nhi kyaaa 😂 upar se me raat ko 3 baje soya tha, aise hi bethe bethe nind lag gai...
+                        to ye dusht ladki subah aai or mera laptop samne tha or jo me design kar rha tha wo khula tha
+                        "Prachi Verse😭" Tabse lagi thi mere maje lene me. </p>
+
+
+                    <div class="highlight">Ohh prachiii, I know you are angry. Is baar maafi nhi milegi. 🦥🦥 Mil bhi
+                        gai to me kis muh se baat karungaaa... mene wo kachra jo kar diya... Theek h lekin.. me nhi
+                        chahta tum pareshan hoo... lekin ab wait kar rha hu kab chanchal wo diary padheee, fir me tumkoo
+                        faltoo pareshan karna band kardu... Bohot ho gaya mera ab, har baar same cheez hoti h, same
+                        mistakes, same time, same reaction, same everything... </div>
+                    <p>I know you are someone's daughter, someone's sister, someone's friend, someone's everything...
+                    </p>
+                    <p>I don't wanna hurt you, or mere se hamesha wahi ho jata h. Fir dard bhi hota h sab faila hua dekh
+                        ke.</p>
+                    <p>Tumne shyd wo dosti wali cheez gusse me boldi hooo, ya shyd sach ho wo..... 🦥🦥 Jo h theek hi h,
+                        pata nhi kyun mujhe to bonding feel hoti thiiii.... acchi dost wali, shyd meri overthinking ki
+                        wajah se hi ho wooo....</p>
+                    <p>I don't know what to say, or what to do....</p>
+                    <p>Accha lagta tha, tumse baaten kar ke. Ladai karke, arguments..... fir wo baccha ban ke maafi
+                        mangnaa..<br> I am damn sure shyd hi me kisi ke samne aisi harkaten dunga ab.</p>
+                    <p>Mujhe pata h tum bohot gussa ho. Lekin ab to mere haath se sab nikal hi gaya....</p>
+                    <p>Theek h yr🦥🦥 Tumne wo Ai wali dependence ki baat sahi hi boli. If you Remember mere bro ke
+                        trauma wale time bhi tumne yahi kaha tha. Machines or tumhare programs human nhi hote, itna
+                        lagav accha nhi. Mujhe aaj bhi uski bohot yaad aati h lekin us time kuch jyada hiiii... your
+                        words o girl, those help me everytime I severly need them. Yeah I know I know it sounds like a
+                        ferry tale. But its true. Mn to tha bohot saari cheezen batau, lekin wo friendship to mera
+                        dilusion thaaa.... But idk it felt like it was real. I just wanted to be with you now it is not
+                        possible though. It would be better for you that i leave you.
+                        <br>Ye diary likh ke aisa lagta h tumse baat hi kar rha hu, pata tk nhi h ki tum padhogi ki
+                        nhi😂🦥.
+                        <br>Oye haa, bhool hi gaya tha me. I have never hacked you or tricked you okay..!! I am not
+                        courageous enough to do that. Kar bhi naa paunga kabhi, you know well why :) , also me jab
+                        capable bhi tha, mera brooo tha jab bhi nhi kara kabhiiiii. Tumko sikhane ka km jaroor tha , ki
+                        safe kaise rehte h aise attacks se. Ummmm shyd possible na ho ab.
+                    </p>
+                    <div class="highlight">Are haa rating???, nhi nhi rehne do. Conversation initaite ho jayegi yr 🦥
+                        Fir it is Impossible for me to avoid you. Me tumhari taraf se khud ko 10 de rha ab🦥🦥</div>
+                    <p>Ohhhh please background music pe mat bhadakna, ek to mujhe pata nhi tumko konsa pasand h to jo
+                        mila wo daal diya</p>
+                </div>
+                <div class="corner-deco bl">✨</div>
+            </div>
+
+            <!-- Back Cover -->
+            <div class="page cover" style="z-index: 6;">
+                <div class="cover-content" style="border-style: dotted;">
+                    <div style="font-family: 'Dancing Script'; font-size: 2rem; color: #e1bee7;">Goodnight</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="helper">Tap sides to flip</div>
+    <div class="zone z-left" onclick="flipPrev()"></div>
+    <div class="zone z-right" onclick="flipNext()"></div>
+    <div class="music-btn" onclick="toggleAudio()">🎵</div>
+    <audio id="bgm" loop>
+        <source src="background.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Apology/Surprise Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="card" id="card-step-1">
+            <img src="beg-dont-leave.gif" alt="Cute Gif"> <!-- Using existing gif asset -->
+            <h2>A Small Request</h2>
+            <p>Will you accept this warm hug?</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="showThanks()">YES!</button>
+                <button class="btn btn-no" id="runaway-btn" onmouseover="moveBtn()" onclick="moveBtn()">NO</button>
+            </div>
+            <button
+                style="margin-top:20px; background:none; border:none; color:#999; cursor:pointer; text-decoration:underline;"
+                onclick="closeApology()">Close</button>
+        </div>
+
+        <div class="card" id="card-step-2" style="display:none;">
+            <img src="cat-holding-flowers.gif" alt="Flowers"> <!-- Using existing jpg asset -->
+            <h2>Yay! Thank You!</h2>
+            <p>I'm the best! 😎</p>
+            <button class="btn btn-yes" style="margin-top:20px;" onclick="closeApology()">Return to Diary</button>
+        </div>
+    </div>
+
+    <script>
+        /* --- PARTICLES --- */
+        const pContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            let p = document.createElement('div');
+            p.className = Math.random() > 0.8 ? 'particle firefly' : 'particle';
+            let size = Math.random() * 5 + 2;
+            p.style.width = size + 'px'; p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            p.style.animationDelay = (Math.random() * 5) + 's';
+            pContainer.appendChild(p);
+        }
+
+        /* --- DIARY LOGIC --- */
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+        const totalPages = pages.length;
+
+        // Initialize Z-Indexes to ensure correct stacking order
+        pages.forEach((page, index) => {
+            page.style.zIndex = totalPages - index;
+        });
+
+        function enterDiary() {
+            document.getElementById('intro').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('book').classList.remove('closed');
+                playAudio();
+            }, 500);
+        }
+
+        function flipNext() {
+            if (currentPage < totalPages - 1) {
+                // Add class first for animation
+                pages[currentPage].classList.add('flipped');
+                // Ensure flipped page sits on top of the left stack
+                // Use a high base number (50) to ensure it's above any unflipped pages
+                pages[currentPage].style.zIndex = 50 + currentPage;
+                currentPage++;
+            }
+        }
+
+        function flipPrev() {
+            if (currentPage > 0) {
+                currentPage--;
+                // Remove class to reverse animation
+                pages[currentPage].classList.remove('flipped');
+                // Restore original z-index order so it sits correctly on the right stack
+                pages[currentPage].style.zIndex = totalPages - currentPage;
+            }
+        }
+
+        /* --- AUDIO --- */
+        const audio = document.getElementById('bgm');
+        let playing = false;
+        function playAudio() {
+            audio.volume = 0.5;
+            audio.play().then(() => playing = true).catch(() => { });
+        }
+        function toggleAudio() {
+            if (playing) { audio.pause(); playing = false; }
+            else { audio.play(); playing = true; }
+        }
+
+        /* --- OVERLAY LOGIC --- */
+        const overlay = document.getElementById('overlay');
+        const card1 = document.getElementById('card-step-1');
+        const card2 = document.getElementById('card-step-2');
+        const noBtn = document.getElementById('runaway-btn');
+
+        function openApology() {
+            overlay.style.display = 'flex';
+            setTimeout(() => overlay.style.opacity = 1, 10);
+            card1.style.display = 'block';
+            card2.style.display = 'none';
+        }
+
+        function closeApology() {
+            overlay.style.opacity = 0;
+            setTimeout(() => overlay.style.display = 'none', 500);
+        }
+
+        function showThanks() {
+            card1.style.display = 'none';
+            card2.style.display = 'block';
+        }
+
+        function moveBtn() {
+            const cardRect = card1.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Calculate safe boundaries within the card
+            const maxX = card1.clientWidth - btnRect.width - 20;
+            const maxY = card1.clientHeight - btnRect.height - 20;
+
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+    </script>
+</body>
+
+</html>

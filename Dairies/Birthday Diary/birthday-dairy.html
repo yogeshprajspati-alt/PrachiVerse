@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Happy Birthday Prachiii ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Nunito:wght@400;700&family=Parisienne&display=swap');
+
+        :root {
+            /* MAGICAL BIRTHDAY PALETTE */
+            --bg-gradient-start: #ffdde1;
+            --bg-gradient-end: #ee9ca7;
+            --accent-pink: #ff6b81;
+            --accent-gold: #ffd700;
+            --paper-cream: #fffdf5;
+            --text-main: #5d4037;
+            --spiral-silver: linear-gradient(90deg, #d3d3d3, #f5f5f5, #a9a9a9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-main);
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+
+        /* Confetti Container */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-gold);
+            animation: confettiFall 4s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(0.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Balloons */
+        .balloon-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 60px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatBalloon 15s infinite ease-in;
+            box-shadow: inset 10px 10px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes floatBalloon {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-120vh) rotate(10deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- GIFT BOX ENTRANCE (REDESIGNED) --- */
+        .gift-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #fff0f5 0%, #ffe4e1 100%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s, visibility 1s;
+        }
+
+        .gift-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* 3Dish Gift Box */
+        .gift-box {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: floatGift 3s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes floatGift {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+        }
+
+        .gift-box:hover {
+            animation-play-state: paused;
+            transform: scale(1.05);
+        }
+
+        /* Base Box */
+        .gift-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 85%;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(255, 117, 140, 0.4);
+            /* Polka Dot Pattern */
+            background-image: radial-gradient(#ffffff 15%, transparent 16%);
+            background-size: 20px 20px;
+        }
+
+        /* Lid */
+        .gift-lid {
+            position: absolute;
+            top: 0;
+            left: -5%;
+            width: 110%;
+            height: 25%;
+            background: linear-gradient(135deg, #ff8fa3, #ff9a9e);
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Ribbons */
+        .ribbon-v {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 100%;
+            background: linear-gradient(to right, #ffd700, #fdb931, #ffd700);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .ribbon-h {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 35px;
+            background: linear-gradient(to bottom, #ffd700, #fdb931, #ffd700);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Big Bow */
+        .bow-container {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .bow-loop {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 10px solid #fdb931;
+            border-radius: 50% 50% 0 50%;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #e6c200);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            top: 0;
+        }
+
+        .bow-loop.left {
+            left: -60px;
+            transform: rotate(-30deg);
+            border-radius: 50% 50% 50% 0;
+        }
+
+        .bow-loop.right {
+            right: -60px;
+            transform: rotate(30deg);
+            border-radius: 50% 50% 0 50%;
+        }
+
+        .bow-center {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #fdb931;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 6;
+        }
+
+        .tap-hint {
+            margin-top: 240px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #d81b60;
+            text-shadow: 0 2px 0 rgba(255, 255, 255, 0.5);
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        /* --- NOTEBOOK CONTAINER --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            max-width: 420px;
+            height: 72vh;
+            perspective: 2000px;
+            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.8) translateY(100px);
+            opacity: 0;
+        }
+
+        .notebook-container.active {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* --- SPIRAL BINDING --- */
+        .spiral {
+            position: absolute;
+            left: -18px;
+            top: 20px;
+            bottom: 20px;
+            width: 40px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 12px;
+            background: repeating-linear-gradient(45deg, #d3d3d3, #eee 2px, #fff 4px, #d3d3d3 6px);
+            border-radius: 6px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            transform: rotate(-5deg);
+        }
+
+        /* --- PAGES --- */
+        .page {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--paper-cream);
+            border-radius: 5px 15px 15px 5px;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            box-shadow: inset 20px 0 30px rgba(0, 0, 0, 0.05), 5px 5px 20px rgba(0, 0, 0, 0.15);
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        .page-content {
+            padding: 30px;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* --- COVER DESIGN (PREMIUM) --- */
+        .cover-page {
+            background-color: #5d2532;
+            /* Deep Wine/Maroon */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237a3442' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .cover-frame {
+            width: 86%;
+            height: 90%;
+            border: 2px solid #ffd700;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(circle, rgba(93, 37, 50, 0.9) 0%, rgba(74, 28, 38, 1) 100%);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+        }
+
+        /* Gold Corners */
+        .cover-frame::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .gold-border-corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #ffd700;
+            transition: all 0.5s;
+        }
+
+        .tl {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .tr {
+            top: -2px;
+            right: -2px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .bl {
+            bottom: -2px;
+            left: -2px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .br {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .cover-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: transparent;
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+            animation: shine 3s infinite linear;
+            background-size: 200%;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .cover-subtitle {
+            font-family: 'Nunito', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 0.9rem;
+            color: #ffd700;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 5px 0;
+        }
+
+        .cover-icon {
+            font-size: 3.5rem;
+            margin: 20px 0;
+            filter: drop-shadow(0 0 10px #ff6b81);
+            animation: beat 2s infinite ease-in-out;
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* --- DECORATIONS --- */
+        .sticker {
+            position: absolute;
+            opacity: 0.8;
+            transform: rotate(-10deg);
+        }
+
+        .sticker.cake {
+            bottom: 20px;
+            right: 20px;
+            font-size: 3rem;
+        }
+
+        .sticker.heart {
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ff6b81;
+        }
+
+        /* --- CAKE INTERACTION --- */
+        .cake-container {
+            margin: 30px auto;
+            width: 150px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .cake-container:active {
+            transform: scale(0.95);
+        }
+
+        .cake-body {
+            width: 100px;
+            height: 60px;
+            background: #ff9a9e;
+            border-radius: 10px 10px 5px 5px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 4px 0 #e8868d;
+        }
+
+        .cake-layer {
+            width: 100%;
+            height: 10px;
+            background: #fff;
+            position: absolute;
+            top: 20px;
+        }
+
+        .candle {
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(#eee, #ccc);
+            margin: 0 auto;
+            position: relative;
+            top: -25px;
+            border-radius: 2px;
+        }
+
+        .flame {
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(circle, #ffd700, #ff6b6b);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -20px;
+            left: -2px;
+            animation: flicker 0.5s infinite alternate;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        .flame.out {
+            opacity: 0;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1) skew(2deg);
+            }
+        }
+
+        .wish-msg {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #ff6b81;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .wish-msg.show {
+            opacity: 1;
+        }
+
+        /* --- NAVIGATION HINT --- */
+        .nav-hint {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            text-align: center;
+            color: #ff6b81;
+            font-weight: bold;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            animation: hintFloat 2s infinite;
+        }
+
+        @keyframes hintFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* --- TOUCH ZONES --- */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            z-index: 500;
+            /* background: rgba(0,0,0,0.1); Debug */
+        }
+
+        .left-zone {
+            left: 0;
+        }
+
+        .right-zone {
+            right: 0;
+        }
+
+        /* --- MUSIC PLAYER --- */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Elements -->
+    <div class="confetti-container" id="confetti-layer"></div>
+    <div class="balloon-container" id="balloon-layer"></div>
+
+    <!-- Entrance Gift -->
+    <div class="gift-overlay" id="gift-intro">
+        <div class="gift-box" onclick="openGift()">
+            <div class="gift-lid">
+                <div class="ribbon-v"></div>
+                <div class="ribbon-h"></div>
+                <div class="bow-container">
+                    <div class="bow-loop left"></div>
+                    <div class="bow-loop right"></div>
+                    <div class="bow-center"></div>
+                </div>
+            </div>
+            <div class="gift-body">
+                <div class="ribbon-v"></div>
+            </div>
+        </div>
+        <div class="tap-hint">Tap to Reveal 🎁</div>
+    </div>
+
+    <!-- Notebook Area -->
+    <div class="notebook-container" id="notebook">
+        <div class="nav-hint">Tap Right ➔ to Flip | Tap Left ⬅ to Back</div>
+
+        <div class="notebook">
+            <!-- Spiral Binding -->
+            <div class="spiral">
+                <!-- 10 Rings -->
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+
+            <!-- Page 1: Cover (REDESIGNED) -->
+            <div class="page cover-page" style="z-index: 6;">
+                <div class="cover-frame">
+                    <div class="gold-border-corner tl"></div>
+                    <div class="gold-border-corner tr"></div>
+                    <div class="gold-border-corner bl"></div>
+                    <div class="gold-border-corner br"></div>
+
+                    <div class="cover-title">Happy<br>Birthday</div>
+                    <div class="cover-subtitle">Prachiii ✨</div>
+
+                    <div class="cover-icon">🥳</div>
+
+                    <div
+                        style="font-family: 'Parisienne', cursive; color: #ffd700; font-size: 1.2rem; margin-top: 10px;">
+                        Birthday Diary
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 2: Personalized Note -->
+            <div class="page" style="z-index: 5;">
+                <div class="sticker heart">💖</div>
+                <div class="page-content">
+                    <h2>Prachiii✨,</h2>
+                    <p>
+                        Kaha tha na impress to tum ho jaogiii..... ✨
+                    </p>
+                    <p>
+                        Is special day par, I just want to remind you kitni special ho tum. Not just because it's your
+                        birthday, but because of who you are.
+                        Tumhari smile, tumhara gussa (thoda sa 🤏), and your unique vibe sab kuch bohot precious hai.
+                    </p>
+                    <p>
+                        May this year bring you as much joy as you bring to everyone around you. (Or thoda kam stress
+                        lena
+                        please! 😂)
+                    </p>
+                    <div style="text-align: right; font-family: 'Great Vibes'; font-size: 1.5rem; margin-top: 20px;">
+                        - Deepak
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Cake Interaction -->
+            <div class="page" style="z-index: 4;">
+                <div class="page-content"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <h2>Make a Wish!</h2>
+                    <p style="text-align: center;">Close your eyes, make a wish, and tap the candle to blow it out!</p>
+
+                    <div class="cake-container" onclick="blowCandle()">
+                        <div class="candle">
+                            <div class="flame" id="candle-flame"></div>
+                        </div>
+                        <div class="cake-body">
+                            <div class="cake-layer"></div>
+                        </div>
+                    </div>
+
+                    <div class="wish-msg" id="wish-text">
+                        ✨ May all your wishes come true! ✨
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: Memories / Fun -->
+            <div class="page" style="z-index: 3;">
+                <div class="page-content">
+                    <h2>Remember...</h2>
+                    <p>
+                        Dekho me ye texts tabhi likhta hu jab me sone hi wala hu or bistar me pada hu to almost sahiii
+                        hi h sab. Lappy toppy mere pittu pe...
+                    </p>
+                    <p>
+                        <em>"Age is merely the number of years the world has been enjoying you."</em>
+                    </p>
+                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+                    <p>
+                        Chand me daag uski kami nhi hote prachiii, wo uski khoobi hoti h. Bina un daagon ke Chand Chand
+                        nhi koi bulb lagega🦥. Or me to bachpan se un daagon ko chand ka face samajhta tha🌛, I hope tum
+                        bhi
+                        samajhti hogi.
+                        <br> Tumhare andar koi kami nhi h. Tum jaisi ho ekdum perfect ho.
+                        Mere se bohot pahle mere ek teacher ne kaha tha Aaj achanak yaad aa rhi h wo baat.
+                        <em>'ek heera johri ke haath me valuable hota h, ek dobhi ke liye wo heera bhi patthar h. Jisko
+                            wo
+                            max to max paper weight bana sakta h.'</em>
+                    </p><br>
+
+
+                    <p>
+                        Jaanti ho kyunnnn...
+                        Wo isiliye kyuki ek johri ko uski keemat ka andaza hota h. Or dobhi ko nhi hota.
+                    </p>
+                    <p>
+                        That's why I'm telling you. Know your worth, khud ko ek johri ke nazariye se dekho. Me to dekhta
+                        hi hu kher....
+                    </p><br <p>
+                    Or ek aur cheez h 😂 jo mere dimag me aai thi. Jo log bina tumhe closely jaane tumhari Kami
+                    nikal de. Samajh lo wo us bhediye ke jaise h jo angoor na milne pe unko khatta hone ka tag de
+                    deta h. Unko laat maar ke apne dimag se bahar nikal do.
+                    </p><br>
+
+                    <p>Kuch bhi kaho, cool to me hu 😎 😏 ha ha me janta hu tum meri tareef nhi karogi. Nhi to me hawa
+                        me udne lagunga haina. Just smile once after looking at this. Me sochunga ye ispe kaam karna
+                        worth-it raha🥳✨.
+                    </p><br>
+                    <div style="text-align: center; font-size: 3rem;">🎉🎈🥳</div>
+                </div>
+            </div>
+
+            <!-- Page 5: Final -->
+            <div class="page" style="z-index: 2;">
+                <div class="page-content"
+                    style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <h2>Enjoy Your Day!</h2>
+                    <p>
+                        Yeh diary hamesha yahi rahegi. Jab bhi down feel karo, just flip through these pages.
+                    </p>
+                    <p style="margin-top: 30px; font-weight: bold; color: #ff6b81;">
+                        Happiesttttt Birthday Once Again! 🎂
+                    </p>
+                    <div style="margin-top: 40px; font-size: 1.2rem; color: #888;">
+                        Are haa Prachiii me iii is inspiring innocent idiot..!!
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="touch-zone left-zone" onclick="flipPrev()"></div>
+    <div class="touch-zone right-zone" onclick="flipNext()"></div>
+
+    <div class="music-toggle" onclick="toggleAudio()">
+        <span id="music-icon">🎵</span>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bg-audio" loop>
+        <!-- Suggesting user replace this with their file or a standard happy birthday instrument -->
+        <source src="dairy.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        /* --- CONFETTI ENGINE --- */
+        const colors = ['#ff6b81', '#ffd700', '#7bed9f', '#70a1ff', '#a4b0be'];
+        const confettiLayer = document.getElementById('confetti-layer');
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const conf = document.createElement('div');
+                conf.classList.add('confetti');
+                conf.style.left = Math.random() * 100 + '%';
+                conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                conf.style.animationDelay = (Math.random() * 5) + 's';
+                confettiLayer.appendChild(conf);
+            }
+        }
+
+        /* --- BALLOON ENGINE --- */
+        const balloonLayer = document.getElementById('balloon-layer');
+        function createBalloons() {
+            for (let i = 0; i < 8; i++) {
+                const b = document.createElement('div');
+                b.classList.add('balloon');
+                b.style.left = (Math.random() * 80 + 10) + '%';
+                b.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 200}, ${Math.random() * 200}, 0.6)`;
+                b.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                b.style.animationDelay = (Math.random() * 10) + 's';
+                balloonLayer.appendChild(b);
+            }
+        }
+
+        /* --- GIFT OPENING --- */
+        function openGift() {
+            const overlay = document.getElementById('gift-intro');
+            const lid = document.querySelector('.gift-lid');
+            const notebook = document.getElementById('notebook');
+            const audio = document.getElementById('bg-audio');
+
+            // Animate Lid - Pop it up and rotate away
+            lid.style.transition = 'transform 0.8s ease-out, opacity 0.8s';
+            lid.style.transform = 'translateY(-250px) rotate(-45deg) translateX(50px)';
+            lid.style.opacity = '0';
+
+            // Play Music
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log('Audio autoplay blocked'));
+
+            // Fade out overlay after lid moves
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                notebook.classList.add('active');
+            }, 600);
+        }
+
+        /* --- PAGE FLIPPING LOGIC --- */
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const totalPages = pages.length;
+
+        // Initialize Z-Indexes
+        pages.forEach((page, index) => {
+            page.style.zIndex = totalPages - index;
+        });
+
+        function flipNext() {
+            if (currentPage < totalPages) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            }
+        }
+
+        function flipPrev() {
+            if (currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove('flipped');
+            }
+        }
+
+        /* --- CANDLE INTERACTION --- */
+        function blowCandle() {
+            const flame = document.getElementById('candle-flame');
+            const msg = document.getElementById('wish-text');
+
+            if (!flame.classList.contains('out')) {
+                flame.classList.add('out');
+                msg.classList.add('show');
+                // Creating extra confetti burst
+                createConfetti();
+            }
+        }
+
+        /* --- AUDIO CONTROL --- */
+        function toggleAudio() {
+            const audio = document.getElementById('bg-audio');
+            const icon = document.getElementById('music-icon');
+            if (audio.paused) {
+                audio.play();
+                icon.textContent = '⏸';
+            } else {
+                audio.pause();
+                icon.textContent = '🎵';
+            }
+        }
+
+        /* --- INITIALIZE --- */
+        createConfetti();
+        createBalloons();
+
+    </script>
+</body>
+
+</html>

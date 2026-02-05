@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Notebook</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Caveat', cursive;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 10px 100px 10px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: float 15s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .notebook-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .notebook {
+            position: relative;
+            width: 90vw;
+            max-width: 380px;
+            height: 75vh;
+            max-height: 550px;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fffef7;
+            background-image:
+                linear-gradient(90deg, rgba(255, 182, 193, 0.15) 0%, rgba(255, 182, 193, 0.15) 5px, transparent 5px),
+                repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(173, 216, 230, 0.2) 24px, rgba(173, 216, 230, 0.2) 25px);
+            border-radius: 8px 0 0 8px;
+            box-shadow:
+                0 8px 16px rgba(0, 0, 0, 0.15),
+                inset 0 0 20px rgba(0, 0, 0, 0.05);
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 30px;
+            padding-left: 45px;
+            font-size: 20px;
+            line-height: 1.8;
+            color: #2c3e50;
+            overflow-y: auto;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .page::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .page.cover {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            background-image:
+                linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%),
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9InRleHR1cmUiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3RleHR1cmUpIi8+PC9zdmc+');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            color: #d63031;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background-size: cover, 60px 60px;
+            gap: 15px;
+        }
+
+        .cover-subtitle {
+            font-size: 18px;
+            font-family: 'Caveat', cursive;
+            color: #e17055;
+            font-weight: 400;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+            z-index: 1;
+            /* Ensure flipped pages are below */
+        }
+
+        .page .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 16px;
+            color: #bdc3c7;
+            font-weight: 700;
+        }
+
+        .page-content {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page:nth-child(1) {
+            z-index: 11;
+        }
+
+        .page:nth-child(2) {
+            z-index: 10;
+        }
+
+        .page:nth-child(3) {
+            z-index: 9;
+        }
+
+        .page:nth-child(4) {
+            z-index: 8;
+        }
+
+        .page:nth-child(5) {
+            z-index: 7;
+        }
+
+        .page:nth-child(6) {
+            z-index: 6;
+        }
+
+        .spiral {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            z-index: 12;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 15px 0;
+        }
+
+        .spiral-ring {
+            position: relative;
+            width: 100%;
+            height: 24px;
+        }
+
+        .spiral-ring::before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            width: 38px;
+            height: 6px;
+            background: linear-gradient(0deg, #95a5a6, #ecf0f1 40%, #7f8c8d 100%);
+            border-radius: 3px;
+            transform: translateY(-50%) rotate(-12deg);
+            box-shadow:
+                0 2px 3px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.9);
+            z-index: 2;
+        }
+
+        .spiral-ring::after {
+            content: '';
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            background: #2d3436;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 13;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            min-width: 90px;
+            transition: all 0.3s ease;
+            font-family: 'Caveat', cursive;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .emoji {
+            display: inline-block;
+            font-size: 24px;
+            margin: 0 5px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(255, 223, 0, 0.3) 0%, rgba(255, 223, 0, 0.5) 100%);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 5px 100px 5px;
+            }
+
+            .notebook {
+                width: 95vw;
+                height: 70vh;
+                max-height: 480px;
+            }
+
+            .page {
+                font-size: 18px;
+                padding: 20px;
+                padding-left: 40px;
+            }
+
+            .page.cover {
+                font-size: 28px;
+            }
+
+            .cover-subtitle {
+                font-size: 16px;
+            }
+
+            .controls {
+                bottom: -65px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 15px;
+                min-width: 80px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            body {
+                padding: 10px 5px 90px 5px;
+            }
+
+            .notebook {
+                height: 65vh;
+                max-height: 420px;
+            }
+
+            .controls {
+                bottom: -60px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            body {
+                padding: 10px 5px 80px 5px;
+            }
+
+            .notebook {
+                height: 60vh;
+                max-height: 380px;
+            }
+
+            .page {
+                font-size: 16px;
+                padding: 15px;
+                padding-left: 35px;
+            }
+
+            .controls {
+                bottom: -55px;
+            }
+        }
+
+        /* Butterfly Animations */
+        .butterflies-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            z-index: 0;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .butterfly svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .butterfly-wings {
+            transform-origin: center;
+            animation: flutter 0.18s infinite alternate ease-in-out;
+        }
+
+        .butterfly-body {
+            fill: rgba(0, 0, 0, 0.6);
+        }
+
+        .butterfly-antennae {
+            fill: none;
+            stroke: rgba(0, 0, 0, 0.6);
+            stroke-width: 1;
+            stroke-linecap: round;
+        }
+
+        @keyframes flutter {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(60deg);
+            }
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translate(-10vw, 110vh) rotate(45deg) scale(0.6);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.9;
+                transform: translate(5vw, 90vh) rotate(45deg) scale(0.8);
+            }
+
+            25% {
+                transform: translate(25vw, 75vh) rotate(35deg) scale(0.9);
+            }
+
+            50% {
+                transform: translate(50vw, 50vh) rotate(55deg) scale(0.8);
+            }
+
+            75% {
+                transform: translate(75vw, 25vh) rotate(40deg) scale(0.9);
+            }
+
+            90% {
+                opacity: 0.9;
+                transform: translate(95vw, 5vh) rotate(45deg) scale(0.8);
+            }
+
+            100% {
+                transform: translate(110vw, -10vh) rotate(45deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        /* Randomize butterfly paths */
+        .butterfly:nth-child(1) {
+            left: 10%;
+            animation: fly 18s linear infinite;
+            animation-delay: 0s;
+        }
+
+        .butterfly:nth-child(2) {
+            left: 30%;
+            animation: fly 23s linear infinite;
+            animation-delay: 5s;
+        }
+
+        .butterfly:nth-child(3) {
+            left: 70%;
+            animation: fly 16s linear infinite;
+            animation-delay: 9s;
+        }
+
+        .butterfly:nth-child(4) {
+            left: 50%;
+            animation: fly 26s linear infinite;
+            animation-delay: 2s;
+        }
+
+        .butterfly:nth-child(5) {
+            left: 85%;
+            animation: fly 21s linear infinite;
+            animation-delay: 13s;
+        }
+
+        .butterfly:nth-child(6) {
+            left: 15%;
+            animation: fly 29s linear infinite;
+            animation-delay: 7s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="butterflies-container">
+        <!-- Butterfly 1: Royal Purple/Gold -->
+        <div class="butterfly">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                        <stop offset="0%" style="stop-color:#ff00cc;stop-opacity:1" />
+                        <stop offset="60%" style="stop-color:#6600cc;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#330066;stop-opacity:1" />
+                    </radialGradient>
+                    <filter id="glow1">
+                        <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+                        <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+                <g class="butterfly-wings" filter="url(#glow1)">
+                    <path d="M50,52 C35,25 10,20 5,40 C0,60 30,70 50,65 C70,70 100,60 95,40 C90,20 65,25 50,52"
+                        fill="url(#grad1)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5" />
+                    <path d="M50,65 C35,75 20,90 25,95 C30,100 45,90 50,75 C55,90 70,100 75,95 C80,90 65,75 50,65"
+                        fill="url(#grad1)" opacity="0.9" />
+                </g>
+                <ellipse cx="50" cy="60" rx="2" ry="12" class="butterfly-body" />
+                <path d="M48,48 Q40,35 35,40 M52,48 Q60,35 65,40" class="butterfly-antennae" />
+            </svg>
+        </div>
+
+        <!-- Butterfly 2: Electric Blue Morpho -->
+        <div class="butterfly">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <radialGradient id="grad2" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+                        <stop offset="70%" style="stop-color:#0000ff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000033;stop-opacity:1" />
+                    </radialGradient>
+                </defs>
+                <g class="butterfly-wings">
+                    <path d="M50,52 C32,22 8,18 4,38 C-2,58 28,68 50,63 C72,68 102,58 96,38 C92,18 68,22 50,52"
+                        fill="url(#grad2)" stroke="rgba(255,255,255,0.4)" stroke-width="0.5" />
+                    <path d="M50,63 C35,73 15,88 20,93 C25,98 40,88 50,73 C60,88 75,98 80,93 C85,88 65,73 50,63"
+                        fill="url(#grad2)" opacity="0.9" />
+                </g>
+                <ellipse cx="50" cy="58" rx="2" ry="12" class="butterfly-body" />
+                <path d="M48,46 Q40,33 35,38 M52,46 Q60,33 65,38" class="butterfly-antennae" />
+            </svg>
+        </div>
+
+        <!-- Butterfly 3: Emerald/Gold -->
+        <div class="butterfly">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#66ff66;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#00cc00;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#003300;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g class="butterfly-wings">
+                    <path d="M50,52 C35,25 10,20 5,40 C0,60 30,70 50,65 C70,70 100,60 95,40 C90,20 65,25 50,52"
+                        fill="url(#grad3)" stroke="#ffff00" stroke-width="0.3" stroke-opacity="0.5" />
+                    <path d="M50,65 C35,75 20,90 25,95 C30,100 45,90 50,75 C55,90 70,100 75,95 C80,90 65,75 50,65"
+                        fill="url(#grad3)" opacity="0.9" />
+                </g>
+                <ellipse cx="50" cy="60" rx="2" ry="12" class="butterfly-body" />
+                <path d="M48,48 Q40,35 35,40 M52,48 Q60,35 65,40" class="butterfly-antennae" />
+            </svg>
+        </div>
+
+        <!-- Butterfly 4: Sunset Monarch -->
+        <div class="butterfly">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <radialGradient id="grad4" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#ffcc00;stop-opacity:1" />
+                        <stop offset="60%" style="stop-color:#ff6600;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#cc0000;stop-opacity:1" />
+                    </radialGradient>
+                </defs>
+                <g class="butterfly-wings">
+                    <path d="M50,52 C35,25 10,20 5,40 C0,60 30,70 50,65 C70,70 100,60 95,40 C90,20 65,25 50,52"
+                        fill="url(#grad4)" stroke="black" stroke-width="0.5" stroke-opacity="0.3" />
+                    <path d="M50,65 C35,75 20,90 25,95 C30,100 45,90 50,75 C55,90 70,100 75,95 C80,90 65,75 50,65"
+                        fill="url(#grad4)" opacity="0.9" />
+                </g>
+                <ellipse cx="50" cy="60" rx="2" ry="12" class="butterfly-body" />
+                <path d="M48,48 Q40,35 35,40 M52,48 Q60,35 65,40" class="butterfly-antennae" />
+            </svg>
+        </div>
+
+        <!-- Butterfly 5: Dreamy Pastel -->
+        <div class="butterfly">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffccff;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#cc99ff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#9966ff;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g class="butterfly-wings">
+                    <path d="M50,52 C35,25 10,20 5,40 C0,60 30,70 50,65 C70,70 100,60 95,40 C90,20 65,25 50,52"
+                        fill="url(#grad5)" stroke="white" stroke-width="1" stroke-opacity="0.6" />
+                    <path d="M50,65 C35,75 20,90 25,95 C30,100 45,90 50,75 C55,90 70,100 75,95 C80,90 65,75 50,65"
+                        fill="url(#grad5)" opacity="0.8" />
+                </g>
+                <ellipse cx="50" cy="60" rx="2" ry="12" class="butterfly-body" />
+                <path d="M48,48 Q40,35 35,40 M52,48 Q60,35 65,40" class="butterfly-antennae" />
+            </svg>
+        </div>
+
+        <!-- Butterfly 6: Golden Glow -->
+        <div class="butterfly">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <radialGradient id="grad6" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#fff700;stop-opacity:1" />
+                        <stop offset="60%" style="stop-color:#ffaa00;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ff4500;stop-opacity:1" />
+                    </radialGradient>
+                </defs>
+                <g class="butterfly-wings">
+                    <path d="M50,52 C35,25 10,20 5,40 C0,60 30,70 50,65 C70,70 100,60 95,40 C90,20 65,25 50,52"
+                        fill="url(#grad6)" />
+                    <path d="M50,65 C35,75 20,90 25,95 C30,100 45,90 50,75 C55,90 70,100 75,95 C80,90 65,75 50,65"
+                        fill="url(#grad6)" opacity="0.9" />
+                </g>
+                <ellipse cx="50" cy="60" rx="2" ry="12" class="butterfly-body" />
+                <path d="M48,48 Q40,35 35,40 M52,48 Q60,35 65,40" class="butterfly-antennae" />
+            </svg>
+        </div>
+    </div>
+
+    <div class="notebook-container">
+        <div class="notebook">
+            <div class="spiral">
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+            </div>
+
+
+            <div class="page cover">
+                <div><span class="emoji">Pirachiii.........💖✨</span></div>
+                <div class="cover-subtitle">Maybe this one is LaSt.....</div>
+
+            </div>
+
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">1</div>
+                    <p><span class="emoji">🌟</span> <span class="highlight">Sab kuch ekdum subtle/majak wale way me
+                            h, tension me mat jana bilkul bhi 🔪 </span></p>
+                    <p>Hellewwwwwwwwww pirachiii😜, Buri tarah thaki hogi tumm..., yaha jao waha jao, ye karo wo
+                        karo.</p>
+                    <p>Tabiyat mat bigad lena bs. Thand to waise hi h (Khud ko superman mat samajh lena chupchaap
+                        sweater pehen lena). Kya likhu ab 😂 Bohot jorrr se nind aa rhi h ab
+                        to, aloo ke parontheeee lapet ke betha hu isiliyeee... 🐣 Are haa me bata rha tha ki shyd... se
+                        maybee.... I got a lot of control over myself
+                        regarding youu...</p>
+                    <p>Noww... If I wish, me tumhare notifications ko bhi avoid kar sakta hu 😼😏😎</p>
+                    <p>Thoda extra busy rehne ki kosish aur thoda sa meditation. Tumne hi bola tha ek baar, tab kuch
+                        kaam nhi kiya tha lekin iss baar ho rha h. Shyd pahle me man se nhi kar rha tha -_- </p>
+
+                    <p>You are Truely, a Lovely Girl🐼💖</p>
+                    <p>Pichle itne saalon me mene bohot cheezen try kari thi, anukriti ne to suggest kara tha ki me
+                        tumhara bura character arc imagine karu tabhi kuch hoga warna aise hi fasa rahega.</p>
+                    <p>Lekin my heart never accepted your dark face(Maybe I never wanted to accept it). Ye wala way
+                        jyada accha h . Ab me tumhe roast bhi kar paaunga 😎</p>
+                    <p>Bina dimag wale Praniiii....🐣, aisa nhi rehta re ki me hamesha snap pe betha rehta hu😂. Wo ye h
+                        ki
+                        mene naaa sabke notifications "OFF"📴 kar rakhe h, except yours 🫵.</p>
+                    <p>Saare APPS Ke band rehte h, Or mera internet bhi hamesha connected rehta h tooo, um jab kuch
+                        bhejti ho to ek hi notification rehta h..., "Pirachiii🤪" is Typing.... to mere se control nhi
+                        hota tha🐣😂 or me dekh leta hu... tap karke. ("Lekin mujhe bohot accha lagta h tum mujhe bata
+                        deti ho jo bhi lagta h to 🦥🐼")</p>
+                    <p>Bohot kaam rehta h reeee, collage ka padho, skills gather karo, khana banao-bartan-waherah, fir
+                        Freelancing, yt dekho apna, apne dream ke liye kuch karo, koi help maange to woo karo, apne mn
+                        ka kuch seekho, etc etc. </p>
+
+
+
+
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">2</div>
+                    <p><span class="emoji">🦥</span> <span class="highlight">Hey You Girl...</span></p>
+                    <P>
+                        . </P>
+
+                    <img src="screenshot1.jpg" alt="A picture of me smiling" width="300">
+                    <p>Ye dekho, almost sabki band h bs family ko chhorkee... 🦥🦥 </p>
+                    <img src="screenshot2.jpg" alt="A picture of me smiling" width="300">
+                    <p>Ye smackchie anukriti h👾</p>
+                    <p>Or meri bye or byeeeeeeeeeeeeeee.... me bohot antar rehta h 🐣😂</p>
+                    <p>Kaafi unanswered questions h mere dimag me abhi bhi😂. Us se yaad jaroor aajati h tumhari..</p>
+                    <p>Tum janti ho mujhe tumhari itni fikar kyun rehti h???</p>
+                    <p>It is because I know how it feels.</p>
+                    <p>I care for all of you because I know the importance of being cared...</p>
+                    <p>I provide you instant replies because there was a time I was ignored and left alone....</p>
+                    <p>Samne se bhiiii... isiliye poochta hu, are you okkk (you can exrpress if you're not). I always
+                        get some visions, sabse poochta hu (satyam, arindam, you)</p>
+                    <p>For me, everything holds a deep meaning, that's why I value you so much... </p>
+
+
+                    <p>Tum ye shaadi se free ho, fir dekh lunga me tumheee 🔪</p>
+
+
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">3</div>
+                    <p><span class="emoji">🎨</span> <span class="highlight">My Love Language Is "Code"</span></p>
+                    <p>Ab tum dekho, jo me sochta hu uska kuch na kuch bana deta hu🦥, dost nhi thee to mera bro bana
+                        liya tha, kaam jyada rehte h isliye AI Agents. Tumhara clone bhi banaya tha mene (yaad karo wo
+                        neural networks ka poocha tha mene), yaad ho toooo... mene galati se wo snap tumko bhej diya tha
+                        or tumne save kar liye tha fir mene delete kar diya tha, Lekin wo clone exactly tumhari copy nhi
+                        ban paaiii thi... , kosish rahegi is baar ho jaaye chuttiyon me.Tum conversation se dar rhi
+                        thi to wo pages bana diyee.
+                        Ab kuch aur banaunga padh padh kee.... Aur wo mail ek tareeka tha...
+                        Tumtak wo Webpage ki link bhejne ke liye 🐣😜. Kyuki baaki platforms me tum mera message nhi
+                        dekh rhi thiii... 👾</p>
+                    <p>Ha ha maan lo maan lo🐣, Me bohot intellignet hu 😼😏😎. Tum idiot ho 😎</p>
+                    <p>Tum cashmish 🥸 ho aur meri ankhen telescope🔭</p>
+                    <p>Tum tingu 😼👾🐣 Me lambu 😎🐼</p>
+                    <p>Tareef karne ka mn to thaaa, lekinn.. tum bhadak jaati ho 🦥🦥 fir bhi peshhhhhh..... h
+                        yeeee......</p>
+                    <img src="flirt1.jpg" alt="A picture of me smiling" width="300">
+                    <img src="flirt2.jpg" alt="A picture of me smiling" width="300">
+                    <img src="flirt3.jpg" alt="A picture of me smiling" width="300">
+                    <img src="flirt4.jpg" alt="A picture of me smiling" width="300">
+                    <p>Is gobhi ki sabzi bana ke mujhe parcel kardo mujhe bhook lagiii h 🐼🐣</p>
+                    <P>Or ye lo tumhari fees 👇👇</P>
+                    <img src="flirt5.jpg" alt="A picture of me smiling" width="300">
+                    <img src="flirt6.jpg" alt="A picture of me smiling" width="300">
+                    <p>Hehe Tumse itna door hu ki tum meri kutai bhi nhi kar sakti 🐣😜</p>
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">4</div>
+                    <p><span class="emoji">🌙</span> <span class="highlight">Arey yr iska kya karuu😭😭</span></p>
+                    <p>Isko mene 2 saal pahle mana kiya tha jb isne mujhe approach kara tha to, ye abhi bhi yahi h 🥸
+                    </p>
+
+                    <img src="richa1.jpg" alt="A picture of me smiling" width="300">
+                    <p>Maje aayenge padhne me dekh lena iski baaten 🦥🦥 </p>
+                    <img src="richa2.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa3.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa4.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa5.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa6.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa7.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa8.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa9.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa10.jpg" alt="A picture of me smiling" width="300">
+                    <img src="richa11.jpg" alt="A picture of me smiling" width="300">
+                    <p>Me kabad bhi bohot ikkatha karta thaa... jaise ki koi book jo kisi ne dii ho, mere papa ne 3
+                        saal
+                        pahle perfume ki bottle di thi, mene abhi tak sambhal ke rakhi h....</p>
+                    <p>Tumhari wo kharab photo, mene ye wali choose hi isiliye kari thi taaki tumhe farak naa pade,
+                        nhi
+                        to ek se ek thiii mere pass...😂 (Or dekho ye sab mene khud tumko bataya tha, aisa nhi ki
+                        kisi
+                        aur se pata chala ho... to tum mere se kuch bhi poochogi me bata dunga.)</p>
+
+                    <p>Batana zaroor ye wali design kaisi lagi 🧸 , ha ha isme change h check karo or dekhoo...</p>
+                    <p>I'll wait............................. </p>
+                    <p style="text-align: center; margin-top: 30px; font-size: 24px;">✨ Chalo jao reeee ✨</p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="backBtn" disabled>← Back</button>
+                <button id="nextBtn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const backBtn = document.getElementById('backBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const totalPages = pages.length;
+
+        function updateButtons() {
+            backBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+
+            if (currentPage === totalPages - 1) {
+                nextBtn.textContent = 'Finished ✓';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+        }
+
+        function flipPage(direction) {
+            if (direction === 'next' && currentPage < totalPages - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            } else if (direction === 'back' && currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove('flipped');
+            }
+            updateButtons();
+        }
+
+        nextBtn.addEventListener('click', () => flipPage('next'));
+        backBtn.addEventListener('click', () => flipPage('back'));
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let isScrolling = false;
+
+        document.querySelector('.notebook').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            isScrolling = false;
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchmove', (e) => {
+            // Detect if user is scrolling vertically
+            const touchY = e.changedTouches[0].screenY;
+            if (Math.abs(touchY - touchStartY) > 10) {
+                isScrolling = true;
+            }
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            // Only handle swipe if user wasn't scrolling
+            if (!isScrolling) {
+                handleSwipe();
+            }
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) { // Threshold
+                if (diff > 0) {
+                    // Swipe left - go to next page
+                    flipPage('next');
+                } else {
+                    // Swipe right - go to previous page
+                    flipPage('back');
+                }
+            }
+        }
+
+        // Track if user is actively scrolling
+        let scrollTimeout;
+        let userIsScrolling = false;
+
+        pages.forEach((page) => {
+            page.addEventListener('scroll', () => {
+                userIsScrolling = true;
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    userIsScrolling = false;
+                }, 150);
+            });
+        });
+
+        // Click on page to advance (except on buttons and when scrolling)
+        pages.forEach((page, index) => {
+            page.addEventListener('click', (e) => {
+                // Don't flip if clicking controls or if user was recently scrolling
+                if (!e.target.closest('.controls') && !userIsScrolling) {
+                    if (index === currentPage && currentPage < totalPages - 1) {
+                        flipPage('next');
+                    }
+                }
+            });
+        });
+
+        updateButtons();
+    </script>
+</body>
+
+</html>

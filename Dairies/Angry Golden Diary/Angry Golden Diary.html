@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Magical Diary</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+
+        :root {
+            --gold: #ffd700;
+            --gold-dim: #b8860b;
+            --paper-bg: #fdfbf7;
+            --ink-color: #3e2723;
+            --overlay-bg: rgba(10, 10, 15, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: var(--ink-color);
+        }
+
+        /* Ambient Effects */
+        .glow-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.03), transparent 80%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, #eee, transparent),
+                radial-gradient(1.5px 1.5px at 100px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 150px 160px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 300px 300px;
+            opacity: 0.4;
+            animation: twinkle 8s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: translateY(-5px);
+            }
+        }
+
+        .fireflies {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--gold), 0 0 16px orange;
+            animation: flight 15s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes flight {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(100px, -150px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* --- UI OVERLAYS --- */
+
+        /* Tutorial Overlay */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 900;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            transition: opacity 1s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .tutorial-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .tutorial-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            text-align: center;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFade 1.5s forwards 0.5s;
+        }
+
+        .tutorial-sub {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: slideUpFade 1.5s forwards 1.2s;
+        }
+
+        .enter-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            color: var(--gold);
+            padding: 15px 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.5s;
+            opacity: 0;
+            animation: slideUpFade 1.5s forwards 2s;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            /* Softer button */
+        }
+
+        .enter-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #fff;
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- NOTEBOOK --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 95vw;
+            /* Max width for mobile */
+            max-width: 500px;
+            /* Limit on larger screens to keep portrait feel */
+            height: 85vh;
+            perspective: 2500px;
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @media (max-width: 600px) {
+            .notebook-container {
+                height: 70vh;
+                width: 90vw;
+                /* Slightly narrower to matching aspect ratio */
+            }
+        }
+
+        /* Initial hidden state for entrance animation */
+        .notebook-container.closed {
+            transform: translateY(50vh) scale(0.8);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Pages */
+        .page {
+            position: absolute;
+            width: 95%;
+            /* Occupy most of the container */
+            height: 100%;
+            right: 0;
+            background: var(--paper-bg);
+            border-radius: 5px 15px 15px 5px;
+            transform-origin: left center;
+            /* Hinge on left */
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            box-shadow:
+                inset 20px 0 30px rgba(0, 0, 0, 0.05),
+                5px 5px 15px rgba(0, 0, 0, 0.2);
+
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' opacity='0.3'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+
+            /* Add some visual thickness */
+            backface-visibility: hidden;
+            /* Simpler handling for single view */
+        }
+
+        /* 
+           Since we are mostly portrait single page, "back" of page isn't strictly necessary 
+           unless we want a cool flip effect.
+           For simple stack navigation:
+           Flipped pages rotate -180deg.
+        */
+
+        .page-content {
+            height: 100%;
+            padding: 25px 30px 25px 50px;
+            /* More left padding for spiral/spine */
+            border: 1px solid rgba(139, 69, 19, 0.1);
+            margin: 5px;
+            border-radius: 4px 10px 10px 4px;
+            overflow-y: auto;
+            color: #2c1810;
+            font-size: 1.15rem;
+            /* Larger for mobile readability */
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* Decorative Corners */
+        .page-content::before,
+        .page-content::after {
+            content: "❧";
+            position: absolute;
+            font-size: 20px;
+            color: var(--gold-dim);
+            opacity: 0.4;
+        }
+
+        .page-content::before {
+            top: 15px;
+            left: 20px;
+        }
+
+        .page-content::after {
+            bottom: 15px;
+            right: 15px;
+            transform: rotate(180deg);
+        }
+
+        /* Scrollbar Styling */
+        .page-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .page-content::-webkit-scrollbar-thumb {
+            background: rgba(139, 69, 19, 0.3);
+            border-radius: 10px;
+        }
+
+        /* Typography */
+        p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #8b4513;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            left: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: #bbb;
+            pointer-events: none;
+        }
+
+        /* COVER PAGE */
+        .cover {
+            background: linear-gradient(135deg, #1c1c1c 0%, #363636 100%);
+            border: 2px solid var(--gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 50;
+        }
+
+        .cover .page-content {
+            border: 2px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            padding: 20px;
+            /* Reset padding for cover */
+        }
+
+        .cover-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            /* Slightly smaller for mobile */
+            color: transparent;
+            background: linear-gradient(45deg, #bf953f, #fcf6ba, #bf953f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .cover-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* FLIPPED STATE */
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+            /* Can't click flipped page to go forward, only back? */
+            /* Actually we want to click the "left" stack to go back. */
+        }
+
+        /* 
+         Logic:
+         When a page is flipped, it goes to -180deg.
+         It reveals the page UNDERNEATH it (which becomes top of right stack).
+         To go back, we need to click the flipped page (which is now on the left).
+        */
+
+
+        /* Z-INDEX STACKING */
+        /* Pages are stacked. index 0 is bottom. last index is top (cover). */
+        /* When flipped, the page should probably move behind the 'left' stack? 
+           Or just sit on top of the left stack. */
+
+        /* We'll handle Z-Order strictly in JS for simplicity in this 3D view. */
+
+        /* Spiral Binding - CORRECTED ALIGNMENT FOR PORTRAIT */
+        .spiral {
+            position: absolute;
+            left: 5px;
+            /* Stick to left edge */
+            top: 2%;
+            bottom: 2%;
+            width: 30px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .spiral-ring {
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(90deg, #5d4037, #ffd700 40%, #ffd700 60%, #5d4037);
+            border-radius: 6px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            transform: rotate(-10deg);
+        }
+
+        /* Helper Text */
+        .helper-text {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            animation: pulse 4s infinite;
+        }
+
+        /* Final Signature Style */
+        .final-signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            background: linear-gradient(45deg, #bf953f, #fcf6ba, #bf953f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 30px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+            animation: shimmer 4s infinite;
+        }
+
+        /* Keyframe Animations */
+        @keyframes pulse {
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+            }
+
+            50% {
+                filter: drop-shadow(0 2px 10px rgba(255, 215, 0, 0.7));
+            }
+
+            100% {
+                filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="stars"></div>
+    <div class="glow-overlay"></div>
+    <div class="fireflies" id="fireflies"></div>
+
+    <!-- REMOVED ORIENTATION OVERLAY -->
+
+
+    <!-- 2. INTRO TUTORIAL -->
+    <div class="tutorial-overlay" id="tutorial">
+        <div class="tutorial-text">Welcome, Prachi</div>
+        <div class="tutorial-sub">A small collection of unspoken thoughts...</div>
+        <button class="enter-btn" onclick="enterDiary()">Open Diary</button>
+    </div>
+
+    <div class="notebook-container closed" id="bookContainer">
+
+
+        <div class="helper-text">Tap Right side to Next • Tap Left side to Back</div>
+
+        <div class="notebook" id="notebook">
+
+            <!-- Spiral -->
+            <div class="spiral">
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+            </div>
+
+            <!-- Cover -->
+            <div class="page cover">
+                <div class="page-content">
+                    <div class="cover-title">Prachi Devi</div>
+                    <div class="cover-subtitle">Things I don't wanna tell</div>
+                </div>
+            </div>
+
+            <!-- P1 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">1</div>
+                    <p>Prachi (instead of Prachiii), ✨</p>
+                    <p>Dekho mujhe nhi pata tumhe kya, kaisa or kyun feel hua, bs itna saaf h shyd tumhe koi saccha
+                        insaan nhi dikha. Or uske liye I could hardly be blamed for your dissapointment.</p>
+                    <p>Haan ye to sach h, ki tumhari jagah thodi upar thi unlog se bhi. Lekin aisa nhi h ki me unke
+                        texts ghanton tk latka ke rakhu ya shaam ko dekhu. Unlog ke me turant hi dekhta hun. Or tumse
+                        bhi to me bolta hi rha naa ki jao kaam karlo. Ab tumhra mn ho to batiyaooooo.... nhi to
+                        jaoooo.... mera to aisa rehta h ki me bs kar leta hu sab parallaly. Or me bohot km logon se
+                        interact karna pasand karta hu.</p>
+                    <p class="highlight">"Me kisi ko as an option treat nhi karta..."</p>
+                    <p>(For me conversation is a form of respect, and if I can, then why would I make them wait for so
+                        long.)</p>
+                </div>
+            </div>
+
+            <!-- P2 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">2</div>
+                    <p>Ab agar kisi ko koi emergency ho or me shaam tk latka ke rakhu to kya hi hoga unka?? or bs aisa
+                        hota rehta h.</p>
+                    <p>Ab jab mene dekha tha ki "prachi has not added you as a friend, they won't be able to see your
+                        messages until they do"</p>
+                    <p>Ye dekh ke thoda ajeeb sa to laga tha, gussa nhi aya ekdum se. Wo baad me aya tha. Lekin me bohot
+                        jyada busy tha or continous nuksaan hi jhel rha tha pichle din se to itna jyada impact nhi pada
+                        initially. Kuch ghant baad gussa aya tha prachi pe fir khud pe.</p>
+                    <p class="highlight">Sote Time jaroor Dimag kharab ho gaya tha mera.... wo overthinking wala phase
+                        tabhi shuru hota h.</p>
+                </div>
+            </div>
+
+            <!-- P3 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">3</div>
+                    <p>Kher mene ye notification dekha tha wo calender wala tab 50% gussa khatam ho gaya tha(tumahre
+                        liye),
+                        baaki 50% tumhare wo text ke baad, tumhare upar nhi h ab koi naragzi.</p>
+                    <p>Agar hoti to me tumahre texts nhi dekhta. Kya pata itne jaldi thanda kyun ho jata hu me. Ab gussa
+                        bs mujhe mere upar aa rha h.</p>
+                    <p><i>Dekho prachi, abhi me bs confused hu ki me kya karu. Mere dimag me countless possibilities h,
+                            to me kya kya soch ke kya hi chunu, ek to aisa hota kyun h ki mere prediction specifically
+                            tumhare samne hamesha fail hote h. To me nhi janta ki what should I do next.</i></p>
+                    <p class="highlight">"Agar tum meri friendship nhi chahti to tum hata sakti ho, me kuch nhi bolne
+                        wala..., na hi naraz hone wala.... Telegram khula h mera tumhare liye."</p>
+                    <p>I was just trying to be the best temporary person of your life. Or haa meri decided lifespan km h
+                        isliye me nhi milunga tumse baad me. </p>
+                    <p class="highlight">However you'll recieve something GREAT before I leave.</p>
+                </div>
+            </div>
+
+            <!-- P4 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">4</div>
+                    <p highlight>Ab mene tumko kabhi whatsapp pe text nhi kara/ call bhi nhi kara kabhi, uska karan ye h
+                        kii wo
+                        tumhari personal space hai. Or me aisi koi cheez acceot nhi kar sakta jis se tumhe takeef ho. Wo
+                        instagram pe bhi isiliy mene mana kar diya tha, kyuki tum enthusisam me aake bina jyada soche
+                        maang rhi thi. To mujhe pata tha ye baad me regret karegi to mene samne se hi bol diya ki follow
+                        mat karna.</p>
+                    <p>Or me bohot hard hu bahar walon ke liye. Serious face or extra serious responses hi milte h unko.
+                        Tumko ordinary banna h to theek h fir, thoda mushkil h lekin kar hi dunga me tumhare liye🫡</p>
+                    <p>Or mene wo jo sab banaya tha sherlock se bolke trash kara diya. to wo kuch nhi bhejega. Christmas
+                        newyear kuch nhii, wo webapp bhi delete kar diya hoga shyd usne.</p>
+                </div>
+            </div>
+
+            <!-- P5 (Back Cover) -->
+            <div class="page back-cover">
+                <div class="page-content">
+                    <p
+                        style="font-family:'Cinzel'; text-transform:uppercase; letter-spacing:3px; color:var(--gold); margin-bottom:10px;">
+                        Final Thoughts</p>
+                    <p>Me janta hu tumne mere chakkar me bohot overthinking kari hogi. Dekho me nhi chahta tum bhi is
+                        beemari ka shikar ban jao. Isiliye me CLEAR kar rha hu ki me tumse 1% bhi naraz nhi hu, you are
+                        free to move!</p>
+
+                    <p><i>"Or is waqt me bohot jyada gusse me hu (Tumhara koi role nhi usme, wo bs meri khudki wajah se
+                            h)..."</i></p>
+
+                    <p>Kyuki mene tumhe ya kisi ko bhi bura feel karaya to meri chest me firse wo ajeeb sa lagne lagega.
+                        Isiliye I am
+                        thinking to walk away, ab tum batao tumhare kya vichar h. I think we should have a serious TRUTH
+                        AND DARE SESSION
+                    </p>
+                    <p>Or haa me chahunga tum ye notebook doobara padho ek baar mere perspective se or fir bhool jao
+                        sab. Agar tumne soch samajh ke ye sab nhi kiya to mere hisab se wo bs ek mood swing tha. To tum
+                        bs apni state or mind ko calm rakho or udas mat hona kisi faltoo mood swing ke impact se. Lekin
+                        agar wo mood swing nhi tha to ho sakti ho!!</p>
+                    <p class="highlight">Tum padho chupchaap or chill karo 🐼 Faltoo cheezon ki chinta karne ki jaroorat
+                        nhi h. </p>
+
+                    <div class="final-signature">Bye 🌟 Bye</div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- Navigation Zones for easy mobile tapping -->
+    <div class="nav-zone left" id="prevBtn"></div>
+    <div class="nav-zone right" id="nextBtn"></div>
+
+    <style>
+        .nav-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 25%;
+            /* Large hit area */
+            z-index: 200;
+            /* Above everything */
+            display: none;
+            /* Hidden strictly until diary opens? Or just transparent */
+            /* Debug: background: rgba(255,0,0,0.1); */
+        }
+
+        .nav-zone.left {
+            left: 0;
+        }
+
+        .nav-zone.right {
+            right: 0;
+        }
+    </style>
+
+    <script>
+        // Setup Fireflies
+        const firefliesContainer = document.getElementById('fireflies');
+        for (let i = 0; i < 40; i++) {
+            const f = document.createElement('div');
+            f.className = 'firefly';
+            f.style.left = Math.random() * 100 + '%';
+            f.style.top = Math.random() * 100 + '%';
+            f.style.animationDelay = Math.random() * 5 + 's';
+            f.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            firefliesContainer.appendChild(f);
+        }
+
+        // Enter Diary Function
+        function enterDiary() {
+            const tutorial = document.getElementById('tutorial');
+            const book = document.getElementById('bookContainer');
+            const leftZone = document.querySelector('.nav-zone.left');
+            const rightZone = document.querySelector('.nav-zone.right');
+
+            tutorial.classList.add('hidden');
+            setTimeout(() => {
+                tutorial.style.display = 'none';
+                book.classList.remove('closed'); // Triggers entrance animation
+                // Enable Nav Zones
+                leftZone.style.display = 'block';
+                rightZone.style.display = 'block';
+            }, 800);
+        }
+
+        // Page Navigation Logic
+        const pages = document.querySelectorAll('.page');
+        const totalPages = pages.length;
+        const navHint = document.querySelector('.nav-hint'); // Might be missing in HTML, that's ok
+
+        // Initial Z-Index and State Setup
+        pages.forEach((page, index) => {
+            // Standard stack: Page 0 (Cover) is top, Page N is bottom?
+            // Wait, in my CSS I had: Page 1 (z=10), Page 2 (z=9)... 
+            // So index 0 (first in DOM) is highest. Correct.
+            page.style.zIndex = totalPages - index;
+            page.dataset.index = index;
+        });
+
+        // Navigation Functions
+        function flipForward() {
+            // Find the top-most UNFLIPPED page
+            // We iterate from first (top) to last.
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                if (!page.classList.contains('flipped')) {
+                    // Flip this one
+                    page.classList.add('flipped');
+                    // Move Z-Index to be on top of the 'left stack'
+                    // The left stack grows. The most recently flipped page should be on top.
+                    // Base Z for left stack could be 100.
+                    // First flipped (Page 1) -> z=100.
+                    // Second flipped (Page 2) -> z=101.
+                    page.style.zIndex = 100 + i;
+                    return; // Only flip one at a time
+                }
+            }
+        }
+
+        function flipBack() {
+            // Find the top-most FLIPPED page (the one with highest Z in left stack, or last index)
+            // We iterate backwards? 
+            // Or just find the last one that HAS 'flipped'.
+            for (let i = pages.length - 1; i >= 0; i--) {
+                const page = pages[i];
+                if (page.classList.contains('flipped')) {
+                    // Unflip this one
+                    page.classList.remove('flipped');
+                    // Restore original Z-Index
+                    page.style.zIndex = totalPages - i;
+                    return;
+                }
+            }
+        }
+
+        // Event Listeners for Zones
+        document.getElementById('prevBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            flipBack();
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            flipForward();
+        });
+
+        // Also allow clicking on the notebook pages directly if they are visible
+        // (Just mapped to same logic)
+        pages.forEach(page => {
+            page.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent double trigger if overlapping
+                if (page.classList.contains('flipped')) {
+                    flipBack(); // Clicking a flipped page (if visible) brings it back
+                } else {
+                    flipForward(); // Clicking a visible right-page flips it forward
+                }
+            });
+        });
+
+        // Keyboard Support for Desktop testing
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') flipForward();
+            if (e.key === 'ArrowLeft') flipBack();
+        });
+
+    </script>
+
+</body>
+
+</html>
+```

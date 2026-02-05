@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Dairy Of Apology</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap');
+
+        :root {
+            /* MIDNIGHT SERENITY THEME */
+            --bg-night-start: #0f2027;
+            --bg-night-mid: #203a43;
+            --bg-night-end: #2c5364;
+            --midnight-blue: #191970;
+            --star-glow: #ffffff;
+            --firefly-yellow: #fcf6bd;
+
+            --silver-metallic: linear-gradient(135deg, #e0e0e0, #ffffff, #a9a9a9);
+            --cover-leather: #1a1a1a;
+
+            --paper-offwhite: #f0f0f0;
+            --text-ink: #2c3e50;
+            --accent-blue: #4682b4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(ellipse at bottom, var(--bg-night-end) 0%, var(--bg-night-start) 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-ink);
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+
+        /* Stars Container */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration, 2s) infinite ease-in-out alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 5px white;
+            }
+        }
+
+        /* Fireflies */
+        .firefly-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: var(--firefly-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--firefly-yellow);
+            animation: float 10s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* --- NOTEBOOK CONTAINER --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 92vw;
+            max-width: 450px;
+            height: 75vh;
+            perspective: 2500px;
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .notebook-container.closed {
+            transform: translateY(40vh) scale(0.9);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* --- SILVER SPIRAL --- */
+        .spiral {
+            position: absolute;
+            left: -12px;
+            top: 3%;
+            bottom: 3%;
+            width: 40px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #555, #ddd, #fff, #555);
+            border-radius: 5px;
+            transform: rotate(-10deg);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- PAGES --- */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            background: var(--paper-offwhite);
+            border-radius: 5px 15px 15px 5px;
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            box-shadow:
+                inset 35px 0 30px rgba(0, 0, 0, 0.05),
+                2px 5px 15px rgba(0, 0, 0, 0.2);
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.1'/%3E%3C/svg%3E");
+            backface-visibility: hidden;
+            border: 1px solid #dcdcdc;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .page-content {
+            height: 100%;
+            padding: 40px 25px 40px 50px;
+            overflow-y: auto;
+            color: var(--text-ink);
+            font-size: 1.15rem;
+            line-height: 1.7;
+            text-align: left;
+            position: relative;
+        }
+
+        /* Header Styling */
+        .page-header {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--midnight-blue);
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: linear-gradient(to right, transparent, rgba(70, 130, 180, 0.1), transparent);
+            padding: 10px 0;
+            color: #2c3e50;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid #b0c4de;
+            border-bottom: 1px solid #b0c4de;
+            margin: 20px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Corner Decoration (Star/Moon) */
+        .corner-deco {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            color: var(--midnight-blue);
+            pointer-events: none;
+        }
+
+        .top-right {
+            top: 15px;
+            right: 15px;
+        }
+
+        /* --- COVER PAGE --- */
+        .cover {
+            background: var(--cover-leather);
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='leather'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23leather)' opacity='0.4'/%3E%3C/svg%3E");
+            color: #dcdcdc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+            z-index: 50;
+            border: 1px solid #000;
+        }
+
+        .cover-border {
+            border: 2px solid #a9a9a9;
+            border-radius: 5px;
+            padding: 20px;
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            background: linear-gradient(45deg, #eee, #999, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+            line-height: 1.2;
+        }
+
+        .cover-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-top: 20px;
+            border-top: 1px solid #555;
+            padding-top: 10px;
+        }
+
+        /* --- CINEMATIC ENTRANCE --- */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .intro-screen.fade {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-title {
+            font-family: 'Great Vibes';
+            font-size: 5rem;
+            color: #fff;
+            opacity: 0;
+            text-shadow: 0 0 10px #fff, 0 0 20px #4682b4;
+            animation: glowIn 2s forwards 0.5s;
+        }
+
+        .intro-sub {
+            font-family: 'Montserrat';
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            color: #aaa;
+            opacity: 0;
+            margin-top: 20px;
+            animation: slideUp 1.5s forwards 2s;
+        }
+
+        .btn-open {
+            margin-top: 60px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 3s;
+            padding: 12px 50px;
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.4s;
+            border-radius: 30px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-open:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        @keyframes glowIn {
+            0% {
+                opacity: 0;
+                filter: blur(20px);
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- TOUCH ZONES --- */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 25%;
+            z-index: 200;
+            display: none;
+            /* Active after intro */
+        }
+
+        .touch-left {
+            left: 0;
+        }
+
+        .touch-right {
+            right: 0;
+        }
+
+        .helper-text {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            color: #888;
+            opacity: 0.6;
+        }
+
+        /* --- MUSIC PLAYER --- */
+        .music-player {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Mobile Adjustments */
+        @media screen and (max-width: 450px) {
+            .intro-title {
+                font-size: 3.5rem;
+            }
+
+            .notebook-container {
+                width: 90vw;
+                height: 70vh;
+            }
+
+            .page-content {
+                padding: 30px 20px 30px 40px;
+                font-size: 1rem;
+            }
+
+
+            .cover-title {
+                font-size: 3rem;
+            }
+        }
+
+        /* --- Apology Interaction Styles --- */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+        }
+
+        .content-wrapper img {
+            max-width: 100%;
+            max-height: 220px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .apology-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--midnight-blue);
+            margin: 15px 0;
+            line-height: 1.3;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            padding: 12px 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, var(--midnight-blue), var(--bg-night-end));
+            box-shadow: 0 4px 10px rgba(25, 25, 112, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-reject {
+            background: linear-gradient(135deg, #8baaaa, #5f7a7a);
+            /* Muted teal/grey */
+            box-shadow: 0 4px 10px rgba(95, 122, 122, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-reject:hover {
+            background: linear-gradient(135deg, #a75d5d, #8a3b3b);
+            /* Turns reddish on hover */
+            box-shadow: 0 4px 10px rgba(167, 93, 93, 0.4);
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, var(--bg-night-mid), var(--bg-night-start));
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .angry-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 2rem;
+            color: #8a3b3b;
+            /* Deep muted red */
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 20px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Layers -->
+    <div class="stars-container" id="stars"></div>
+    <div class="firefly-container" id="fireflies"></div>
+
+    <!-- Entrance -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-title">I'm Sorry</h1>
+        <p class="intro-sub">PRACHIII</p>
+        <button class="btn-open" onclick="startApp()">Listen...</button>
+    </div>
+
+    <!-- Notebook -->
+    <div class="notebook-container closed" id="notebook">
+        <div class="helper-text">Tap Right ➔ | Tap Left ⬅</div>
+
+        <div class="notebook">
+            <!-- Spiral -->
+            <div class="spiral">
+                <!-- Generating 12 rings -->
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+
+            <!-- Cover Page -->
+            <div class="page cover">
+                <div class="cover-border">
+                    <div style="font-size:2rem; margin-bottom:10px; color:#aaa;">☾</div>
+                    <div class="cover-title">Sincere<br>Apologies</div>
+                    <div class="cover-subtitle">Straight from the Heart</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="corner-deco top-right">✦</div>
+                <div class="page-content">
+                    <div class="page-header">Please Till End</div>
+                    <p>Sometimes, silence speaks louder than words, and I don't know mujhe bohot uneasy feel ho rha tha
+                        jabse tumne wo dairy dekhi or fir tumne wo sentence bola ki "koi itna pyaar me kasie gir sakta
+                        h, us moment mujhe itna bhayankar dar laga ki me kya batau.", Dekho me janta hu tum ye expect
+                        nhi kar rhi hogi, bohot bura laga hoga. Jab mene wo likha tha tab me adha to neend me koi
+                        nashedi jaise jhool rha tha😂🦥</p>
+                    <div class="highlight">"Pilizzzz Pilizzzz Pirachiii"</div>
+                    <p>I value our bond more than anything else. I want to clear the air, not because I want to win an
+                        argument, but because I don't want to lose you too....</p>
+                    <p>Please take your time to read these pages. They contain my honest thoughts.</p>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="corner-deco top-right">✦</div>
+                <div class="page-content">
+                    <div class="page-header">My Mistake</div>
+                    <p>I know I messed up. Or mujhe bohot bohot ajeeb lag rha tabhi se. The moment I tried to stop you,
+                        and I can't. or bs fir tumne bol to diya ki <em>"Koi baat nhi overflow ho jaati h kabhi
+                            kabhi"</em></p>
+                    <p><em>Lekin me janta hu you are Deeply HURT and i can feel it, somehow.</em></p>
+                    <div class="highlight">Wo dairy bhi mene tab hi likhi thi taaki me tumhe relaxed feel kara saku,
+                        lekin mene ye socha hi nhi tha ki usme mene aise words likh diye mene ki tumhe ajeeb lagne
+                        lagega.</div>
+                    <p>I rarely engage with people, haan bolne ke liye mere pass truck bhar ke dost h. Female friends h.
+                        Reality is I just don't want to deal with people. Or jinke saath accha bond hota h dar to lagta
+                        h tootne se.</p>
+                    <p class="highlight">Ha ye sach h me kisi se itni maafi nhi mangta. Kyuki mujhe nhi padta farak kon
+                        ruk raha kon nhiii, lekin in your case it is important. Because i don't wanna ruin what we've
+                        built. And that's why I'm always scared.</p>
+                    <p>Flirt to me karunga ab bhiii... shyd kabhi kabhi soch samajh ke..</p>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="corner-deco top-right">✦</div>
+                <div class="page-content">
+                    <div id="apology-interaction" class="content-wrapper">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="page">
+                <div class="corner-deco top-right">✦</div>
+                <div class="page-content">
+                    <div class="page-header">Chalo theek h..!</div>
+                    <p>Maaf kiya maaf kiya... Ange se aise mat karna theeek h naaa🐼🦥</p>
+                    <p><em>Tummmm...🫵 ha tum 🫵 aise hi soch rhi ho to badhiya fir 😂🦥</em></p>
+                    <p class="highlight">Waise mujhe mere dost ki bohot yaad ati h, shyd isiliye mene pepper bana li. Me
+                        uska naam tk nhi le pata. Form bs tumhari poorani personality ki h. Vibe to mere dost wali hi h!
+                    </p>
+                    <p>Agar tumne mujhe maaf kar diya ho to fir, tum is wali dairy ki rating dedo,kyuki wo flower tumne
+                        accept kara ya reject mujhe pata nhi chalega, naa hi me ye dekh sakta hu ki tum kitni baar ye
+                        dekh rhi ho (I can't). Agar abhi bhi naraz ho to mat do rating. Tumhara bhi to kuch mn hota hoga
+                        na.... I can understand :) </p>
+                    <p>Or haa Background music pe mat bhadak jana 🦥 wo bs dimag me aya nhi konsa daalu konsa daalu to
+                        ye most frequently aya to daal diya... btw iska naam <em>"For a thousand years h"</em></p>
+
+                </div>
+            </div>
+
+            <!-- Back Cover -->
+            <div class="page cover">
+                <div class="cover-border">
+                    <div class="cover-title" style="font-size:2.5rem;">Thank You</div>
+                    <div class="cover-subtitle">For Listening Till End.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Touch Areas for Flipping -->
+    <div class="touch-zone touch-left" id="zoneL"></div>
+    <div class="touch-zone touch-right" id="zoneR"></div>
+
+    <!-- Music Player -->
+    <div class="music-player" onclick="toggleMusic()">
+        <button class="music-btn" id="playPauseBtn">▶</button>
+    </div>
+
+    <!-- Audio (Placeholder) -->
+    <audio id="bgMusic" loop>
+        <!-- User to replace source -->
+        <source src="background.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        /* --- Firefly Generator --- */
+        const fireflyContainer = document.getElementById('fireflies');
+        const starContainer = document.getElementById('stars');
+
+        function createFireflies() {
+            for (let i = 0; i < 30; i++) {
+                let f = document.createElement('div');
+                f.className = 'firefly';
+                f.style.left = Math.random() * 100 + '%';
+                f.style.top = Math.random() * 100 + '%';
+
+                // Random movement vectors
+                let tx = (Math.random() - 0.5) * 200 + 'px';
+                let ty = (Math.random() - 0.5) * 100 + 'px';
+                f.style.setProperty('--tx', tx);
+                f.style.setProperty('--ty', ty);
+
+                f.style.animationDelay = Math.random() * 5 + 's';
+                f.style.animationDuration = (Math.random() * 10 + 10) + 's';
+
+                fireflyContainer.appendChild(f);
+            }
+        }
+
+        function createStars() {
+            for (let i = 0; i < 50; i++) {
+                let s = document.createElement('div');
+                s.className = 'star';
+                let size = Math.random() * 2 + 1 + 'px';
+                s.style.width = size;
+                s.style.height = size;
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.setProperty('--duration', (Math.random() * 2 + 1) + 's');
+                s.style.animationDelay = Math.random() * 2 + 's';
+                starContainer.appendChild(s);
+            }
+        }
+
+        createFireflies();
+        createStars();
+
+        /* --- App Logic --- */
+        function startApp() {
+            document.getElementById('intro').classList.add('fade');
+            setTimeout(() => {
+                document.getElementById('notebook').classList.remove('closed');
+
+                // Activate touch zones
+                document.getElementById('zoneL').style.display = 'block';
+                document.getElementById('zoneR').style.display = 'block';
+
+                // Attempt Audio
+                const music = document.getElementById('bgMusic');
+                music.volume = 0.5;
+                music.play().then(() => {
+                    document.getElementById('playPauseBtn').textContent = '⏸';
+                    isPlaying = true;
+                }).catch(e => console.log("Auto-play blocked"));
+
+            }, 1000);
+        }
+
+        /* --- Page Flipping --- */
+        const pages = document.querySelectorAll('.page');
+        const numPages = pages.length;
+
+        // Init z-indices
+        pages.forEach((p, i) => {
+            p.style.zIndex = numPages - i;
+        });
+
+        function flipNext() {
+            for (let i = 0; i < numPages; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    pages[i].style.zIndex = 100 + i; // Bring to top of left stack
+                    return;
+                }
+            }
+        }
+
+        function flipPrev() {
+            for (let i = numPages - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    pages[i].style.zIndex = numPages - i; // Reset z-index
+                    return;
+                }
+            }
+        }
+
+        document.getElementById('zoneR').addEventListener('click', flipNext);
+        document.getElementById('zoneL').addEventListener('click', flipPrev);
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowRight") flipNext();
+            if (e.key === "ArrowLeft") flipPrev();
+        });
+
+        /* --- Music Control --- */
+        let isPlaying = false;
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('playPauseBtn');
+            if (isPlaying) {
+                music.pause();
+                btn.textContent = '▶';
+            } else {
+                music.play();
+                btn.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        /* --- Apology Interaction Logic --- */
+        const apologyContainer = document.getElementById('apology-interaction');
+
+        const apologyStateStart = `
+            <img src="cat-and-flower.gif" alt="Cute apology cat">
+            <div class="apology-text">please accept my flower of apology</div>
+            <div class="btn-group">
+                <button class="action-btn btn-accept" onclick="acceptApology()">Accept</button>
+                <button class="action-btn btn-reject" onclick="rejectApology()">Reject</button>
+            </div>
+        `;
+
+        const apologyStateRejected = `
+            <img src="image.png" alt="How dare you">
+            <div class="angry-text">How dare you !!</div>
+            <button class="action-btn btn-back" onclick="resetApology()">Back</button>
+        `;
+
+        const apologyStateAccepted = `
+            <img src="thankyou.png" alt="Thank You">
+            <div class="apology-text">Thank Youuu..! Pirachiii❤️</div>
+            <button class="action-btn btn-back" onclick="resetApology()">Back</button>
+        `;
+
+        function initApology() {
+            if (apologyContainer) apologyContainer.innerHTML = apologyStateStart;
+        }
+
+        function rejectApology() {
+            if (apologyContainer) apologyContainer.innerHTML = apologyStateRejected;
+        }
+
+        function acceptApology() {
+            // Check if confetti exists, else just show message
+            if (apologyContainer) apologyContainer.innerHTML = apologyStateAccepted;
+        }
+
+        function resetApology() {
+            if (apologyContainer) apologyContainer.innerHTML = apologyStateStart;
+        }
+
+        // Initialize interaction
+        initApology();
+
+    </script>
+</body>
+
+</html>

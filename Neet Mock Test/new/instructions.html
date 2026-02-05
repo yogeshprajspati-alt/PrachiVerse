@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET 2026 Mock Test - Instructions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 NEET 2026 Mock Test - Instructions</h1>
+            <p class="subtitle">📖 Please read all instructions carefully before proceeding</p>
+        </header>
+
+        <main class="instructions-main">
+            <div class="candidate-info-display">
+                <h3>Candidate Information</h3>
+                <p><strong>Name:</strong> <span id="displayName"></span></p>
+                <p><strong>Roll Number:</strong> <span id="displayRoll"></span></p>
+            </div>
+
+            <div class="instructions-content">
+                <h2>General Instructions</h2>
+                <ol>
+                    <li>The examination consists of <strong>180 questions</strong> divided into four subjects.</li>
+                    <li>The total duration of the examination is <strong>3 hours (180 minutes)</strong>.</li>
+                    <li>Each question carries <strong>4 marks</strong> for correct answer.</li>
+                    <li><strong>1 mark</strong> will be deducted for each incorrect answer.</li>
+                    <li>No marks will be awarded or deducted for unattempted questions.</li>
+                    <li>The maximum marks for the examination is <strong>720</strong>.</li>
+                    <li><strong>All questions are compulsory</strong> - there are no optional questions or internal choices.</li>
+                </ol>
+
+                <h2>Subject-wise Instructions</h2>
+                <div class="subject-instructions">
+                    <div class="instruction-box">
+                        <h3>Physics (45 Questions)</h3>
+                        <ul>
+                            <li>Section A: 45 questions (All compulsory)</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-box">
+                        <h3>Chemistry (45 Questions)</h3>
+                        <ul>
+                            <li>Section A: 45 questions (All compulsory)</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-box">
+                        <h3>Biology (90 Questions)</h3>
+                        <ul>
+                            <li>Section A: 90 questions (All compulsory)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>Important Note</h2>
+                <div class="warning-box">
+                    <p><strong>Important:</strong> There are <strong>no optional questions</strong> and <strong>no internal choices</strong>. 
+                    All 180 questions are compulsory. This helps students plan chapter coverage more efficiently.</p>
+                </div>
+
+                <h2>Navigation Instructions</h2>
+                <ul>
+                    <li>Use the question palette to navigate between questions.</li>
+                    <li>Color codes in the palette:
+                        <ul>
+                            <li><span class="color-demo answered">Green</span> - Answered</li>
+                            <li><span class="color-demo not-answered">Red</span> - Not Answered</li>
+                            <li><span class="color-demo marked">Purple</span> - Marked for Review</li>
+                            <li><span class="color-demo not-visited">Gray</span> - Not Visited</li>
+                        </ul>
+                    </li>
+                    <li>You can mark questions for review and come back to them later.</li>
+                    <li>You can change your answers before final submission.</li>
+                    <li>The timer will automatically submit the test when time expires.</li>
+                    <li>A warning will appear when 10 minutes are remaining.</li>
+                </ul>
+
+                <h2>Important Reminders</h2>
+                <ul>
+                    <li>Read each question carefully before answering.</li>
+                    <li>Manage your time effectively across all subjects.</li>
+                    <li>Review your answers before final submission.</li>
+                    <li>Once you click "Final Submit", you cannot change your answers.</li>
+                </ul>
+            </div>
+
+            <div class="instructions-actions">
+                <button onclick="window.location.href='index.html'" class="btn btn-secondary">Back</button>
+                <button onclick="startTest()" class="btn btn-primary">I am ready to begin</button>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

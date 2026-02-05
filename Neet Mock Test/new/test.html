@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET 2026 Mock Test - Examination</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="test-container">
+        <!-- Header with Timer and Candidate Info -->
+        <header class="test-header">
+            <div class="header-left">
+                <h2>NEET 2026 Mock Test</h2>
+            </div>
+            <div class="header-right">
+                <div class="timer-container">
+                    <div class="timer" id="timer">03:00:00</div>
+                </div>
+                <div class="question-counter">
+                    ✅ <span id="answeredCount">0</span>/<span id="totalQuestions">180</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Warning Banner -->
+        <div class="warning-banner" id="warningBanner">
+            <strong>⚠️ Warning:</strong> Only 10 minutes remaining! Please review and submit your answers.
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="test-main">
+            <!-- Left Panel: Question and Options -->
+            <div class="question-panel">
+                <div class="question-header">
+                    <div class="subject-selector">
+                        <button class="subject-btn active" data-subject="physics" onclick="switchSubject('physics')">⚛️ Physics</button>
+                        <button class="subject-btn" data-subject="chemistry" onclick="switchSubject('chemistry')">🧪 Chemistry</button>
+                        <button class="subject-btn" data-subject="biology" onclick="switchSubject('biology')">🧬 Biology</button>
+                    </div>
+                    <div class="section-indicator">
+                        <span id="currentSection">Section A</span> | Question <span id="currentQuestionNum">1</span>
+                    </div>
+                </div>
+
+                <div class="question-content">
+                    <div class="question-text" id="questionText">
+                        Loading question...
+                    </div>
+                    <div class="options-container" id="optionsContainer">
+                        <!-- Options will be dynamically inserted -->
+                    </div>
+                </div>
+
+                <div class="question-actions">
+                    <button class="btn btn-secondary" onclick="markForReview()">Mark for Review</button>
+                    <button class="btn btn-secondary" onclick="goToUnanswered()">📋 Unanswered</button>
+                    <button class="btn btn-primary" onclick="previousQuestion()">⬅️ Previous</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()">Next ➡️</button>
+                    <button class="btn btn-danger" onclick="showSubmitDialog()" style="grid-column: 1 / -1;">🏁 Finish Test</button>
+                </div>
+            </div>
+
+            <!-- Right Panel: Question Palette and Navigation -->
+            <div class="palette-panel">
+                <div class="palette-header">
+                    <h3>Question Palette</h3>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-color answered"></span>
+                            <span>Answered</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color not-answered"></span>
+                            <span>Not Answered</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color marked"></span>
+                            <span>Marked</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color not-visited"></span>
+                            <span>Not Visited</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="palette-content">
+                    <div class="subject-palette" id="physicsPalette">
+                        <h4>Physics</h4>
+                        <div class="section-palette">
+                            <div class="section-label">Section A (45 Questions - All Compulsory)</div>
+                            <div class="question-grid" id="physicsSectionA"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-palette" id="chemistryPalette" style="display: none;">
+                        <h4>Chemistry</h4>
+                        <div class="section-palette">
+                            <div class="section-label">Section A (45 Questions - All Compulsory)</div>
+                            <div class="question-grid" id="chemistrySectionA"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-palette" id="biologyPalette" style="display: none;">
+                        <h4>Biology</h4>
+                        <div class="section-palette">
+                            <div class="section-label">Section A (90 Questions - All Compulsory)</div>
+                            <div class="question-grid" id="biologySectionA"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="palette-footer">
+                    <button class="btn btn-danger" onclick="showSubmitDialog()">Final Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Confirmation Dialog -->
+    <div class="modal" id="submitModal">
+        <div class="modal-content">
+            <h3>Confirm Submission</h3>
+            <p>Are you sure you want to submit the test?</p>
+            <div class="submission-stats" id="submissionStats"></div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeSubmitDialog()">Cancel</button>
+                <button class="btn btn-danger" onclick="submitTest()">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="test.js"></script>
+</body>
+</html>
+

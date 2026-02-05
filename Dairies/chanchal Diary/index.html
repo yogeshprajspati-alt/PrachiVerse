@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lavender Dream</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap');
+
+        :root {
+            /* LAVENDER DREAM THEME - REFINED */
+            --bg-lavender-start: #f3e5f5;
+            --bg-lavender-mid: #e1bee7;
+            --bg-lavender-end: #ce93d8;
+            --deep-violet: #2a0a3b;
+            --gold-accent: #d4af37;
+            --gold-light: #f9f7d8;
+            /* Vintage Paper Colors */
+            --paper-parchment: #f4e4bc;
+            --text-ink: #3e2723;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-lavender-start), var(--bg-lavender-mid), var(--bg-lavender-end));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Lora', serif;
+            color: var(--text-ink);
+        }
+
+        /* Global Noise Overlay for "Film Grain" look */
+        .global-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 900;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- ATMOSPHERE --- */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.6;
+            animation: floatUp linear infinite;
+        }
+
+        .sparkle {
+            background: var(--gold-accent);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Soft Glow Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: breathe 8s infinite alternate;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 350px;
+            height: 350px;
+            background: #ffffff;
+            top: -100px;
+            left: -100px;
+            mix-blend-mode: soft-light;
+        }
+
+        .orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #e1bee7;
+            bottom: -50px;
+            right: -50px;
+            mix-blend-mode: overlay;
+            animation-delay: 2s;
+        }
+
+        @keyframes breathe {
+            from {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            to {
+                transform: scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        /* --- NOTEBOOK --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            max-width: 420px;
+            height: 72vh;
+            perspective: 2000px;
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+        }
+
+        .notebook-container.closed {
+            transform: translateY(50vh) scale(0.8);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Golden Spiral - More detailed */
+        .spiral {
+            position: absolute;
+            left: -18px;
+            top: 2%;
+            bottom: 2%;
+            width: 45px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(0deg, #b8860b 0%, #ffd700 50%, #b8860b 100%);
+            border-radius: 10px;
+            transform: rotate(-6deg);
+            box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        .ring::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%);
+            opacity: 0.6;
+        }
+
+        /* Pages - Linen Texture */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            background-color: var(--paper-parchment);
+            border-radius: 4px 12px 12px 4px;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+
+            /* Realistic Shadow & Linen Texture + Vignette for Aged Look */
+            box-shadow:
+                inset 0 0 50px rgba(62, 39, 35, 0.2),
+                /* Vignette/Burnt edges */
+                inset 15px 0 25px rgba(0, 0, 0, 0.06), 2px 2px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            /* Darker border for aged feel */
+            backface-visibility: hidden;
+
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f4e4bc' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='1'/%3E%3C/svg%3E"),
+                linear-gradient(to right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.05));
+            /* Subtle grime */
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* Cover Specifics - Crushed Velvet / Leather */
+        .cover {
+            background-color: var(--deep-violet);
+            color: var(--gold-accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            /* Deep Velvet Texture */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='velvet'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeSpecularLighting surfaceScale='2' specularConstant='0.7' specularExponent='20' lighting-color='%236a1b9a' result='specular'%3E%3CfePointLight x='100' y='100' z='200'/%3E%3C/feSpecularLighting%3E%3CfeComposite operator='in' in='specular' in2='SourceAlpha'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23velvet)' opacity='0.3'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #2a0a3b 0%, #1a0525 100%);
+
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), inset 5px 0 10px rgba(255, 255, 255, 0.1);
+            border: 1px solid #10021a;
+        }
+
+        .cover-frame {
+            border: 2px solid var(--gold-accent);
+            padding: 2rem;
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cover-frame::before,
+        .cover-frame::after {
+            content: "✦";
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--gold-light);
+        }
+
+        .cover-frame::before {
+            top: 10px;
+        }
+
+        .cover-frame::after {
+            bottom: 10px;
+        }
+
+        .cover-title {
+            font-family: 'Parisienne', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #FFD700, #FFFACD, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+            line-height: 1.2;
+        }
+
+        /* Content Styling */
+        .page-content {
+            height: 100%;
+            padding: 2.5rem 1.5rem 2.5rem 2.5rem;
+            overflow-y: auto;
+            color: var(--text-ink);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Webkit scrollbar styling for mobile */
+        .page-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 2px;
+        }
+
+        .page-content::-webkit-scrollbar-thumb {
+            background: rgba(93, 63, 211, 0.3);
+            border-radius: 2px;
+        }
+
+        .journal-header {
+            font-family: 'Parisienne', cursive;
+            font-size: 2.2rem;
+            color: #5D3FD3;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* Floral Corner Decoration */
+        .corner-flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            /* Recolored to Lavender/Violet for this theme */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 80 Q50 50 80 20 M20 20 Q50 50 80 80' stroke='%239370DB' fill='none' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%239370DB' opacity='0.5'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(to right, transparent, rgba(147, 112, 219, 0.1), transparent);
+            padding: 10px 0;
+            color: #4B0082;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid #D8BFD8;
+            border-bottom: 1px solid #D8BFD8;
+            margin: 20px 0;
+            border-left: none;
+            /* Removing old border */
+            border-radius: 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* INTRO */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0518;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease;
+        }
+
+        .intro-screen.fade {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-text {
+            font-family: 'Parisienne', cursive;
+            font-size: 4rem;
+            color: #E6E6FA;
+            opacity: 0;
+            animation: fadeInBlur 2s forwards 0.5s;
+        }
+
+        .intro-btn {
+            margin-top: 40px;
+            padding: 12px 40px;
+            background: transparent;
+            border: 1px solid #DAA520;
+            color: #DAA520;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            opacity: 0;
+            animation: slideInUp 1s forwards 2s;
+            transition: 0.3s;
+        }
+
+        .intro-btn:hover {
+            background: rgba(218, 165, 32, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(218, 165, 32, 0.3);
+        }
+
+        @keyframes fadeInBlur {
+            from {
+                opacity: 0;
+                filter: blur(20px);
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Music Controls */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Touch Zones */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 15%;
+            z-index: 200;
+        }
+
+        .zone-left {
+            left: 0;
+        }
+
+        .zone-right {
+            right: 0;
+        }
+
+        .helper-text {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6A5ACD;
+            opacity: 0.7;
+            z-index: 150;
+        }
+
+        /* --- RESPONSIVE / MOBILE OPTIMIZATION --- */
+        /* Targets modern mobile phones (Moto G73 is ~412x915 active viewport) */
+        @media screen and (max-width: 480px) {
+            .intro-text {
+                font-size: 3rem;
+            }
+
+            .notebook-container {
+                width: 85vw;
+                /* Narrower to fit with spiral while staying centered */
+                height: 75vh;
+                /* Adjust height to fit comfortably and center better */
+                max-height: none;
+                /* Remove max-height restriction for better centering */
+            }
+
+            /* Adjust Cover Title for smaller screens */
+            .cover-title {
+                font-size: 2.8rem;
+            }
+
+            /* Content Padding & Text */
+            .page-content {
+                padding: 1.5rem 1rem 1.5rem 1.5rem;
+                /* Reduced padding */
+                font-size: 1rem;
+            }
+
+            .journal-header {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+
+            .highlight-box {
+                padding: 10px;
+                margin: 15px 0;
+                font-size: 0.95rem;
+            }
+
+            /* Spirals - reduce size slightly */
+            .spiral {
+                width: 35px;
+                left: -14px;
+            }
+
+            .ring {
+                height: 10px;
+            }
+
+            /* Music Toggle Position */
+            .music-toggle {
+                bottom: 25px;
+                right: 25px;
+                width: 45px;
+                height: 45px;
+            }
+
+            /* Intro Button */
+            .intro-btn {
+                padding: 10px 30px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Landscape Mode Optimization (if they rotate) */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .notebook-container {
+                height: 85vh;
+                width: 70vw;
+            }
+
+            .page-content {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* --- APOLOGY INTERACTIVE STYLES --- */
+        .apology-hidden {
+            display: none !important;
+        }
+
+        .apology-card {
+            text-align: center;
+            animation: apologySlideIn 0.5s ease-out;
+            width: 100%;
+        }
+
+        @keyframes apologySlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .apology-gif-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .apology-gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .apology-message {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #4B0082;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .apology-sub-message {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .apology-button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .apology-btn {
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Lora', serif;
+        }
+
+        .apology-btn-yes {
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%);
+            color: white;
+        }
+
+        .apology-btn-yes:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(147, 112, 219, 0.4);
+        }
+
+        .apology-btn-no {
+            background: linear-gradient(135deg, #DDA0DD 0%, #DA70D6 100%);
+            color: white;
+        }
+
+        .apology-btn-no:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(218, 112, 214, 0.4);
+        }
+
+        .apology-thankyou-message {
+            font-family: 'Parisienne', cursive;
+            font-size: 2rem;
+            color: #8A2BE2;
+            margin-bottom: 15px;
+        }
+
+        .apology-thankyou-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        @media screen and (max-width: 480px) {
+            .apology-gif-container {
+                width: 130px;
+                height: 130px;
+            }
+
+            .apology-message {
+                font-size: 1.2rem;
+            }
+
+            .apology-btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+
+            .apology-thankyou-message {
+                font-size: 1.6rem;
+            }
+
+            /* Apology Overlay Mobile Optimization */
+            #apologyOverlay button[onclick="closeApologyOverlay()"] {
+                top: 10px;
+                left: 10px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            #apologyOverlay>div {
+                width: 95%;
+                padding: 10px;
+            }
+
+            #apologyOverlay .apology-gif-container {
+                width: 140px;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-texture"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Intro -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-text">Anonmous Confession</h1>
+        <button class="intro-btn" onclick="openDiary()">Open Diary</button>
+    </div>
+
+    <!-- Diary -->
+    <div class="notebook-container closed" id="notebook">
+        <!-- Spiral Binding -->
+        <div class="spiral">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+
+        <div class="notebook">
+            <!-- Cover -->
+            <div class="page cover">
+                <div class="cover-frame">
+                    <div class="cover-title">Anonmous Confession</div>
+                    <div
+                        style="font-family:'Montserrat'; letter-spacing:2px; font-size:0.8rem; margin-top:10px; color:#F0E68C;">
+                        ....</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">Hey, Chanchal</div>
+                    <p>Hello Ma'am, I hope you remember me ?? <br>
+                        I am that boy ..... , smiriti wali misunderstanding wala.
+                    </p>
+                    <p>Me us din khud confused tha ki, ho kya rha hai...</p>
+                    <p>Thoda sa shock me, me prachi ki attention grab karne ki kosish karta tha us time. To conversation
+                        ke bahane doonhta tha,</p>
+                    <p>Actually hua kya tha me batata hu. Sameer mera dost h. Me uska desktop theek karne gaya tha. Mtlb
+                        so bigada rehta tha . To me jata rehta tha aise normally hi. TO AISE HI normally baaten karte
+                        the Humalog. Me ye prachi ke nature ke baare me poochta tha 🙂 hamesha, ki wo kaisi ladki h.
+                        uske baare me little little details taaki me usko thoda jaan saku.
+                    </p>
+                    <div class="highlight-box">"Jab bhi milte the to me kuch na kuch pooch hi leta tha. Fir wahi cheezen
+                        prachi ko batata. Accha lagta tha tab."</div>
+                    <p>wo bolta tha Bohot acchi ladki h. Bholi bhali h
+                        Masoom h. Bohot jyada masoom h, bohot bohot seedhi h. Arey bhai gaaye h gaaye(cow) 🐄, bhole pan
+                        ke point of view se.</p>
+
+                    <div class="highlight-box">"🦥🦥 "</div>
+                    <p>Wo tumlog ke school ka nhi h, hamare school ka h lekin, uski padosi smriti h. Us se pooch
+                        leta tha wo prachi ke baare me kabhi kabhi meri request pe (although smriti or me kabhi nhi
+                        mile, but yes we are friends on instagram. Or mene jitni us se baat kari h wo bohot acchi ladki
+                        h yr).<br> To ekdin wo mujhe drop karne jaa rha tha ghar, to Baton baaton me tumhara usne Bola
+                        tha(Sameer ne) ki mtlb ladai hoti h uski aisa kuch jo us time ki baat thi which ( I don't
+                        remember exactly what was it, shyd wahi normal prachi related cheezen shyd se mene bola tha ki,
+                        prachi ne bhai bola tha mere se, boodhi daadi style me "Jyada nhi hasna chaiye, warna daant gir
+                        jayenge..!!").<br> Tabhi mene uske friend circle ka poocha tha, usne bola uski bestie hai
+                        chanchal
+                        naam h uska. Mene poocha aur nhi h kya, he replied ki shyd banti nhi hai itni. Thodi ladai
+                        wagerah hoti rehti h chanchal se(lekin ye isne man se Bola tha 😭 or me bhi pgl tha mene
+                        direct smtiti ka naam le Liya. Aur wo sab ho Gaya 😐)</p>
+
+                    <p>Mtlb aise hi direct nhi kuch prachi se related baaten chal rhi thi to usne ye Bola tha koi baat
+                        pe mujhe ekdum acche se yaad nhi tha.</p>
+
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">.......</div>
+                    <p>Fir smriti mere se boli ke deepak mene aisa Kab kaha tumse, or sacchi baat thi usne to mere se
+                        kuch kaha hi nhi tha. Acche se jante tk nhi ek doosre ko. Aur to aur fact to face mile tk nhi.
+                        Or prachi ne meri screen record karke bheji thi to me shock me tha, ki ye aisa kaise kar sakti
+                        h🙂 to mujhe kuch samajh hi nhi aya ki kya karu me..</p>
+
+
+                    <p>Upar se meri wajah se smtiti ka naam aa gaya tha. Uski to koi galati thi bhi nhi, mere dimag me
+                        kuch aya hi nhi us time, aur prachi ne wo group bana diya tha clear karne ko. I had literally no
+                        words to speak out. <br>If you remember mene tumko hello ki jagah namaste bola tha(usually tab
+                        use karta hu jab ajeeb lagta h) to mene bol diya lastly li mene mn se bol diya wo, wo sab. Or
+                        smriti ka isme koi role nhi h. Kyuki me nhi fasa sakta tha faltoo me usko, or usne jab samne se
+                        mere se bola ki Deepak mene aisa kab kaha tumse, to wahi guilt wali feel aai thodi jyada. To
+                        mene kuch explain karne ki jagah sab apne upar le liya.</p>
+
+
+
+
+                </div>
+            </div>
+
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">......</div>
+                    <p><em></em></p>
+                    <div class="highlight-box">"Mene jaan booch ke nhi Bola tha mtlb, Wo to Sameer ne mere se Bola mujhe
+                        laga hoga aise hi kuch. To mene prachi se bol diya (Dekho and I will not lie, prachi se mujhe
+                        shuru se dar lagta h to me kuch bhi bol deta hu darke us se. | Impression accha pade is chakkar
+                        me flow flow me aise portray kar diya jaise smriti meri khudki dost ho or sameer ka naam tk nhi
+                        liya). Usne tumse or fir wo sa ho gyaa" </div>
+
+
+                    <p>Agar tumko aaj bhi us cheez ka koi bojh ho to heavy hearted apologies for-granted please.</p>
+                    <p>Itne time baad achanak se isiliye, kyuki us time mujhe nhi pata tha, tumhare baare me itna</p>
+
+
+                    <div class="highlight-box">Mujhe abhi tk lagta tha tum acchi nhi ho, me galat tha hamesha se. Wo
+                        hota h na koi first Impression mil jaaye kahi se to carry-on hota rehta h. Bhale hi wo sach na
+                        ho.</div>
+                    <p>Ek to ye prachi ne mujhe nhi bataya ki tum uski nursery se dost ho. Aur acchi wali, itni acchi
+                        wali dost ho, behen jaisi. Wo ab jaake patachala mujhe.</p>
+
+
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">......</div>
+
+                    <p>Truth is ki me chahta hu tum sab ekdum sahi sahi jaano isiliye ye sab bata diya mene tumko. Isme
+                        1% bhi jooth nhi h 100% genuine or true.</p>
+                    <p>Tumko snap request isiliye bheji thi taaki tumko ye direct de saku.</p>
+                    <p>Or BTW ye neeche music wale symbol ke liye maafi chahta hu, doosri diary joo prachi ke liye
+                        design kari thi usko use kara tha mene, or ye itne bade codebase me se sirf ye section hatana
+                        thoda time consuming rehta h isiliye aise hi rehne diya mene</p>
+
+                    <div class="highlight-box">Ye prachi bohot nadan lagti h mujhe shuru se. Please iska saath kabhi mat
+                        chhorna. Tumhari bohot jyada izzat karti h ye. Shuru se dekh rha hu me, you are literally her
+                        bestieeeee...</div>
+                    <p>Tum wo waise bhi samajhdaar ho. I know it is called buttering, but i'm not buttering maybe
+                        buttering. Idk what to call it</p>
+
+                </div>
+            </div>
+
+
+
+            <!-- Page 5 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">.......</div>
+                    <p><em>Tumko ye cheez confess isliye kar rha hu(ye smriti wale time ki) kyuki maybe I and prachi
+                            will never talk to each other from now. To Impression ya fir apni side me laane wala concept
+                            yaha nhi lagega.</em> Uska nhi pata, lekin ab mere me himmat hi nhi h ki me text karu use 🙃
+                        Bohot pareshan kr diya shyd mene.... or wo gussa bhi h bohot.</p>
+                    <div class="highlight-box">Mujhe koi andaza nhi tha ki tum uske liye kitni important ho..!!
+                        Tabhi usne us din clear karne ko bola tha mere se. Lekin me samjha hi nhi tha. I think today is
+                        perfect to do whatever was left-out.</div>
+                    <p>Usko mat batana please.
+                    </p>
+                    <div class="highlight-box">I don't wanna hurt her..!!</div>
+
+
+                </div>
+            </div>
+
+            <!-- Back Cover -->
+            <div class="page cover">
+                <div class="cover-frame">
+                    <div class="cover-title" style="font-size: 2.5rem;">Take Care</div>
+                    <div
+                        style="font-family:'Montserrat'; letter-spacing:1px; font-size:0.7rem; color:#F0E68C; margin-top:20px;">
+                        of yourself and her Especially</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="helper-text">Tap Sides to Flip</div>
+    </div>
+
+    <!-- Touch Zones -->
+    <div class="touch-zone zone-left" onclick="flipPrev()"></div>
+    <div class="touch-zone zone-right" onclick="flipNext()"></div>
+
+    <!-- Music -->
+    <div class="music-toggle" onclick="toggleAudio()">
+        <span id="music-icon" style="font-size:1.5rem;">🎵</span>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="background.mp3" type="audio/mpeg">
+        <!-- Fallback or empty if not present -->
+    </audio>
+
+    <!-- Apology Overlay -->
+    <div id="apologyOverlay" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    ">
+        <div style="position: relative; width: 90%; max-width: 500px; padding: 20px;">
+            <!-- Back Button -->
+            <button onclick="closeApologyOverlay()" style="
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                padding: 10px 20px;
+                background: rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(10px);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                border-radius: 20px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                font-family: 'Lora', serif;
+                transition: all 0.3s ease;
+                z-index: 10000;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                ← Back to Diary
+            </button>
+
+            <!-- Apology Card Container -->
+            <div
+                style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 30px; padding: 50px 40px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); text-align: center; margin-top: 40px;">
+
+                <!-- Screen 1: Initial request -->
+                <div class="apology-card" id="overlay-screen1">
+                    <div class="apology-gif-container">
+                        <img src="beg-dont-leave.gif" alt="Please">
+                    </div>
+                    <div class="apology-message">Maan jao please 🥺</div>
+                    <div class="apology-sub-message">I'm really sorry...</div>
+                    <div class="apology-button-container">
+                        <button class="apology-btn apology-btn-yes" onclick="acceptApologyOverlay()">Yes ❤️</button>
+                        <button class="apology-btn apology-btn-no" onclick="showOverlayScreen2()">No 😔</button>
+                    </div>
+                </div>
+
+                <!-- Screen 2: Second attempt -->
+                <div class="apology-card apology-hidden" id="overlay-screen2">
+                    <div class="apology-gif-container">
+                        <img src="milk-and-mocha-bear-sorry-na.gif" alt="Please reconsider">
+                    </div>
+                    <div class="apology-message">Ek baar aur sochlo 🥺</div>
+                    <div class="apology-sub-message">Please Pilizzzz...</div>
+                    <div class="apology-button-container">
+                        <button class="apology-btn apology-btn-yes" onclick="acceptApologyOverlay()">Yes ❤️</button>
+                        <button class="apology-btn apology-btn-no" onclick="showOverlayScreen3()">No 😢</button>
+                    </div>
+                </div>
+
+                <!-- Screen 3: Final attempt -->
+                <div class="apology-card apology-hidden" id="overlay-screen3">
+                    <div class="apology-gif-container">
+                        <img src="sorry-na-sorry-jerry.gif" alt="Please think again">
+                    </div>
+                    <div class="apology-message">Are aise kaise, socho to 🥹</div>
+                    <div class="apology-sub-message">One more chance please...</div>
+                    <div class="apology-button-container">
+                        <button class="apology-btn apology-btn-yes" onclick="acceptApologyOverlay()">Yes ❤️</button>
+                        <button class="apology-btn apology-btn-no" id="movingNoBtnOverlay"
+                            onclick="moveButtonOverlay(); return false;">No 💔</button>
+                    </div>
+                </div>
+
+                <!-- Thank you screen -->
+                <div class="apology-card apology-hidden apology-thankyou-screen" id="overlay-thankyouScreen">
+                    <div class="apology-gif-container" style="width: 180px; height: 180px;">
+                        <img src="cat-holding-flowers.jpg" alt="Thank you">
+                    </div>
+                    <div class="apology-thankyou-message">Thank You! 💕</div>
+                    <div class="apology-thankyou-text">
+                        I knew you'd understand! 😁😎<br>
+                        You're the best! 😎<br>
+                        Chalooo wapis jao aur pages h ange..
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Particles ---
+        const container = document.getElementById('particles');
+        const particleCount = 20;
+
+        function createParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                let p = document.createElement('div');
+                p.classList.add('particle');
+
+                // Randomize sparkle vs circle
+                if (Math.random() > 0.7) p.classList.add('sparkle');
+
+                let size = Math.random() * 6 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // --- Diary Logic ---
+        const notebook = document.getElementById('notebook');
+        const pages = document.querySelectorAll('.page');
+        let totalPages = pages.length;
+
+        // Z-Index Stacking
+        pages.forEach((page, index) => {
+            page.style.zIndex = totalPages - index;
+        });
+
+        function openDiary() {
+            document.getElementById('intro').classList.add('fade');
+            setTimeout(() => {
+                notebook.classList.remove('closed');
+                playAudio();
+            }, 800);
+        }
+
+        function flipNext() {
+            for (let i = 0; i < totalPages; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    // Adjust z-index to ensure it sits on top of the left stack correctly if needed
+                    // For simple stack, just flipping is enough, but we want it to layer properly
+                    pages[i].style.zIndex = 100 + i;
+                    return;
+                }
+            }
+        }
+
+        function flipPrev() {
+            for (let i = totalPages - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    pages[i].style.zIndex = totalPages - i;
+                    return;
+                }
+            }
+        }
+
+        // --- One-sided turn logic (simple stack) ---
+        // Right side click -> Flip top-most unflipped page
+        // Left side click -> Unflip top-most flipped page
+
+        // --- Audio ---
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        function playAudio() {
+            audio.volume = 0.5;
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.textContent = '⏸';
+            }).catch(e => console.log("Audio autoplay blocked"));
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.textContent = '🎵';
+            } else {
+                audio.play();
+                isPlaying = true;
+                musicIcon.textContent = '⏸';
+            }
+        }
+
+        // --- APOLOGY INTERACTION FUNCTIONS ---
+        function showApologyScreen2() {
+            document.getElementById('apology-screen1').classList.add('apology-hidden');
+            document.getElementById('apology-screen2').classList.remove('apology-hidden');
+        }
+
+        function showApologyScreen3() {
+            document.getElementById('apology-screen2').classList.add('apology-hidden');
+            document.getElementById('apology-screen3').classList.remove('apology-hidden');
+        }
+
+        function acceptApologyPage() {
+            // Hide all screens
+            document.getElementById('apology-screen1').classList.add('apology-hidden');
+            document.getElementById('apology-screen2').classList.add('apology-hidden');
+            document.getElementById('apology-screen3').classList.add('apology-hidden');
+
+            // Show thank you screen
+            document.getElementById('apology-thankyouScreen').classList.remove('apology-hidden');
+        }
+
+        function moveButtonPage() {
+            const btn = document.getElementById('movingNoBtnPage');
+
+            // Get the page content container dimensions
+            const pageContent = btn.closest('.page-content');
+            const containerRect = pageContent.getBoundingClientRect();
+
+            // Calculate random position within the page
+            const maxX = containerRect.width - 120; // button width approx
+            const maxY = containerRect.height - 50; // button height approx
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            // Apply absolute positioning relative to the page
+            btn.style.position = 'absolute';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.transition = 'all 0.3s ease';
+            btn.style.zIndex = '1000';
+
+            // Prevent default behavior
+            return false;
+        }
+
+        // --- APOLOGY OVERLAY FUNCTIONS ---
+        function openApologyOverlay() {
+            const overlay = document.getElementById('apologyOverlay');
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+            }, 10);
+
+            // Reset to screen 1
+            document.getElementById('overlay-screen1').classList.remove('apology-hidden');
+            document.getElementById('overlay-screen2').classList.add('apology-hidden');
+            document.getElementById('overlay-screen3').classList.add('apology-hidden');
+            document.getElementById('overlay-thankyouScreen').classList.add('apology-hidden');
+        }
+
+        function closeApologyOverlay() {
+            const overlay = document.getElementById('apologyOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                // Reset moving button position
+                const btn = document.getElementById('movingNoBtnOverlay');
+                if (btn) {
+                    btn.style.position = 'relative';
+                    btn.style.left = 'auto';
+                    btn.style.top = 'auto';
+                }
+            }, 500);
+        }
+
+        function showOverlayScreen2() {
+            document.getElementById('overlay-screen1').classList.add('apology-hidden');
+            document.getElementById('overlay-screen2').classList.remove('apology-hidden');
+        }
+
+        function showOverlayScreen3() {
+            document.getElementById('overlay-screen2').classList.add('apology-hidden');
+            document.getElementById('overlay-screen3').classList.remove('apology-hidden');
+        }
+
+        function acceptApologyOverlay() {
+            // Hide all screens
+            document.getElementById('overlay-screen1').classList.add('apology-hidden');
+            document.getElementById('overlay-screen2').classList.add('apology-hidden');
+            document.getElementById('overlay-screen3').classList.add('apology-hidden');
+
+            // Show thank you screen
+            document.getElementById('overlay-thankyouScreen').classList.remove('apology-hidden');
+        }
+
+        function moveButtonOverlay() {
+            const btn = document.getElementById('movingNoBtnOverlay');
+            const container = btn.closest('div[style*="background: rgba(255, 255, 255, 0.95)"]');
+
+            if (!container) return false;
+
+            const containerRect = container.getBoundingClientRect();
+
+            // Calculate random position within the card
+            const maxX = containerRect.width - 120; // button width approx
+            const maxY = containerRect.height - 60; // button height approx
+
+            const randomX = Math.random() * (maxX - 40) + 20;
+            const randomY = Math.random() * (maxY - 40) + 20;
+
+            // Apply absolute positioning
+            btn.style.position = 'absolute';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.transition = 'all 0.3s ease';
+            btn.style.zIndex = '10001';
+
+            // Prevent default behavior
+            return false;
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ocean Moonlight</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Raleway:wght@300;400&display=swap');
+
+        :root {
+            /* OCEAN MOONLIGHT THEME */
+            --bg-ocean-start: #0a1128;
+            --bg-ocean-mid: #1e3a5f;
+            --bg-ocean-end: #2c5f7c;
+            --deep-navy: #001233;
+            --silver-accent: #c0c0c0;
+            --silver-light: #e8e8e8;
+            /* Cream Paper Colors */
+            --paper-cream: #fef9e7;
+            --text-charcoal: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-ocean-start), var(--bg-ocean-mid), var(--bg-ocean-end));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Crimson Text', serif;
+            color: var(--text-charcoal);
+        }
+
+        /* Global Texture for depth */
+        .global-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 900;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- ATMOSPHERE --- */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.5;
+            animation: floatUp linear infinite;
+        }
+
+        .sparkle {
+            background: var(--silver-accent);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Soft Glow Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: breathe 10s infinite alternate;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #4a90e2;
+            top: -120px;
+            left: -120px;
+            mix-blend-mode: soft-light;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #5dade2;
+            bottom: -80px;
+            right: -80px;
+            mix-blend-mode: overlay;
+            animation-delay: 3s;
+        }
+
+        @keyframes breathe {
+            from {
+                transform: scale(1);
+                opacity: 0.25;
+            }
+
+            to {
+                transform: scale(1.15);
+                opacity: 0.45;
+            }
+        }
+
+        /* --- NOTEBOOK --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 90vw;
+            max-width: 420px;
+            height: 72vh;
+            perspective: 2000px;
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.5));
+        }
+
+        .notebook-container.closed {
+            transform: translateY(50vh) scale(0.8);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Silver Spiral - More metallic */
+        .spiral {
+            position: absolute;
+            left: -18px;
+            top: 2%;
+            bottom: 2%;
+            width: 45px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(0deg, #a8a8a8 0%, #e0e0e0 50%, #a8a8a8 100%);
+            border-radius: 10px;
+            transform: rotate(-6deg);
+            box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .ring::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 40%, rgba(255, 255, 255, 0.9) 50%, transparent 60%);
+            opacity: 0.7;
+        }
+
+        /* Pages - Cream Texture */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            background-color: var(--paper-cream);
+            border-radius: 4px 12px 12px 4px;
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+
+            /* Realistic Shadow & Cream Texture */
+            box-shadow:
+                inset 0 0 40px rgba(44, 62, 80, 0.15),
+                inset 15px 0 20px rgba(0, 0, 0, 0.05), 2px 2px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(139, 119, 101, 0.25);
+            backface-visibility: hidden;
+
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='4' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fef9e7' surfaceScale='1.5'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='1'/%3E%3C/svg%3E"),
+                linear-gradient(to right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.03));
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* Cover Specifics - Deep Ocean Leather */
+        .cover {
+            background-color: var(--deep-navy);
+            color: var(--silver-accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            /* Deep Leather Texture */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='leather'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='6' stitchTiles='stitch'/%3E%3CfeSpecularLighting surfaceScale='3' specularConstant='0.8' specularExponent='25' lighting-color='%231e3a5f' result='specular'%3E%3CfePointLight x='100' y='100' z='250'/%3E%3C/feSpecularLighting%3E%3CfeComposite operator='in' in='specular' in2='SourceAlpha'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23leather)' opacity='0.25'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #001233 0%, #0a1128 100%);
+
+            box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.9), inset 5px 0 12px rgba(255, 255, 255, 0.08);
+            border: 1px solid #000510;
+        }
+
+        .cover-frame {
+            border: 2px solid var(--silver-accent);
+            padding: 2rem;
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cover-frame::before,
+        .cover-frame::after {
+            content: "✦";
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--silver-light);
+        }
+
+        .cover-frame::before {
+            top: 10px;
+        }
+
+        .cover-frame::after {
+            bottom: 10px;
+        }
+
+        .cover-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #c0c0c0, #f0f0f0, #c0c0c0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+            line-height: 1.2;
+        }
+
+        /* Content Styling */
+        .page-content {
+            height: 100%;
+            padding: 2.5rem 1.5rem 2.5rem 2.5rem;
+            overflow-y: auto;
+            color: var(--text-charcoal);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Webkit scrollbar styling for mobile */
+        .page-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 2px;
+        }
+
+        .page-content::-webkit-scrollbar-thumb {
+            background: rgba(74, 144, 226, 0.3);
+            border-radius: 2px;
+        }
+
+        .journal-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #2980b9;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(41, 128, 185, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* Wave Corner Decoration */
+        .corner-flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 Q30 30 50 50 T90 50' stroke='%234a90e2' fill='none' stroke-width='2'/%3E%3Cpath d='M50 10 Q30 30 50 50 T50 90' stroke='%234a90e2' fill='none' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%234a90e2' opacity='0.4'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(to right, transparent, rgba(74, 144, 226, 0.12), transparent);
+            padding: 10px 0;
+            color: #1a5490;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid #85c1e9;
+            border-bottom: 1px solid #85c1e9;
+            margin: 20px 0;
+            border-left: none;
+            border-radius: 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* INTRO */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000510;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease;
+        }
+
+        .intro-screen.fade {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #aed6f1;
+            opacity: 0;
+            animation: fadeInBlur 2s forwards 0.5s;
+        }
+
+        .intro-btn {
+            margin-top: 40px;
+            padding: 12px 40px;
+            background: transparent;
+            border: 1px solid #5dade2;
+            color: #5dade2;
+            border-radius: 30px;
+            font-family: 'Raleway', sans-serif;
+            cursor: pointer;
+            opacity: 0;
+            animation: slideInUp 1s forwards 2s;
+            transition: 0.3s;
+        }
+
+        .intro-btn:hover {
+            background: rgba(93, 173, 226, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(93, 173, 226, 0.4);
+        }
+
+        @keyframes fadeInBlur {
+            from {
+                opacity: 0;
+                filter: blur(20px);
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Music Controls */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Touch Zones */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 15%;
+            z-index: 200;
+        }
+
+        .zone-left {
+            left: 0;
+        }
+
+        .zone-right {
+            right: 0;
+        }
+
+        .helper-text {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #85c1e9;
+            opacity: 0.7;
+            z-index: 150;
+        }
+
+        /* --- RESPONSIVE / MOBILE OPTIMIZATION --- */
+        @media screen and (max-width: 480px) {
+            .intro-text {
+                font-size: 3rem;
+            }
+
+            .notebook-container {
+                width: 85vw;
+                height: 75vh;
+                max-height: none;
+            }
+
+            .cover-title {
+                font-size: 2.8rem;
+            }
+
+            .page-content {
+                padding: 1.5rem 1rem 1.5rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .journal-header {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+
+            .highlight-box {
+                padding: 10px;
+                margin: 15px 0;
+                font-size: 0.95rem;
+            }
+
+            .spiral {
+                width: 35px;
+                left: -14px;
+            }
+
+            .ring {
+                height: 10px;
+            }
+
+            .music-toggle {
+                bottom: 25px;
+                right: 25px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .intro-btn {
+                padding: 10px 30px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Landscape Mode Optimization */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .notebook-container {
+                height: 85vh;
+                width: 70vw;
+            }
+
+            .page-content {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* --- APOLOGY INTERACTIVE STYLES --- */
+        .apology-hidden {
+            display: none !important;
+        }
+
+        .apology-card {
+            text-align: center;
+            animation: apologySlideIn 0.5s ease-out;
+            width: 100%;
+        }
+
+        @keyframes apologySlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .apology-gif-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .apology-gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .apology-message {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a5490;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .apology-sub-message {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .apology-button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .apology-btn {
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Crimson Text', serif;
+        }
+
+        .apology-btn-yes {
+            background: linear-gradient(135deg, #4a90e2 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .apology-btn-yes:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        .apology-btn-no {
+            background: linear-gradient(135deg, #85c1e9 0%, #5dade2 100%);
+            color: white;
+        }
+
+        .apology-btn-no:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(133, 193, 233, 0.4);
+        }
+
+        .apology-thankyou-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .apology-thankyou-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        @media screen and (max-width: 480px) {
+            .apology-gif-container {
+                width: 130px;
+                height: 130px;
+            }
+
+            .apology-message {
+                font-size: 1.2rem;
+            }
+
+            .apology-btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+
+            .apology-thankyou-message {
+                font-size: 1.6rem;
+            }
+
+            #apologyOverlay button[onclick="closeApologyOverlay()"] {
+                top: 10px;
+                left: 10px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            #apologyOverlay>div {
+                width: 95%;
+                padding: 10px;
+            }
+
+            #apologyOverlay .apology-gif-container {
+                width: 140px;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-texture"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Intro -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-text">Ocean Moonlight</h1>
+        <button class="intro-btn" onclick="openDiary()">Open Diary</button>
+    </div>
+
+    <!-- Diary -->
+    <div class="notebook-container closed" id="notebook">
+        <!-- Spiral Binding -->
+        <div class="spiral">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+        </div>
+
+        <div class="notebook">
+            <!-- Cover -->
+            <div class="page cover">
+                <div class="cover-frame">
+                    <div class="cover-title">Midnight Waves</div>
+                    <div
+                        style="font-family:'Raleway'; letter-spacing:2px; font-size:0.8rem; margin-top:10px; color:#d5e8f7;">
+                        Under the moonlit ocean...</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">Prachiii Badmoshh....</div>
+                    <p>Hey there, Prachiii. You know what's funny? Periods wale time pe hi meri band bajti hai..,
+                        isiliye
+                        yaad rakhta hu taaki faltoo pange na lu 🙂‍↔️💀 Mene notice kiya hai har baar tabhi mere se kuch
+                        kaand ho jata h." 🙂</p>
+                    <p>Aise me fir ek joke yaad ata h, periods ladki-log ke hote h, lecture humlog ke lag jaate h... 😅
+                    </p>
+                    <p>Hope tumne wo shraddha wali birthday wish dekhli hogi, tumse pahle ki h <em>DEVI JI</em> areeee
+                        ye
+                        mujhe har saal alag tareeke se wish karti thi, last year ek program ke form me kiya tha to fir
+                        me kaise haar maan lu 💀🗿 Don bhi matrix se bahar jaake kuch karega 💀.</p>
+                    <p>Ruko yr aaj sab clear cut present ho hi jaane do ab🦥🦥</p>
+                    <div class="highlight-box">"It is True that I Love You 🫵🦥 <br> Aaaaaahhhhh.... nhi waise nhi jaise
+                        tum sochti ho, not in romantic way.... , not in a tharak wali way.... trun the pages to know how
+                        different it is."</div>
+                    <p></p>
+                    <img src="image.png" alt="new id" width="300">
+                    <div class="highlight-box">"Ab dekhlo, tarak to aisi jagah aati h🗿🗿 🦥🦥"</div>
+                    <p>Or nhi hamara kuch nhi chal rha🦥🙂‍↔️😂...!!</p>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">Just For You</div>
+                    <p>Ummmmmmmmmmmmmm...... mera intention khud ki saaf image kharab karne ka nhi h, Foreigners to hote
+                        hi h fast 😂Pata nhi ye dairy likhte time mene snap khol liye poorane jo dekhe nhi thee. Maybe
+                        it is also a Co-incident.</p>
+                    <p>Me bs itna bata rha hu ki, if I say I love you, it doesn't mean I want you in my life in a way
+                        you think, it just means I love you for who you are, and I want you to be happy, even if it's
+                        not with me.</p>
+                    <div class="highlight-box">"Your mother loves you, your Father Loves you, and even your brother
+                        does...!!"</div>
+                    <p>Do they have any second thoughts for you? The answer is No..!!</p>
+                    <p>The same goes for me..!!</p>
+                    <p>I too love my family..!! and you the same double-battery 🦥🦥</p>
+
+
+                    <div class="highlight-box">All I ever think about you, then it is simply taking care of you,
+                        annoying you, also listening to you all the time (like a small kid), that's it and nothing
+                        more...!!</div>
+
+                    <div class="highlight-box">Kharab baat ye h, "My intentions are really pure for you" tum nhi samajh
+                        paogi... ye bhi janta hu me😂 this is disgusting, mene socha bhi nhi tha me ye sab bolunga
+                        kabhi, i never had any interest in such things, lekin ab ho gaya na...</div>
+                    <p>Me to koi couple wali movie bhi nhi dekhta tha tab, dishum dishum wali movies, dinosaur wali,
+                        School pe terrorist attack💀, school me baad aajaye to mere bag me boat 🗿🦥, terrorist mere
+                        kamre me aaye to eett(brick) fek ke maarunga 🗿💀, aisi cheezen dekhta tha me😂 koi titanic ka
+                        wo romantic scene dikha de to me bol deta, bhai dhakka maar use 💀😂....
+                        Ajeeb-oooooooooo-garebb..... harkaton wale cartoons (Shinchan, Gon the Dinasaur(Cartoon
+                        Network),Gon the stonage boy(Humgama),Oggy and the Cockroaches(Cartoon Network),
+                        ,Doraemon(Cartoon Network), Tom & Jerry(Cartoon Network),aur saare almost, etc.) Even when I was
+                        so big boy.</p>
+                    <p>Or me to bata bhi chuka ki me tumhari present form se nhi, tumhari past form se pyaar karta hu🦥,
+                        wo chhoti bacchi wali, or aaj imagine bhi karu to tumhara present face nhii, wahi poorana.</p>
+                    <p>Talkin about my intentions, to wo bs taking-care wale h. tumhare gaal ko rubber ki tarah keech
+                        duuu😂. Cashma chura lu taaki tum dekh na paao 💀 brush karne jao to usme tooth-paste ki jagah
+                        dedo cream😂🗿 Jyada bad-bad kare to fridge pe bitha dooo 🗿💀</p>
+                </div>
+            </div>
+
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">My Message</div>
+                    <p><em></em></p>
+                    <p>I know tumko chanchal ne bola hoga kuch, it is fine, dost h tumhari, tum fas na jao kahi us wajah
+                        se samjhaya hi hoga.</p>
+                    <p>Actually you are very lucky, kyuki sachme ladke hota h kharab.</p>
+
+                    <div class="highlight-box">Or me janta tha wo bolegi kuch isiliye me pahle hi pooch rha tha ki kya
+                        bola usne wagerah wagerah...</div>
+
+                    <!-- Button to open apology overlay -->
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button onclick="openApologyOverlay()" style="
+                            padding: 12px 30px;
+                            background: linear-gradient(135deg, #4a90e2 0%, #2980b9 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 25px;
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+                            font-family: 'Crimson Text', serif;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(74, 144, 226, 0.5)'"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(74, 144, 226, 0.3)'">
+                            🫵 Click Here 🫵
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">My Message</div>
+
+                    <p>Rahi baad periods yaad rakhne ki, to wo meri khudki safety ke liye h 😂🦥 <em> mujhe anukriti or
+                            shraddha ke bhi yaad rehte h(wo alag baat h ki unlog se me samne se jaake pange leta hu😎
+                            kon dare apne khud ke bacchon se 🗿me papa hu anukriti ka to </em> or ha me thodi tumpe koi
+                        jadoo tona wagerah kar dunga 😂 "</p>
+                    <p>Or mujhe genuinely chinta rehti h, dikhava nhi karta me🙃</p>
+                    <p>Tumhe pata h ek din me arindam shraddha or arindam confrence pe baat kar the the 😂ye arindam
+                        bangali totke bata rha tha...</p>
+                    <p>Kisi bhi ladki ko apne liye kaise pataye 🗿 bengali baba orindam ka tareeka --> raat ke 2 baje 🗿
+                        2 mirchi , 2 nimboo ekdum freshum fresh 🗿. mere saath bolke yaad karo balakonnn ommmmmm prachi
+                        deepak ki ho jaayeee, is mantra ko 2100 baar padho 🗿 dhyn rahe agar 2 bajne me 1 second upar
+                        neeche hue to tumhare raste lagane prachi naam ki bhootni aajayegi 🗿 fir apne hisab se dekh
+                        lena 🗿 or agar 2100 ki jagah 2009 baar padha ya 2101 baar hi ho gaya to teri ankhen nikal ke
+                        kanche khelegi wo 🗿 </p>
+                    <p>Us din ye bhaisab ne ye majak majak wale mood ne aise 3 ya 4 tareeke bataye the 😂😂</p>
+
+
+                    <div class="highlight-box">Or ab tum bologi ---> "Bohot bohot dhanyawad" isse accha nhi ajeeb lagta
+                        h 🙂‍↔️...!! and even you present rude replies sometimes. Me isiliye ignore kar deta hu kyuki I
+                        love you 🗿 Or wo harkat tumhare alawa koi aur kare to mw hamesha ke liye ignore kar deta hu. I
+                        have already said, even i wish i cannot avoid you. </div>
+
+                </div>
+            </div>
+
+
+
+            <!-- Page 5 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="journal-header">My Message</div>
+                    <p><em>Wo roz text karne wali baat isiliye likhi thi kyuki, mujhe laga kahi is baat se to naraz nhi
+                            ki mene 1 hafte ping hi nhi kiya tumhe.</em></p>
+                    <p>Mene bs isiliye bola tha, ab mujhe pata hi nhi hoga ki baat kya h, to me kaise react karu kya
+                        bolu kaise decide karunga, tumhi batao..!! Khud hi socho kuch din pahle tk itni achiiii achanak
+                        se cold enough.(Tum meri jagah hoti to kya karti tum hi batao chalo)
+                    </p>
+                    <div class="highlight-box">If you don't want you can tell, ab me nhi janta tum kis baat pe gussa ho
+                        🐼🐻‍❄️ ya kya hua achanak se birthday ke pahle tk sab theek tha..
+                        Daily, alternate days, weekly ya monthly bhi kar sakte h waise conversations, that's not an
+                        issue ✌️ or agar tum chaho to once
+                        in a month ya year bhi kar sakte h "On a specific date and time" . I'm all good with it. Me bs
+                        ye bata rha hu ki bonding me
+                        darar nhi padni chaiye bilkul bhi.
+                        If you are tensed with those stupid feelings, to me bata chuka tha pahle bhi, "you'll never be
+                        harmed" and if you get one boy you can tell me, I can even offer tips😏✌️ what actually matters,
+                        it is your happiness and well-being, whatever it takes to achieve. Chahe mujhe ek completely new
+                        language seekhni pade raat bhar beth ke kuch banane ko, ya fir Naya algorithm likhna pade. Only
+                        thing that matters the most is that one small smile of that double battery girl..!!</div>
+                    <p>Aur agar tumhe lagta h ki me friend jaise nhi rehta , then I can use the exact same language jo
+                        me inlog ke saath use karta hu. Bs thoda time lagega normalise hone me.</p>
+                    <div class="highlight-box">Uske baad bhi if you want me to leave, then you have to record your voice
+                        "I no longer want you to be my friend, and please leave forever." me chala jaunga forever,
+                        removing every
+                        trace of me.✌️✌️</div>
+
+                    <div class="highlight-box">Tumhe jo accha lage wo karenge billu devi😂🫡</div>
+                    <div class="highlight-box">And after this I'll never step back, beacuse <em>I am man of my
+                            words</em></div>
+
+                    <p>🐼🐼</ap>
+
+
+                </div>
+            </div>
+
+            <!-- Back Cover -->
+            <div class="page cover">
+                <div class="cover-frame">
+                    <div class="cover-title" style="font-size: 2.5rem;">Bye Bye</div>
+                    <div
+                        style="font-family:'Raleway'; letter-spacing:1px; font-size:0.7rem; color:#d5e8f7; margin-top:20px;">
+                        Read Twice, and think of those days first..!!</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="helper-text">Tap Sides to Flip</div>
+    </div>
+
+    <!-- Touch Zones -->
+    <div class="touch-zone zone-left" onclick="flipPrev()"></div>
+    <div class="touch-zone zone-right" onclick="flipNext()"></div>
+
+    <!-- Music -->
+    <div class="music-toggle" onclick="toggleAudio()">
+        <span id="music-icon" style="font-size:1.5rem;">🎵</span>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="background.mp3" type="audio/mpeg">
+        <!-- Fallback or empty if not present -->
+    </audio>
+
+    <!-- Apology Overlay -->
+    <div id="apologyOverlay" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1e3a5f 0%, #2c5f7c 100%);
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    ">
+        <div style="position: relative; width: 90%; max-width: 500px; padding: 20px;">
+            <!-- Back Button -->
+            <button onclick="closeApologyOverlay()" style="
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                padding: 10px 20px;
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(10px);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 20px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                font-family: 'Crimson Text', serif;
+                transition: all 0.3s ease;
+                z-index: 10000;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                ← Back to Diary
+            </button>
+
+            <!-- Apology Card Container -->
+            <div
+                style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 30px; padding: 50px 40px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); text-align: center; margin-top: 40px;">
+
+                <!-- Screen 1: Initial request -->
+                <div class="apology-card" id="overlay-screen1">
+                    <div class="apology-gif-container">
+                        <img src="beg-dont-leave.gif" alt="Please">
+                    </div>
+                    <div class="apology-message">Maan jao please 🥺</div>
+                    <div class="apology-sub-message">I'm really sorry...</div>
+                    <div class="apology-button-container">
+                        <button class="apology-btn apology-btn-yes" onclick="acceptApologyOverlay()">Yes ❤️</button>
+                        <button class="apology-btn apology-btn-no" onclick="showOverlayScreen2()">No 😔</button>
+                    </div>
+                </div>
+
+                <!-- Screen 2: Second attempt -->
+                <div class="apology-card apology-hidden" id="overlay-screen2">
+                    <div class="apology-gif-container">
+                        <img src="beg-dont-leave.gif" alt="Please reconsider">
+                    </div>
+                    <div class="apology-message">Ek baar aur sochlo 🥺</div>
+                    <div class="apology-sub-message">Please Pilizzzz...</div>
+                    <div class="apology-button-container">
+                        <button class="apology-btn apology-btn-yes" onclick="acceptApologyOverlay()">Yes ❤️</button>
+                        <button class="apology-btn apology-btn-no" onclick="showOverlayScreen3()">No 😢</button>
+                    </div>
+                </div>
+
+                <!-- Screen 3: Final attempt -->
+                <div class="apology-card apology-hidden" id="overlay-screen3">
+                    <div class="apology-gif-container">
+                        <img src="beg-dont-leave.gif" alt="Please think again">
+                    </div>
+                    <div class="apology-message">Are aise kaise, socho to 🥹</div>
+                    <div class="apology-sub-message">One more chance please...</div>
+                    <div class="apology-button-container">
+                        <button class="apology-btn apology-btn-yes" onclick="acceptApologyOverlay()">Yes ❤️</button>
+                        <button class="apology-btn apology-btn-no" id="movingNoBtnOverlay"
+                            onclick="moveButtonOverlay(); return false;">No 💔</button>
+                    </div>
+                </div>
+
+                <!-- Thank you screen -->
+                <div class="apology-card apology-hidden apology-thankyou-screen" id="overlay-thankyouScreen">
+                    <div class="apology-gif-container" style="width: 180px; height: 180px;">
+                        <img src="cat-holding-flowers.jpg" alt="Thank you">
+                    </div>
+                    <div class="apology-thankyou-message">Thank You! 💕</div>
+                    <div class="apology-thankyou-text">
+                        I knew you'd understand! 😁😎<br>
+                        You're the best! 😎<br>
+                        Chalooo wapis jao aur pages h ange..
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Particles ---
+        const container = document.getElementById('particles');
+        const particleCount = 20;
+
+        function createParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                let p = document.createElement('div');
+                p.classList.add('particle');
+
+                // Randomize sparkle vs circle
+                if (Math.random() > 0.7) p.classList.add('sparkle');
+
+                let size = Math.random() * 6 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // --- Diary Logic ---
+        const notebook = document.getElementById('notebook');
+        const pages = document.querySelectorAll('.page');
+        let totalPages = pages.length;
+
+        // Z-Index Stacking
+        pages.forEach((page, index) => {
+            page.style.zIndex = totalPages - index;
+        });
+
+        function openDiary() {
+            document.getElementById('intro').classList.add('fade');
+            setTimeout(() => {
+                notebook.classList.remove('closed');
+                playAudio();
+            }, 800);
+        }
+
+        function flipNext() {
+            for (let i = 0; i < totalPages; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    pages[i].style.zIndex = 100 + i;
+                    return;
+                }
+            }
+        }
+
+        function flipPrev() {
+            for (let i = totalPages - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    pages[i].style.zIndex = totalPages - i;
+                    return;
+                }
+            }
+        }
+
+        // --- Audio ---
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        function playAudio() {
+            audio.volume = 0.5;
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.textContent = '⏸';
+            }).catch(e => console.log("Audio autoplay blocked"));
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.textContent = '🎵';
+            } else {
+                audio.play();
+                isPlaying = true;
+                musicIcon.textContent = '⏸';
+            }
+        }
+
+        // --- APOLOGY OVERLAY FUNCTIONS ---
+        function openApologyOverlay() {
+            const overlay = document.getElementById('apologyOverlay');
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+            }, 10);
+
+            // Reset to screen 1
+            document.getElementById('overlay-screen1').classList.remove('apology-hidden');
+            document.getElementById('overlay-screen2').classList.add('apology-hidden');
+            document.getElementById('overlay-screen3').classList.add('apology-hidden');
+            document.getElementById('overlay-thankyouScreen').classList.add('apology-hidden');
+        }
+
+        function closeApologyOverlay() {
+            const overlay = document.getElementById('apologyOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                // Reset moving button position
+                const btn = document.getElementById('movingNoBtnOverlay');
+                if (btn) {
+                    btn.style.position = 'relative';
+                    btn.style.left = 'auto';
+                    btn.style.top = 'auto';
+                }
+            }, 500);
+        }
+
+        function showOverlayScreen2() {
+            document.getElementById('overlay-screen1').classList.add('apology-hidden');
+            document.getElementById('overlay-screen2').classList.remove('apology-hidden');
+        }
+
+        function showOverlayScreen3() {
+            document.getElementById('overlay-screen2').classList.add('apology-hidden');
+            document.getElementById('overlay-screen3').classList.remove('apology-hidden');
+        }
+
+        function acceptApologyOverlay() {
+            // Hide all screens
+            document.getElementById('overlay-screen1').classList.add('apology-hidden');
+            document.getElementById('overlay-screen2').classList.add('apology-hidden');
+            document.getElementById('overlay-screen3').classList.add('apology-hidden');
+
+            // Show thank you screen
+            document.getElementById('overlay-thankyouScreen').classList.remove('apology-hidden');
+        }
+
+        function moveButtonOverlay() {
+            const btn = document.getElementById('movingNoBtnOverlay');
+            const container = btn.closest('div[style*="background: rgba(255, 255, 255, 0.95)"]');
+
+            if (!container) return false;
+
+            const containerRect = container.getBoundingClientRect();
+
+            // Calculate random position within the card
+            const maxX = containerRect.width - 120; // button width approx
+            const maxY = containerRect.height - 60; // button height approx
+
+            const randomX = Math.random() * (maxX - 40) + 20;
+            const randomY = Math.random() * (maxY - 40) + 20;
+
+            // Apply absolute positioning
+            btn.style.position = 'absolute';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.transition = 'all 0.3s ease';
+            btn.style.zIndex = '10001';
+
+            // Prevent default behavior
+            return false;
+        }
+
+    </script>
+</body>
+
+</html>

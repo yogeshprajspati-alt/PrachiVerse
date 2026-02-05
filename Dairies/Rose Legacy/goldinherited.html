@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Rose Legacy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap');
+
+        :root {
+            /* ROSE GOLD LUXURY THEME */
+            --bg-gradient-start: #fff0f5;
+            --bg-gradient-end: #fdeef1;
+            --rose-gold: #b76e79;
+            --rose-gold-light: #e6b8c0;
+            --rose-metallic: linear-gradient(135deg, #d4af37, #b76e79, #d4af37);
+            --velvet-cover: #4a2c31;
+            /* Deep Burgundy Velvet */
+            --paper-cream: #fffdf9;
+            --text-ink: #3a2e2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* Soft blurred background */
+            background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-ink);
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+
+        /* Floating Petal Container */
+        .petal-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background: rgba(183, 110, 121, 0.4);
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(0, -10vh) rotate(0deg) scale(0.6);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(100px, 110vh) rotate(720deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        /* Soft Glow Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: breathe 10s infinite alternate;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #ffe4e1;
+            top: -50px;
+            left: -50px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #fff0f5;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 2s;
+        }
+
+        @keyframes breathe {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        /* --- NOTEBOOK CONTAINER --- */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 92vw;
+            max-width: 450px;
+            height: 75vh;
+            perspective: 2500px;
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .notebook-container.closed {
+            transform: translateY(40vh) scale(0.9);
+            opacity: 0;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* --- ROSE GOLD SPIRAL --- */
+        .spiral {
+            position: absolute;
+            left: -12px;
+            top: 3%;
+            bottom: 3%;
+            width: 40px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+
+        .ring {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #5c3a40, #ffd1dc, #b76e79, #5c3a40);
+            border-radius: 5px;
+            transform: rotate(-10deg);
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- PAGES --- */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            background: var(--paper-cream);
+            border-radius: 5px 15px 15px 5px;
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            box-shadow:
+                inset 35px 0 30px rgba(183, 110, 121, 0.1),
+                2px 5px 15px rgba(0, 0, 0, 0.1);
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.15'/%3E%3C/svg%3E");
+            backface-visibility: hidden;
+            border: 1px solid rgba(183, 110, 121, 0.2);
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .page-content {
+            height: 100%;
+            padding: 40px 25px 40px 50px;
+            overflow-y: auto;
+            color: var(--text-ink);
+            font-size: 1.2rem;
+            line-height: 1.7;
+            text-align: left;
+            position: relative;
+        }
+
+        /* Floral Corner Decoration */
+        .corner-flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 80 Q50 50 80 20 M20 20 Q50 50 80 80' stroke='%23e6b8c0' fill='none' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23e6b8c0' opacity='0.5'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .top-right {
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Headers */
+        .page-header {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.2rem;
+            color: var(--rose-gold);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: linear-gradient(to right, transparent, rgba(183, 110, 121, 0.1), transparent);
+            padding: 10px 0;
+            color: #8a4b55;
+            font-style: italic;
+            text-align: center;
+            border-top: 1px solid var(--rose-gold-light);
+            border-bottom: 1px solid var(--rose-gold-light);
+            margin: 20px 0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* --- COVER PAGE --- */
+        .cover {
+            background: var(--velvet-cover);
+            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='velvet'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23velvet)' opacity='0.25'/%3E%3C/svg%3E");
+            color: #ffd1dc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+            z-index: 50;
+            border: 1px solid #2d1a1d;
+        }
+
+        .cover-border {
+            border: 2px solid var(--rose-gold);
+            border-radius: 5px;
+            padding: 20px;
+            width: 85%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cover-border::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(183, 110, 121, 0.5);
+        }
+
+        .cover-title {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ffd1dc, #d4af37, #ffd1dc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+            line-height: 1.2;
+        }
+
+        .cover-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rose-gold);
+            margin-top: 20px;
+        }
+
+        /* --- CINEMATIC ENTRANCE --- */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #fff0f5 0%, #fcecf0 100%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .intro-screen.fade {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Blur-in Animations */
+        .intro-title {
+            font-family: 'Pinyon Script';
+            font-size: 4.5rem;
+            color: #b76e79;
+            opacity: 0;
+            filter: blur(10px);
+            animation: blurIn 1.5s forwards 0.5s;
+        }
+
+        .intro-line {
+            width: 0px;
+            height: 1px;
+            background: #e6b8c0;
+            margin: 15px 0;
+            animation: expandLine 1s forwards 1.5s;
+        }
+
+        .intro-sub {
+            font-family: 'Montserrat';
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            color: #888;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s forwards 2s;
+        }
+
+        .btn-open {
+            margin-top: 50px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 3s;
+            padding: 15px 60px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--rose-gold);
+            color: var(--rose-gold);
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0 10px 30px rgba(183, 110, 121, 0.15);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-open:hover {
+            box-shadow: 0 10px 40px rgba(183, 110, 121, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes blurIn {
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes expandLine {
+            to {
+                width: 100px;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- TOUCH LAYERS --- */
+        .touch-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 25%;
+            z-index: 200;
+            display: none;
+        }
+
+        .touch-left {
+            left: 0;
+        }
+
+        .touch-right {
+            right: 0;
+        }
+
+        .helper-text {
+            position: absolute;
+            bottom: -60px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            color: #b76e79;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        .sig {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.5rem;
+            text-align: right;
+            color: var(--rose-gold);
+            margin-top: 30px;
+        }
+
+        .page-content::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .page-content::-webkit-scrollbar-thumb {
+            background: #e6b8c0;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Layers -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="petal-container" id="petals"></div>
+
+    <!-- Cinematic Entrance -->
+    <div class="intro-screen" id="intro">
+        <h1 class="intro-title">Prachiii.....</h1>
+        <div class="intro-line"></div>
+        <p class="intro-sub">THE ROSE COLLECTION</p>
+        <button class="btn-open" onclick="start()">ENTER</button>
+    </div>
+
+    <!-- Notebook -->
+    <div class="notebook-container closed" id="notebook">
+        <div class="helper-text">Tap Right ➔ | Tap Left ⬅</div>
+
+        <div class="notebook">
+
+            <!-- Spiral -->
+            <div class="spiral">
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+
+            <!-- Cover -->
+            <div class="page cover">
+                <div class="cover-border">
+                    <div style="font-size:2rem; margin-bottom:10px;">❦</div>
+                    <div class="cover-title">Prachi<br>Devi</div>
+                    <div class="cover-subtitle">Things Left Unsaid</div>
+                </div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">Preface</div>
+                    <p><strong>Prachii, ✨</strong></p>
+                    <p>Book or designs to me aise bana rha hu jaise me koi writer hu 😂 kya baat h kya baat h maja aa
+                        gaya...</p>
+                    <p>chalo re maje karo, tum wo poorani bakwas doobara naa dekho isiliye is se replace kar dunga
+                        meeeee.</p>
+                    <div class="highlight">"Kitna badmash hu me... HE HE HU HU HA HA...."</div>
+                    <p>Chahta to mujhe bs copy paste karna tha notepad me typed cheezen. Lekin aaj ka ho gaya tum bore
+                        ho jaogiii... to baad me...</p>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">The Silence</div>
+                    <p>😜😜😜😜😜😜😜😜😜😜😜😜😜😜😜</p>
+                    <p>Oh balle balle de shava shava <em>"prachi ka cashma chura lo...."</em></p>
+                    <p>Empty h empty</p>
+                    <div class="highlight">Chaiii piyoooo biscuit khaooooooo.......</div>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">Confusion</div>
+                    <p>Khali h khali....</p>
+                    <p><em>Areeee... badi dusht ho tum....</em></p>
+                    <div class="highlight">"🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳</div>
+
+                    <p><strong>However you'll recieve something GREAT before I leave.</strong></p>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">🥂🥂🥂🥂</div>
+                    <p>light light<strong>strong strong</strong> hai.</p>
+
+                    <div class="highlight">"Proper judgment prevents future regret."</div>
+                </div>
+            </div>
+
+            <!-- Final Page -->
+            <div class="page">
+                <div class="corner-flower top-right"></div>
+                <div class="page-content">
+                    <div class="page-header">Finality</div>
+                    <p>Me chala soneeeee....</p>
+                    <p>Tum bohot dusht ho, abhi bhi pages palat rhi hooo....!!</p>
+
+                    <p style="margin-top:20px; font-style:italic; color:#b76e79;">"........"</p>
+
+                    <div class="highlight">I'm gonna steal all your toys...🐼</div>
+
+                    <div class="sig">Bye 🌟 Bye</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Areas -->
+    <div class="touch-zone touch-left" id="zoneL"></div>
+    <div class="touch-zone touch-right" id="zoneR"></div>
+
+    <script>
+        // Rose Petal Gen
+        const pContainer = document.getElementById('petals');
+        for (let i = 0; i < 25; i++) {
+            let p = document.createElement('div');
+            p.className = 'petal';
+            let size = Math.random() * 10 + 10; // 10-20px
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            p.style.animationDelay = (Math.random() * 5) + 's';
+            pContainer.appendChild(p);
+        }
+
+        // Logic
+        function start() {
+            document.getElementById('intro').classList.add('fade');
+            const nb = document.getElementById('notebook');
+            nb.classList.remove('closed');
+            setTimeout(() => {
+                document.getElementById('zoneL').style.display = 'block';
+                document.getElementById('zoneR').style.display = 'block';
+            }, 800);
+        }
+
+        const pages = document.querySelectorAll('.page');
+        const numPages = pages.length;
+
+        // Init Stack
+        pages.forEach((p, i) => {
+            p.style.zIndex = numPages - i;
+        });
+
+        function next() {
+            for (let i = 0; i < numPages; i++) {
+                if (!pages[i].classList.contains('flipped')) {
+                    pages[i].classList.add('flipped');
+                    pages[i].style.zIndex = 100 + i;
+                    return;
+                }
+            }
+        }
+
+        function prev() {
+            for (let i = numPages - 1; i >= 0; i--) {
+                if (pages[i].classList.contains('flipped')) {
+                    pages[i].classList.remove('flipped');
+                    pages[i].style.zIndex = numPages - i;
+                    return;
+                }
+            }
+        }
+
+        document.getElementById('zoneR').addEventListener('click', next);
+        document.getElementById('zoneL').addEventListener('click', prev);
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        });
+
+    </script>
+</body>
+
+</html>

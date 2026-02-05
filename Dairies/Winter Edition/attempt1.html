@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Winter Love Letter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Caveat', cursive;
+            background: linear-gradient(180deg, #1a1f3a 0%, #2d1b4e 50%, #4a2c5e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px 10px 90px 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Northern Lights Effect */
+        .aurora {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+            pointer-events: none;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(0, 255, 150, 0.2) 25%,
+                    rgba(100, 200, 255, 0.2) 50%,
+                    rgba(200, 100, 255, 0.2) 75%,
+                    transparent 100%);
+            animation: aurora 15s ease-in-out infinite;
+        }
+
+        @keyframes aurora {
+
+            0%,
+            100% {
+                transform: translateX(-50%) skewX(-5deg);
+                opacity: 0.2;
+            }
+
+            50% {
+                transform: translateX(50%) skewX(5deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* Snowfall Container */
+        .snowfall {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: #fff;
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Notebook Container */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            max-height: 600px;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Frosted Glass Effect on Pages */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(245, 248, 255, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 12px 0 0 12px;
+            box-shadow:
+                0 8px 32px rgba(31, 38, 135, 0.37),
+                inset 0 0 30px rgba(255, 255, 255, 0.3),
+                inset -2px 0 10px rgba(100, 150, 255, 0.2);
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 25px 20px;
+            padding-left: 40px;
+            font-size: 18px;
+            line-height: 1.7;
+            color: #2c3e50;
+            overflow-y: auto;
+            overflow-x: hidden;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Snowflake Watermark Pattern */
+        .page::before {
+            content: '❄';
+            position: absolute;
+            font-size: 120px;
+            color: rgba(180, 210, 255, 0.08);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .page::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background: rgba(100, 150, 200, 0.3);
+            border-radius: 2px;
+        }
+
+        /* Cover Page - Winter Theme */
+        .page.cover {
+            background: linear-gradient(135deg,
+                    rgba(200, 220, 255, 0.95) 0%,
+                    rgba(150, 180, 230, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            font-weight: 700;
+            color: #2d4a6e;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            gap: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .cover::before {
+            content: '❄';
+            font-size: 80px;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cover-subtitle {
+            font-size: 20px;
+            font-family: 'Caveat', cursive;
+            color: #5a7ba6;
+            font-weight: 400;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Flipped State */
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 14px;
+            color: #95a5b8;
+            font-weight: 700;
+        }
+
+        /* Content Animation */
+        .page-content {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Z-index Stacking */
+        .page:nth-child(1) {
+            z-index: 11;
+        }
+
+        .page:nth-child(2) {
+            z-index: 10;
+        }
+
+        .page:nth-child(3) {
+            z-index: 9;
+        }
+
+        .page:nth-child(4) {
+            z-index: 8;
+        }
+
+        .page:nth-child(5) {
+            z-index: 7;
+        }
+
+        .page:nth-child(6) {
+            z-index: 6;
+        }
+
+        /* Spiral Binding - Winter Style */
+        .spiral {
+            position: absolute;
+            left: -18px;
+            top: 0;
+            width: 36px;
+            height: 100%;
+            z-index: 12;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 15px 0;
+        }
+
+        .spiral-ring {
+            position: relative;
+            width: 100%;
+            height: 20px;
+        }
+
+        .spiral-ring::before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            width: 32px;
+            height: 5px;
+            background: linear-gradient(0deg, #b0c4de, #e6f2ff 40%, #8fa9c4 100%);
+            border-radius: 3px;
+            transform: translateY(-50%) rotate(-12deg);
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.9);
+            z-index: 2;
+        }
+
+        .spiral-ring::after {
+            content: '';
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            background: #4a6178;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        /* Controls - Winter Themed */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #4a5fce 100%);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow:
+                0 6px 20px rgba(102, 126, 234, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            min-width: 100px;
+            transition: all 0.3s ease;
+            font-family: 'Caveat', cursive;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: linear-gradient(135deg, #95a5b8 0%, #7a8a9c 100%);
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+
+        /* Text Styling */
+        .emoji {
+            display: inline-block;
+            font-size: 22px;
+            margin: 0 4px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(135, 206, 250, 0.3) 0%, rgba(173, 216, 230, 0.5) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-left: 3px solid rgba(100, 150, 255, 0.5);
+        }
+
+        p {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Frost Effect on Images */
+        img:hover {
+            box-shadow: 0 6px 20px rgba(100, 150, 255, 0.4);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 5px 85px 5px;
+            }
+
+            .notebook {
+                height: 70vh;
+                max-height: 550px;
+            }
+
+            .page {
+                font-size: 17px;
+                padding: 20px 15px;
+                padding-left: 35px;
+            }
+
+            .page.cover {
+                font-size: 32px;
+            }
+
+            .cover-subtitle {
+                font-size: 18px;
+            }
+
+            button {
+                padding: 12px 24px;
+                font-size: 15px;
+                min-width: 90px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .notebook {
+                height: 65vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Aurora Background -->
+    <div class="aurora"></div>
+
+    <!-- Snowfall Effect -->
+    <div class="snowfall" id="snowfall"></div>
+
+    <!-- Notebook -->
+    <div class="notebook-container">
+        <div class="notebook">
+            <div class="spiral">
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+            </div>
+
+            <!-- Cover Page -->
+            <div class="page cover">
+                <div>Pirachiii....... 💖✨</div>
+                <div class="cover-subtitle">A Winter's Tale...</div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">1</div>
+                    <p><span class="emoji">❄️</span> <span class="highlight">Sab kuch ekdum subtle/majak wale way me h,
+                            tension me mat jana bilkul bhi 🔪</span></p>
+                    <p>Hellewwwwwwwwww pirachiii😜, Buri tarah thaki hogi tumm..., yaha jao waha jao, ye karo wo karo.
+                    </p>
+                    <p>Tabiyat mat bigad lena bs. Thand to waise hi h (Khud ko superman mat samajh lena chupchaap
+                        sweater pehen lena). Kya likhu ab 😂 Bohot jorrr se nind aa rhi h ab to, aloo ke parontheeee
+                        lapet ke betha hu isiliyeee... 🐣</p>
+                    <p>Are haa me bata rha tha ki shyd... se maybee.... I got a lot of control over myself regarding
+                        youu...</p>
+                    <p>Noww... If I wish, me tumhare notifications ko bhi avoid kar sakta hu 😼😏😎</p>
+                    <p>Thoda extra busy rehne ki kosish aur thoda sa meditation. Tumne hi bola tha ek baar, tab kuch
+                        kaam nhi kiya tha lekin iss baar ho rha h. Shyd pahle me man se nhi kar rha tha -_-</p>
+                    <p>You are Truely, a Lovely Girl🐼💖</p>
+                    <p>Pichle itne saalon me mene bohot cheezen try kari thi, anukriti ne to suggest kara tha ki me
+                        tumhara bura character arc imagine karu tabhi kuch hoga warna aise hi fasa rahega.</p>
+                    <p>Lekin my heart never accepted your dark face(Maybe I never wanted to accept it). Ye wala way
+                        jyada accha h. Ab me tumhe roast bhi kar paaunga 😎</p>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">2</div>
+                    <p><span class="emoji">🌨️</span> <span class="highlight">Hey You Girl...</span></p>
+                    <p>Bina dimag wale Praniiii....🐣, aisa nhi rehta re ki me hamesha snap pe betha rehta hu😂. Wo ye h
+                        ki mene naaa sabke notifications "OFF"📴 kar rakhe h, except yours 🫵.</p>
+                    <p>Saare APPS Ke band rehte h, Or mera internet bhi hamesha connected rehta h tooo, um jab kuch
+                        bhejti ho to ek hi notification rehta h..., "Pirachiii🤪" is Typing.... to mere se control nhi
+                        hota tha🐣😂 or me dekh leta hu... tap karke.</p>
+                    <p>("Lekin mujhe bohot accha lagta h tum mujhe bata deti ho jo bhi lagta h to 🦥🐼")</p>
+                    <p>Bohot kaam rehta h reeee, collage ka padho, skills gather karo, khana banao-bartan-waherah, fir
+                        Freelancing, yt dekho apna, apne dream ke liye kuch karo, koi help maange to woo karo, apne mn
+                        ka kuch seekho, etc etc.</p>
+                    <p>Or meri bye or byeeeeeeeeeeeeeee.... me bohot antar rehta h 🐣😂</p>
+                    <p>Kaafi unanswered questions h mere dimag me abhi bhi😂. Us se yaad jaroor aajati h tumhari..</p>
+                    <p>Tum janti ho mujhe tumhari itni fikar kyun rehti h???</p>
+                    <p><span class="highlight">It is because I know how it feels.</span></p>
+                    <p>I care for all of you because I know the importance of being cared...</p>
+                    <p>I provide you instant replies because there was a time I was ignored and left alone....</p>
+                    <p>For me, everything holds a deep meaning, that's why I value you so much...</p>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">3</div>
+                    <p><span class="emoji">💙</span> <span class="highlight">My Love Language Is "Code"</span></p>
+                    <p>Ab tum dekho, jo me sochta hu uska kuch na kuch bana deta hu🦥, dost nhi thee to mera bro bana
+                        liya tha, kaam jyada rehte h isliye AI Agents.</p>
+                    <p>Tumhara clone bhi banaya tha mene (yaad karo wo neural networks ka poocha tha mene), yaad ho
+                        toooo... mene galati se wo snap tumko bhej diya tha or tumne save kar liye tha fir mene delete
+                        kar diya tha.</p>
+                    <p>Lekin wo clone exactly tumhari copy nhi ban paaiii thi... , kosish rahegi is baar ho jaaye
+                        chuttiyon me.</p>
+                    <p>Tum conversation se dar rhi thi to wo pages bana diyee. Ab kuch aur banaunga padh padh kee....
+                        Aur wo mail ek tareeka tha... Tumtak wo Webpage ki link bhejne ke liye 🐣😜.</p>
+                    <p>Kyuki baaki platforms me tum mera message nhi dekh rhi thiii... 👾</p>
+                    <p>Ha ha maan lo maan lo🐣, Me bohot intellignet hu 😼😏😎. Tum idiot ho 😎</p>
+                    <p>Tum cashmish 🥸 ho aur meri ankhen telescope🔭</p>
+                    <p>Tum tingu 😼👾🐣 Me lambu 😎🐼</p>
+                    <p>Tareef karne ka mn to thaaa, lekinn.. tum bhadak jaati ho 🦥🦥</p>
+                    <p>Tum ye shaadi se free ho, fir dekh lunga me tumheee 🔪</p>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">4</div>
+                    <p><span class="emoji">🎄</span> <span class="highlight">Final Words...</span></p>
+                    <p>Me kabad bhi bohot ikkatha karta thaa... jaise ki koi book jo kisi ne dii ho, mere papa ne 3 saal
+                        pahle perfume ki bottle di thi, mene abhi tak sambhal ke rakhi h....</p>
+                    <p>Tumhari wo kharab photo, mene ye wali choose hi isiliye kari thi taaki tumhe farak naa pade, nhi
+                        to ek se ek thiii mere pass...😂</p>
+                    <p>(Or dekho ye sab mene khud tumko bataya tha, aisa nhi ki kisi aur se pata chala ho... to tum mere
+                        se kuch bhi poochogi me bata dunga.)</p>
+                    <p>Batana zaroor ye wali design kaisi lagi 🧸</p>
+                    <p>Winter special banaya h tumhare liye... ❄️</p>
+                    <p>I'll wait............................. </p>
+                    <p style="text-align: center; margin-top: 40px; font-size: 26px;">✨ Stay Warm, Pirachi ✨</p>
+                    <p style="text-align: center; font-size: 20px; color: #5a7ba6;">☃️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="controls">
+            <button id="backBtn" disabled>← Back</button>
+            <button id="nextBtn">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        // Snowfall Animation
+        function createSnowflakes() {
+            const snowfall = document.getElementById('snowfall');
+            const snowflakeCount = 50;
+
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 10 + 's';
+                snowflake.style.fontSize = (Math.random() * 1 + 0.5) + 'em';
+                snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                snowfall.appendChild(snowflake);
+            }
+        }
+
+        createSnowflakes();
+
+        // Page Navigation
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const backBtn = document.getElementById('backBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const totalPages = pages.length;
+
+        function updateButtons() {
+            backBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+
+            if (currentPage === totalPages - 1) {
+                nextBtn.textContent = 'Finished ✓';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+        }
+
+        function flipPage(direction) {
+            if (direction === 'next' && currentPage < totalPages - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            } else if (direction === 'back' && currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove('flipped');
+            }
+            updateButtons();
+        }
+
+        nextBtn.addEventListener('click', () => flipPage('next'));
+        backBtn.addEventListener('click', () => flipPage('back'));
+
+        // Touch/Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let isScrolling = false;
+
+        document.querySelector('.notebook').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            isScrolling = false;
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchmove', (e) => {
+            const touchY = e.changedTouches[0].screenY;
+            if (Math.abs(touchY - touchStartY) > 10) {
+                isScrolling = true;
+            }
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (!isScrolling) {
+                handleSwipe();
+            }
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    flipPage('next');
+                } else {
+                    flipPage('back');
+                }
+            }
+        }
+
+        // Click to advance
+        let scrollTimeout;
+        let userIsScrolling = false;
+
+        pages.forEach((page) => {
+            page.addEventListener('scroll', () => {
+                userIsScrolling = true;
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    userIsScrolling = false;
+                }, 150);
+            });
+        });
+
+        pages.forEach((page, index) => {
+            page.addEventListener('click', (e) => {
+                if (!e.target.closest('.controls') && !userIsScrolling) {
+                    if (index === currentPage && currentPage < totalPages - 1) {
+                        flipPage('next');
+                    }
+                }
+            });
+        });
+
+        updateButtons();
+    </script>
+</body>
+
+</html>

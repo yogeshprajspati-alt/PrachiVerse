@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Fairy 𓆩♡𓆪</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #ec4899;
+            --secondary: #8b5cf6;
+            /* Slightly deeper lavender */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-main: #4a042e;
+            --text-light: #831843;
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fbcfe8, #e9d5ff, #fff1f2);
+            min-height: 100vh;
+            overflow: hidden;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* --- MUSIC CONTROL --- */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            color: var(--primary);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.3);
+        }
+
+        .music-btn.playing {
+            animation: spin 3s linear infinite;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- PARTICLES (FEATHERS + SPARKLES) --- */
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .feather {
+            position: absolute;
+            top: -10vh;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: fall-sway 12s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        @keyframes fall-sway {
+            0% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(60vh) rotate(180deg) translateX(50px);
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(120vh) rotate(360deg) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        /* --- STAGE SYSTEM --- */
+        .stage {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            /* flex center by default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.95) translateY(20px);
+            z-index: 10;
+        }
+
+        .stage.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        .stage.exit {
+            opacity: 0;
+            transform: scale(1.05) translateY(-20px);
+        }
+
+        /* --- GLASSMOPHISM CARD --- */
+        .glass-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow-glass);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .glass-box.center {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #be185d, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(190, 24, 93, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        /* --- CONTROLS --- */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            color: var(--text-main);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            margin-top: 1.5rem;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(236, 72, 153, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(236, 72, 153, 0.5);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        /* --- STAGE 1: ENTRANCE --- */
+        .fairy-container {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .fairy-container:hover {
+            transform: scale(1.1);
+        }
+
+        .fairy {
+            font-size: 6rem;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .tap-hint {
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            animation: pulse-fade 2s infinite;
+        }
+
+        /* --- STAGE 2: TYPED MESSAGE --- */
+        #typed-container {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            text-align: left;
+            position: relative;
+            padding-right: 10px;
+            /* space for scrollbar */
+        }
+
+        /* Custom Scrollbar */
+        #typed-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #typed-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+        }
+
+        #typed-container::-webkit-scrollbar-thumb {
+            background: rgba(236, 72, 153, 0.3);
+            border-radius: 4px;
+        }
+
+        #typed-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            color: #4a042e;
+        }
+
+        #typed-text::after {
+            content: '|';
+            display: inline-block;
+            color: var(--primary);
+            animation: blink 0.8s infinite;
+            margin-left: 2px;
+        }
+
+        #typed-text.done::after {
+            display: none;
+        }
+
+        /* --- STAGE 3: GIFT --- */
+        .gift-box {
+            margin: 40px auto;
+            font-size: 6rem;
+            cursor: pointer;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .gift-box.open {
+            animation: shake 0.8s ease-in-out forwards;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: scale(1.1) rotate(0deg);
+            }
+
+            25% {
+                transform: scale(1.1) rotate(-10deg);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(10deg);
+            }
+
+            75% {
+                transform: scale(1.1) rotate(-10deg);
+            }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+            display: none;
+            /* hidden initially */
+        }
+
+        .cards-grid.visible {
+            display: grid;
+        }
+
+        .reward-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px 10px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .reward-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reward-card:hover {
+            transform: translateY(-5px);
+            background: #fff;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.2);
+        }
+
+        .reward-card .icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .reward-card .label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a042e;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse-fade {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* --- CONFETTI (CSS only simplistic) --- */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #f00;
+            animation: confetti-fall 3s linear forwards;
+            top: 50%;
+            left: 50%;
+            z-index: 100;
+            opacity: 0;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="particles-container" id="particles"></div>
+
+    <audio id="bg-music" loop>
+        <source src="background.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-btn" id="musicBtn" onclick="toggleMusic()">🔇</div>
+
+    <!-- STAGE 1: ENTRY -->
+    <div class="stage active" id="s1">
+        <div class="fairy-container" onclick="nextStage('s1', 's2')">
+            <div class="fairy">🧚‍♀️</div>
+        </div>
+        <p class="tap-hint">Tap the fairy to begin ✨</p>
+    </div>
+
+    <!-- STAGE 2: LETTER -->
+    <div class="stage" id="s2">
+        <div class="back-btn" onclick="prevStage('s2', 's1')">←</div>
+        <div class="glass-box">
+            <h1 style="text-align:center">Ohh Prachiii ✨</h1>
+            <div id="typed-container" class="scroller">
+                <div id="typed-text"></div>
+            </div>
+            <div style="text-align: center;">
+                <button class="btn-primary" onclick="nextStage('s2', 's3')">Next Surprise 🎀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 3: GIFT -->
+    <div class="stage" id="s3">
+        <div class="back-btn" onclick="prevStage('s3', 's2')">←</div>
+        <div class="glass-box center">
+            <h1>A little gift... 💝</h1>
+            <p style="margin-bottom: 0;">Just for you</p>
+
+            <div class="gift-box" id="gift" onclick="openGift()">🎁</div>
+
+            <div class="cards-grid" id="cardsGrid">
+                <!-- Cards injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 4: FRIENDSHIP -->
+    <div class="stage" id="card-friend">
+        <div class="back-btn" onclick="closeCard('card-friend')">←</div>
+        <div class="glass-box center">
+            <div style="font-size: 4rem; margin-bottom: 10px;">🦥</div>
+            <h1>Premium Bond</h1>
+            <p>
+                <b>Congratulations! 🥳</b><br><br>
+
+                You got a premium membership of my annoying side 🦥🥳
+
+                Includes: unlimited care, silly jokes, random check-ins and zero escape 😌<br>
+                , and zero return policy.<br><br>
+                <i>No refunds. 😌</i>
+            </p>
+        </div>
+    </div>
+
+
+
+    <script>
+        /* --- MUSIC SYSTEM --- */
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('musicBtn');
+
+            if (audio.paused) {
+                audio.volume = 0.5; // Set decent volume
+                audio.play().then(() => {
+                    btn.innerHTML = '🎵';
+                    btn.classList.add('playing');
+                }).catch(e => console.log("Audio play failed:", e));
+            } else {
+                audio.pause();
+                btn.innerHTML = '🔇';
+                btn.classList.remove('playing');
+            }
+        }
+
+        /* --- PARTICLES --- */
+        const pContainer = document.getElementById('particles');
+        const colors = ['#f472b6', '#c084fc', '#fcd34d', '#ffffff'];
+
+        setInterval(() => {
+            const p = document.createElement('div');
+            p.classList.add('feather');
+            p.innerHTML = Math.random() > 0.5 ? '🪶' : '✨';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (8 + Math.random() * 5) + 's';
+            p.style.fontSize = (16 + Math.random() * 14) + 'px';
+            if (p.innerHTML === '✨') {
+                p.style.color = '#fbbf24';
+                p.style.textShadow = '0 0 5px #fbbf24';
+            }
+            pContainer.appendChild(p);
+            setTimeout(() => p.remove(), 13000);
+        }, 800);
+
+        /* --- NAVIGATION --- */
+        function nextStage(current, next) {
+            // Anim out
+            const c = document.getElementById(current);
+            const n = document.getElementById(next);
+
+            c.classList.add('exit');
+            c.classList.remove('active');
+
+            setTimeout(() => {
+                c.classList.remove('exit');
+                n.classList.add('active');
+
+                // Specific Logic
+                if (next === 's2' && !typedStarted) {
+                    startTypewriter();
+                    if (document.getElementById('bg-music').paused) toggleMusic();
+                }
+                if (next === 's3') resetGift();
+            }, 500);
+        }
+
+        function prevStage(current, prev) {
+            const c = document.getElementById(current);
+            const p = document.getElementById(prev);
+
+            c.classList.add('exit'); // or reverse exit? keep simple for now
+            c.classList.remove('active');
+
+            setTimeout(() => {
+                c.classList.remove('exit');
+                p.classList.add('active');
+            }, 400);
+        }
+
+        /* --- TYPEWRITER --- */
+        const msg = `Some people come into our lives like a soft breeze... 🌸
+
+And suddenly, everything feels a little lighter, a little brighter.
+
+I wanted to make this small space for you.
+It's just text right now, but imagine it spoken with the warmest voice.
+
+You are special, valid, and cherished. 💖
+Never forget that your smile is my favorite notification.
+
+Yours truly,
+Deepak ✨`;
+
+        const typedEl = document.getElementById('typed-text');
+        const typedCont = document.getElementById('typed-container');
+        let typedStarted = false;
+        let i = 0;
+
+        function startTypewriter() {
+            typedStarted = true;
+            typedEl.innerHTML = '';
+            i = 0;
+            typeLoop();
+        }
+
+        function typeLoop() {
+            if (i < msg.length) {
+                const char = msg.charAt(i);
+                typedEl.innerHTML += char === '\n' ? '<br>' : char;
+                i++;
+                // Auto scroll
+                typedCont.scrollTop = typedCont.scrollHeight;
+                setTimeout(typeLoop, 50); // Speed
+            } else {
+                typedEl.classList.add('done');
+            }
+        }
+
+        /* --- GIFT LOGIC --- */
+        let giftOpened = false;
+
+        function resetGift() {
+            giftOpened = false;
+            document.getElementById('gift').style.display = 'block';
+            document.getElementById('cardsGrid').classList.remove('visible');
+            document.getElementById('cardsGrid').innerHTML = ''; // reset cards
+        }
+
+        function openGift() {
+            if (giftOpened) return;
+            giftOpened = true;
+
+            const gift = document.getElementById('gift');
+            gift.classList.add('open');
+
+            // Confetti
+            createConfetti();
+
+            setTimeout(() => {
+                gift.style.display = 'none'; // Hide gift
+                showCards();
+            }, 800);
+        }
+
+        function createConfetti() {
+            for (let k = 0; k < 30; k++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                // random direction
+                const tx = (Math.random() - 0.5) * 400;
+                const ty = (Math.random() - 1) * 400; // mostly up
+                c.style.setProperty('--tx', `${tx}px`);
+                c.style.setProperty('--ty', `${ty}px`);
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                // Position near center
+                c.style.left = '50%';
+                c.style.top = '50%';
+
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 3000);
+            }
+        }
+
+        function showCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.classList.add('visible');
+            grid.innerHTML = `
+                <div class="reward-card" onclick="showCard('card-friend')">
+                    <span class="icon">🦦</span>
+                    <span class="label">Membership</span>
+                </div>
+                <a href="game.html" target="_blank" class="reward-card" style="text-decoration: none; color: inherit; display: block;">
+                    <span class="icon">🎮</span>
+                    <span class="label">Play Game</span>
+                </a>
+            `;
+
+            // Stagger animation
+            const cards = grid.querySelectorAll('.reward-card');
+            cards.forEach((card, idx) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, idx * 150);
+            });
+        }
+
+        function showCard(id) {
+            // Hide s3 temporarily or just layer on top? Layer on top is easier as 'stage'
+            // We treat the card detail as a stage 4/5
+            nextStage('s3', id);
+        }
+
+        function closeCard(id) {
+            prevStage(id, 's3');
+        }
+
+    </script>
+</body>
+
+</html>

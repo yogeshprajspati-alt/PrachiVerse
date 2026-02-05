@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Fairy 𓆩♡𓆪</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --pink: #ec4899;
+            --lav: #c084fc;
+            --dark: #3b1d2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fde2f3, #ede9fe, #fff1f2);
+            min-height: 100vh;
+            overflow: hidden;
+            color: #2b1220;
+        }
+
+        /* FALLING FEATHERS */
+        .feathers {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .feather {
+            position: absolute;
+            top: -10vh;
+            font-size: 22px;
+            opacity: .7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0
+            }
+        }
+
+        /* STAGES */
+        .stage {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .6s ease;
+            z-index: 5;
+        }
+
+        .stage.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* BACK ARROW */
+        .back-arrow {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .9);
+            color: #6b1438;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
+            z-index: 20;
+        }
+
+        .back-arrow:active {
+            transform: scale(.9)
+        }
+
+        /* FAIRY */
+        .fairy {
+            font-size: 6rem;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-18px)
+            }
+        }
+
+        /* BOX */
+        .box {
+            background: rgba(255, 255, 255, .95);
+            border-radius: 26px;
+            padding: 26px;
+            width: 100%;
+            max-width: 640px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, .18);
+            position: relative;
+        }
+
+        .center {
+            text-align: center
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: #6b1438;
+            margin-bottom: 14px;
+        }
+
+        /* SCROLLABLE TYPING */
+        #typedWrap {
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        #typed {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #3b1d2a;
+            white-space: pre-wrap;
+        }
+
+        #typed::after {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: var(--pink);
+            margin-left: 4px;
+            animation: blink .8s infinite;
+        }
+
+        #typed.done::after {
+            display: none
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 40px;
+            background: linear-gradient(45deg, var(--pink), var(--lav));
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+        }
+
+        /* GIFT */
+        .gift {
+            font-size: 5.5rem;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.15)
+            }
+        }
+
+        /* CARDS */
+        .cards {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 26px;
+        }
+
+        .card {
+            width: 260px;
+            background: #fff;
+            border-radius: 22px;
+            padding: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+            text-align: center;
+        }
+
+        .card:active {
+            transform: scale(.96)
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="feathers" id="feathers"></div>
+
+    <!-- STAGE 1 -->
+    <div class="stage active" id="s1">
+        <div class="center">
+            <div class="fairy">🧚‍♀️</div>
+            <p>Tap the fairy ✨</p>
+        </div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage" id="s2">
+        <div class="back-arrow" onclick="show('s1')">←</div>
+        <div class="box">
+            <h1 class="center">Hey You 💕</h1>
+            <div id="typedWrap">
+                <div id="typed"></div>
+            </div>
+            <div class="center">
+                <button onclick="show('s3')">Next 🎀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage" id="s3">
+        <div class="back-arrow" onclick="show('s2')">←</div>
+        <div class="box center">
+            <h1>A Little Surprise 💝</h1>
+            <div class="gift" onclick="openCards()">🎁</div>
+            <div class="cards" id="cards"></div>
+        </div>
+    </div>
+
+    <!-- FRIENDSHIP PAGE -->
+    <div class="stage" id="friend">
+        <div class="back-arrow" onclick="show('s3')">←</div>
+        <div class="box">
+            <h1>💗 From Me</h1>
+            <p>
+                Congratulations 🥳<br><br>
+                You got a premium membership of my annoying side 🦥🥳<br><br>
+                Includes: unlimited care, silly jokes,
+                random check-ins and zero escape 😌
+            </p>
+        </div>
+    </div>
+
+    <!-- SPOTIFY PAGE -->
+    <div class="stage" id="spotify">
+        <div class="back-arrow" onclick="show('s3')">←</div>
+        <div class="box">
+            <h1>🎧 Spotify Premium</h1>
+            <p>
+                3 Months Spotify Premium 💚<br><br>
+                Steps to redeem:<br><br>
+                1. Open Spotify App<br>
+                2. Go to Account → Redeem<br>
+                3. Enter the code I give you ✨<br><br>
+                Enjoy ad-free music & downloads 🎶
+            </p>
+        </div>
+    </div>
+
+    <script>
+        /* FEATHERS */
+        const fBox = document.getElementById('feathers');
+        setInterval(() => {
+            const f = document.createElement('div');
+            f.className = 'feather';
+            f.textContent = '🪶';
+            f.style.left = Math.random() * 100 + 'vw';
+            f.style.animationDuration = 8 + Math.random() * 6 + 's';
+            fBox.appendChild(f);
+            setTimeout(() => f.remove(), 15000);
+        }, 450);
+
+        /* TYPEWRITER */
+        const msg = `Some people enter your life quietly 🌸
+
+And suddenly…
+everything feels lighter.
+
+This text area is scrollable,
+so you can write as much as you want 💖
+
+Your feelings,
+your thoughts,
+your heart — all belong here.`;
+
+        let i = 0;
+        function type() {
+            if (i < msg.length) {
+                typed.textContent += msg[i++];
+                typedWrap.scrollTop = typedWrap.scrollHeight;
+                setTimeout(type, 55);
+            } else {
+                typed.classList.add('done');
+            }
+        }
+
+        /* NAVIGATION */
+        const stages = document.querySelectorAll('.stage');
+        function show(id) {
+            stages.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        document.querySelector('.fairy').onclick = () => {
+            show('s2');
+            if (!typed.textContent) type();
+        };
+
+        /* GIFT CARDS */
+        function openCards() {
+            cards.innerHTML = `
+    <div class="card" onclick="show('friend')">
+      🦥🥳<br><b>Friendship Membership</b>
+    </div>
+    <div class="card" onclick="show('spotify')">
+      🎧<br><b>Spotify Premium</b>
+    </div>
+  `;
+        }
+    </script>
+
+</body>
+
+</html>

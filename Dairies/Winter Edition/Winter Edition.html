@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Winter Letter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Caveat', cursive;
+            background: linear-gradient(180deg, #1a1f3a 0%, #2d1b4e 50%, #4a2c5e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px 10px 90px 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Northern Lights Effect */
+        .aurora {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+            pointer-events: none;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(0, 255, 150, 0.2) 25%,
+                    rgba(100, 200, 255, 0.2) 50%,
+                    rgba(200, 100, 255, 0.2) 75%,
+                    transparent 100%);
+            animation: aurora 15s ease-in-out infinite;
+        }
+
+        @keyframes aurora {
+
+            0%,
+            100% {
+                transform: translateX(-50%) skewX(-5deg);
+                opacity: 0.2;
+            }
+
+            50% {
+                transform: translateX(50%) skewX(5deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* Snowfall Container */
+        .snowfall {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: #fff;
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Notebook Container */
+        .notebook-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .notebook {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            max-height: 600px;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Frosted Glass Effect on Pages */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(245, 248, 255, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 12px 0 0 12px;
+            box-shadow:
+                0 8px 32px rgba(31, 38, 135, 0.37),
+                inset 0 0 30px rgba(255, 255, 255, 0.3),
+                inset -2px 0 10px rgba(100, 150, 255, 0.2);
+            transform-origin: left center;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 25px 20px;
+            padding-left: 40px;
+            font-size: 18px;
+            line-height: 1.7;
+            color: #2c3e50;
+            overflow-y: auto;
+            overflow-x: hidden;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Snowflake Watermark Pattern */
+        .page::before {
+            content: '❄';
+            position: absolute;
+            font-size: 120px;
+            color: rgba(180, 210, 255, 0.08);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .page::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .page::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background: rgba(100, 150, 200, 0.3);
+            border-radius: 2px;
+        }
+
+        /* Cover Page - Winter Theme */
+        .page.cover {
+            background: linear-gradient(135deg,
+                    rgba(200, 220, 255, 0.95) 0%,
+                    rgba(150, 180, 230, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            font-weight: 700;
+            color: #2d4a6e;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            gap: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .cover::before {
+            content: '❄';
+            font-size: 80px;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cover-subtitle {
+            font-size: 20px;
+            font-family: 'Caveat', cursive;
+            color: #5a7ba6;
+            font-weight: 400;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Flipped State */
+        .page.flipped {
+            transform: rotateY(-180deg);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 14px;
+            color: #95a5b8;
+            font-weight: 700;
+        }
+
+        /* Content Animation */
+        .page-content {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Z-index Stacking */
+        .page:nth-child(1) {
+            z-index: 11;
+        }
+
+        .page:nth-child(2) {
+            z-index: 10;
+        }
+
+        .page:nth-child(3) {
+            z-index: 9;
+        }
+
+        .page:nth-child(4) {
+            z-index: 8;
+        }
+
+        .page:nth-child(5) {
+            z-index: 7;
+        }
+
+        .page:nth-child(6) {
+            z-index: 6;
+        }
+
+        /* Spiral Binding - Winter Style */
+        .spiral {
+            position: absolute;
+            left: -18px;
+            top: 0;
+            width: 36px;
+            height: 100%;
+            z-index: 12;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 15px 0;
+        }
+
+        .spiral-ring {
+            position: relative;
+            width: 100%;
+            height: 20px;
+        }
+
+        .spiral-ring::before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            width: 32px;
+            height: 5px;
+            background: linear-gradient(0deg, #b0c4de, #e6f2ff 40%, #8fa9c4 100%);
+            border-radius: 3px;
+            transform: translateY(-50%) rotate(-12deg);
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.9);
+            z-index: 2;
+        }
+
+        .spiral-ring::after {
+            content: '';
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            background: #4a6178;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+
+
+        /* Text Styling */
+        .emoji {
+            display: inline-block;
+            font-size: 22px;
+            margin: 0 4px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(135, 206, 250, 0.3) 0%, rgba(173, 216, 230, 0.5) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-left: 3px solid rgba(100, 150, 255, 0.5);
+        }
+
+        p {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Frost Effect on Images */
+        img:hover {
+            box-shadow: 0 6px 20px rgba(100, 150, 255, 0.4);
+        }
+
+        /* Nav Hint */
+        .nav-hint {
+            position: fixed;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            animation: bounce 2.5s infinite;
+            pointer-events: none;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .nav-hint.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-out;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 5px 85px 5px;
+            }
+
+            .notebook {
+                height: 70vh;
+                max-height: 550px;
+            }
+
+            .page {
+                font-size: 17px;
+                padding: 20px 15px;
+                padding-left: 35px;
+            }
+
+            .page.cover {
+                font-size: 32px;
+            }
+
+            .cover-subtitle {
+                font-size: 18px;
+            }
+
+            button {
+                padding: 12px 24px;
+                font-size: 15px;
+                min-width: 90px;
+            }
+
+            .nav-hint {
+                bottom: 70px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .notebook {
+                height: 65vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Aurora Background -->
+    <div class="aurora"></div>
+
+    <!-- Snowfall Effect -->
+    <div class="snowfall" id="snowfall"></div>
+
+    <!-- Navigation Hint -->
+    <div class="nav-hint">👈 Tap left/right to turn pages 👉</div>
+
+    <!-- Notebook -->
+    <div class="notebook-container">
+        <div class="notebook">
+            <div class="spiral">
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+                <div class="spiral-ring"></div>
+            </div>
+
+            <!-- Cover Page -->
+            <div class="page cover">
+                <div>Pirachiiiiiiii....... 💖✨</div>
+                <div class="cover-subtitle">Title khud bana lo</div>
+            </div>
+
+            <!-- Page 1 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">1</div>
+                    <p><span class="emoji">❄️</span> <span class="highlight">Againn... I know, I know </span></p>
+                    <p>Haannn... bola to tha mene ki wo hi last h, lekinnnn mera code meri marzi 🦥🐼 Tum to padh
+                        logiii.
+                    </p>
+                    <p>Kitni Thand hai yaha basoda me, Dhyn rakhoo or kya🐣</p>
+                    <p>Waise mene wo "Bs itna shareef hu" aise hi bhej diya tha. Dikha rha tha bs ki almost sab mere
+                        around safe feel karti h 🦥,
+                        they knows well me kaisa hu 🙃,
+                        Bs meri crush ko nhi kara paya thaa..
+                    </p>
+                    <p>Wo tumne saksham ki chat padhi thii na, me crop karna hi bhool gaya wo "r" word. Dekhne me
+                        kharab, sunne me aur jyada kharab.</p>
+                    <p>Me wo word use nhi karta🙃. Kher sirf saksham nhi un dono ko sab bolte thee starting se, shyd
+                        unko pata bhi ho. Mene to nhi bola, or shyd bolunga bhi nhi🙃🦥 Meri khud bhi self esteem h
+                        isiliyeee.. </p>
+
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">2</div>
+                    <p><span class="emoji">🌨️</span> <span class="highlight">.........</span></p>
+                    <p>Mene jooth bola tha kl, ki me screen ke samne tha or phone pass me rakha tha. Asal me wo adha
+                        sach tha.</p>
+                    <p>Sach ye h ki me poorani conversation padh rha thaa.. Taaki dekh saku ki kahi mene kuch galati naa
+                        kar diii ho :)</p>
+                    <p>Poorani adat h ye meri, kyuki me sab bigad deta hu hamesha.</p>
+                    <p>Wo photo bhale hi blur thi lekin tum acchi lag rhi thi usmee.. "Divaa hi kehnde" iska mtlb star
+                        performer h kyaa prachiii????</p>
+                    <p>Ek or cheez. Tumhara koi dost ho to usme koi galat baat nhi h. Aise to mere bhi dost h. Zaroori
+                        thodi h har dost ka mtlb kuch galat hoo.. </p>
+                    <p>Me to bs pooch hi rha tha ki raaj h ki nhi. Wo accha ladka h waise. Meri last time uske birthday
+                        pe baat hui thi, pichle saal. </p>
+
+                    <p><span class="highlight">Pata nhi aisa kyun hota h😂 Sahi time me sahi words nhi milte. Or jab
+                            milte h tab sahi moka nhi hota</span></p>
+                    <p>Waise ek tum hi nhi ho jisko mene nickname diya h. </p>
+                    <p>Jinki bohot jyada hi parvah hoti h unko de deta hu. Meri behen ko to me kuch bhi bol ke bula leta
+                        hu😂 wo mere se aloo bolti h 😂 or ye meri id bhi "deep.ak2294 se "aloo2294" usi dusht ne kari
+                        thii..</p>
+                    <p>Shraddha ko captain bola hu me, shuru se 🦥 wo mujhe computer bolti h 😂. Anukriti se kurkura
+                        bolta tha me🦥 wo mere se beta biloni 😂</p>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">3</div>
+                    <p><span class="emoji">💙</span> <span class="highlight">Mujhe shak h tum ye padhti bhi ho ki
+                            nhi😼</span></p>
+                    <p>Ab tumko billu nhi pasand to koi accha sa naam sochunga meee....</p>
+                    <p>Jiska use sirf me kar saku😂 Even though Prachiii bohot bohot accha naam h.</p>
+                    <p>Prachiiiii to bhole naath h</p>
+                    <p>
+                        Tumhari kichdi ki recipe do yr, mujhe bhi ameer banna h 😂 or dekhni h ki kya bawal cheez banati
+                        ho tumm....
+                    </p>
+                    <p>Chalo ye sab to faltoo baaten h,
+                        tum ye batao ki tumko sabse best songs konse lagte h, dekhu to kya taste h tumhara🦥🐼
+                    </p>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page">
+                <div class="page-content">
+                    <div class="page-number">4</div>
+                    <p><span class="emoji">🎄</span> <span class="highlight">Final Words...</span></p>
+                    <p>Or lastly... chanchal me mujhe koi interest nhiiii...., even ab kisi me nhi h 🦥🐼 isliye don't
+                        worry 😂 wo bs majak tha</p>
+                    <p>Mujhe tumhare wo sentence pe hasi aa rhi h 😂 ki "To me kyu help karu tumhari, Wo bhi meri hi
+                        dost ko ptane ke liye"🐼🐣😂 mere bure haal ho gaye the has has ke 😂😂 </p>
+                    <p>Or haaa tumne bola tha ladkon ko to koi bhi pasand aajati h 😂 shyd ye sach hooo..., lekin mere
+                        case me aisa nhi h 🦥. Me thoda alag hi hu... ab mujhe koi pasand nhi 😎 me free hu 😎</p>
+
+
+                    <p>Wiase me ye tumko impress karne ke liye nhi banata 🙃 Wo bs accha lagta h kuch unique cheez karna
+                        🦥 Atleast yaaden to banengi ki haa ek insaan tha 😼 jo kuch toofani cheezen karta tha😂🐼. Shyd
+                        ye tum tumhari dostlog ko batao to wo mere se impress ho jaayeeenn , who knows 😂😂 wo jo pehli
+                        wali banai thi na 😂 wo mene Expert systems ke lecture me peeche beth ke banai thi 😂 mera dost
+                        mere saath betha tha to bol rha tha bhai😂 me agar ladki hota to tere peeche pad jata 😂😂 or me
+                        🥸 >> hattt beeee door bhag. </p>
+
+                    <p>Winter special banaya h tumhare liye... ❄️</p>
+                    <p>Ek ad din dosa special bhi banaunga 🫔</p>
+                    <p>Batana zaroor ye wali design kaisi lagi or rating bhii chaiyee apun ko🧸</p>
+                    <p>I'll wait............................. </p>
+                    <p style="text-align: center; margin-top: 40px; font-size: 26px;">✨ Stay Warm, Pirachi ✨</p>
+                    <p style="text-align: center; font-size: 20px; color: #5a7ba6;">☃️</p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Snowfall Animation
+        function createSnowflakes() {
+            const snowfall = document.getElementById('snowfall');
+            const snowflakeCount = 50;
+
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 10 + 's';
+                snowflake.style.fontSize = (Math.random() * 1 + 0.5) + 'em';
+                snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                snowfall.appendChild(snowflake);
+            }
+        }
+
+        createSnowflakes();
+
+        // Page Navigation
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const totalPages = pages.length;
+        const navHint = document.querySelector('.nav-hint');
+        let hintVisible = true;
+
+        function hideHint() {
+            if (hintVisible) {
+                navHint.classList.add('hidden');
+                hintVisible = false;
+            }
+        }
+
+        function flipPage(direction) {
+            hideHint(); // Hide hint on any successful flip interaction
+            if (direction === 'next' && currentPage < totalPages - 1) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            } else if (direction === 'back' && currentPage > 0) {
+                currentPage--;
+                pages[currentPage].classList.remove('flipped');
+            }
+        }
+
+        // Touch/Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let isScrolling = false;
+
+        document.querySelector('.notebook').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            isScrolling = false;
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchmove', (e) => {
+            const touchY = e.changedTouches[0].screenY;
+            if (Math.abs(touchY - touchStartY) > 10) {
+                isScrolling = true;
+            }
+        }, { passive: true });
+
+        document.querySelector('.notebook').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (!isScrolling) {
+                handleSwipe();
+            }
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    flipPage('next');
+                } else {
+                    flipPage('back');
+                }
+            }
+        }
+
+        // Tap Navigation (Split Screen)
+        document.addEventListener('click', (e) => {
+            // Ignore if user was scrolling (simple check, though click usually fires after scroll settles)
+            if (isScrolling) return;
+
+
+
+            const screenWidth = window.innerWidth;
+            const clickX = e.clientX;
+
+            if (clickX > screenWidth / 2) {
+                // Right side -> Next
+                if (currentPage < totalPages - 1) {
+                    flipPage('next');
+                }
+            } else {
+                // Left side -> Back
+                if (currentPage > 0) {
+                    flipPage('back');
+                }
+            }
+        });
+
+        // Click to advance logic removed in favor of Split Screen Tap, but retained scrolling check helpers
+        let scrollTimeout;
+        let userIsScrolling = false;
+
+        pages.forEach((page) => {
+            page.addEventListener('scroll', () => {
+                userIsScrolling = true;
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    userIsScrolling = false;
+                }, 150);
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
